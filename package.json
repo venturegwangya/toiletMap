@@ -1,0 +1,24 @@
+{
+  "name": "toiletmaster",
+  "version": "0.0.1",
+  "description": "깨끗한 화장실을 찾기 위한 용도",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pizzakinggod/toiletMaster.git"
+  },
+  "keywords": [
+    "toilet",
+    "shit",
+    "dung"
+  ],
+  "author": "pizzakinggod, jhlee910609",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pizzakinggod/toiletMaster/issues"
+  },
+  "homepage": "https://github.com/pizzakinggod/toiletMaster#readme"
+}
