@@ -2,9 +2,9 @@
   "name": "toiletmaster",
   "version": "0.0.1",
   "description": "깨끗한 화장실을 찾기 위한 용도",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "webpack --watch --watch-poll=5000"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,18 @@
   "bugs": {
     "url": "https://github.com/pizzakinggod/toiletMaster/issues"
   },
-  "homepage": "https://github.com/pizzakinggod/toiletMaster#readme"
+  "homepage": "https://github.com/pizzakinggod/toiletMaster#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {}
 }
