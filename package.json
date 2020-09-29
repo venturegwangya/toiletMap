@@ -8,7 +8,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo \"린터 작동중...\" && lint-staged"
+      "pre-commit": "echo \"* 린터 작동중...\" && lint-staged"
     }
   },
   "lint-staged": {
@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pizzakinggod/toiletMaster.git"
+    "url": "git+https://github.com/vlwkaos/toiletMaster.git"
   },
   "keywords": [
     "toilet",
     "shit",
     "dung"
   ],
-  "author": "pizzakinggod, jhlee910609",
+  "author": "vlwkaos, jhlee910609",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/pizzakinggod/toiletMaster/issues"
