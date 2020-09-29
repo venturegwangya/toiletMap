@@ -6,6 +6,16 @@
   "scripts": {
     "watch": "webpack --watch --watch-poll=5000"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo \"린터 작동중...\" && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --cache --fix"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pizzakinggod/toiletMaster.git"
