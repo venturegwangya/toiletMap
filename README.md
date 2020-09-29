@@ -5,7 +5,7 @@
 
 `npm i`
 
-`npm watch`
+`npm run watch`
 
 ## vscode 설정
 
