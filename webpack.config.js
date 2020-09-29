@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -23,7 +25,7 @@ module.exports = {
             '@babel/preset-react',
             '@babel/preset-typescript',
           ],
-          plugins: ['babel-plugin-styled-components', {}],
+          plugins: [['babel-plugin-styled-components', {}], ['lodash']],
         },
       },
     ],
@@ -32,4 +34,5 @@ module.exports = {
     colors: true,
   },
   devtool: 'source-map',
+  plugins: [new LodashModuleReplacementPlugin()],
 };
