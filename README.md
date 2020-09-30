@@ -1,6 +1,8 @@
 # toiletMaster
 밖에 있을 때, 깨끗한 화장실을 찾고자 한다면...
 
+[현재 칸반보드 바로가기](https://github.com/vlwkaos/toiletMaster/projects/1)
+
 ## 설치 
 
 `npm i`
