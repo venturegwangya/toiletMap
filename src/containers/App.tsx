@@ -1,11 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-const Title = styled.h1`
-  font-size: 1.5em;
-  text-align: center;
-  color: palevioletred;
-`;
+const Title = styled.h1.attrs({
+  className: `i bg-dark-red`,
+})``;
+
 export default class App extends React.Component {
   public render() {
     return (
