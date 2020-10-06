@@ -7,7 +7,7 @@ module.exports = {
   mode: 'development',
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
   output: {
-    filename: 'app.bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'build'),
   },
   resolve: {
@@ -26,7 +26,11 @@ module.exports = {
             '@babel/preset-react',
             '@babel/preset-typescript',
           ],
-          plugins: [['babel-plugin-styled-components', {}], ['lodash']],
+          plugins: [
+            ['@babel/plugin-proposal-class-properties'],
+            ['babel-plugin-styled-components', {}],
+            ['lodash'],
+          ],
         },
       },
     ],
