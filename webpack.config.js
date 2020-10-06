@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -34,5 +35,11 @@ module.exports = {
     colors: true,
   },
   devtool: 'source-map',
-  plugins: [new LodashModuleReplacementPlugin()],
+  plugins: [
+    new LodashModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      minify: process.env.NODE_ENV === 'production' ? true : false,
+    }),
+  ],
 };
