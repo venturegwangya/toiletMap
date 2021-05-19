@@ -1,23 +1,16 @@
-import logo from './logo.svg';
+/** @jsxImportSource @emotion/react */
+import { css, jsx } from '@emotion/react';
+import Map from './components/Map';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div css={css`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    `}>
+      <Map />
     </div>
   );
 }
