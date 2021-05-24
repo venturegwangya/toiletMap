@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from '@emotion/react';
-import Map from './components/Map';
+import { css } from '@emotion/react';
 import './App.css';
+import Map from './components/Map';
 
 function App() {
+
   return (
     <div css={css`
       display: flex;
