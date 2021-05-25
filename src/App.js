@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import './App.css';
 import Map from './components/Map';
+import TestComponent from './components/TestComponent';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       align-items: center;
     `}>
       <Map />
+      <TestComponent />
     </div>
   );
 }

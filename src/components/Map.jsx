@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+
+const seoul = [37.40095, 126.733522];
 
 function Map() {
   return (
@@ -9,7 +11,7 @@ function Map() {
         width: 100%;
         height: 100vh;
       `}
-      center={[51.505, -0.09]}
+      center={seoul}
       zoom={13}
       scrollWheelZoom={false}
     >
@@ -17,7 +19,7 @@ function Map() {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[51.505, -0.09]}>
+      <Marker position={seoul}>
         <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
