@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { useState, useEffect } from "react";
-import { fetchToilets } from "../apis/toiletApi";
+import { css } from '@emotion/react';
+import { useState, useEffect } from 'react';
+import { fetchToilets } from '../apis/toiletApi';
 
 function TestComponent() {
   const [toilets, setToilets] = useState([]);
 
   useEffect(() => {
     // componentMount/Update
-    fetchToilets((toilets) => setToilets(toilets));
+    fetchToilets(toilets => setToilets(toilets));
     return () => {
       // cleanup
     };
@@ -23,7 +23,7 @@ function TestComponent() {
         z-index: 500;
       `}
     >
-      {toilets.map((toilet) => toilet.name)}
+      {toilets.map(toilet => toilet.name)}
     </div>
   );
 }
