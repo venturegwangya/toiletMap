@@ -1,0 +1,15 @@
+{
+    "eslint.alwaysShowStatus": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    // Enable per-language
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "editor.codeActionsOnSave": {
+        // For ESLint
+        "source.fixAll.eslint": true
+    }
+}

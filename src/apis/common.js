@@ -1,13 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 import firebase from 'firebase';
-import { firebaseConfig } from "../firebase-config";
+import { firebaseConfig } from '../firebase-config';
 
 const axiosInstance = axios.create({
-    headers: {
+  headers: {
     'Content-Type': 'application/json;charset=utf-8',
     'Access-Control-Allow-Origin': '*',
-    },
-    withCredentials: true,
+  },
+  withCredentials: true,
 });
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
