@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { css } from '@emotion/react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 const seoul = [37.40095, 126.733522];
 
