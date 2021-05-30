@@ -1,10 +1,27 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useState, useEffect } from 'react';
-import { fetchToilets } from '../apis/toiletApi';
+import { subscribeToAuthChange } from '../apis/authentication';
+import { fetchToilets } from '../apis/toilets';
+import SignUpPage from './SignUp';
+import TestToilet from './TestToilet';
 
 function TestComponent() {
   const [toilets, setToilets] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // user바뀔 때
+    const unsubscribe = subscribeToAuthChange(
+      authUser => {
+        setUser(authUser);
+      },
+      () => setUser(null),
+    );
+    return () => {
+      unsubscribe(); // detach backend listener
+    };
+  }, []);
 
   useEffect(() => {
     // componentMount/Update
@@ -23,7 +40,14 @@ function TestComponent() {
         z-index: 500;
       `}
     >
-      {toilets.map(toilet => toilet.name)}
+      <div>
+        로그인된 유저:{user && user.displayName}, UID: {user && user.uid}
+      </div>
+      <SignUpPage isSignUp />
+      <SignUpPage />
+      {toilets.map((toilet, i) => (
+        <TestToilet key={i} toilet={toilet} userId={user.uid} />
+      ))}
     </div>
   );
 }
