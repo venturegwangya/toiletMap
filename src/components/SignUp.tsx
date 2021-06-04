@@ -1,20 +1,25 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword, signUpWithEmailAndPassword } from '../apis/authentication';
+import {
+  signInWithEmailAndPassword,
+  signUpWithEmailAndPassword,
+} from '../apis/authentication';
 
-function SignUpPage({ isSignUp }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function SignUpPage({ isSignUp }: any): JSX.Element {
   // signup
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
-  const signUp = e => {
+  const signUp = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     signUpWithEmailAndPassword(email, password, userName);
     alert('계정 생성');
   };
 
-  const signIn = e => {
+  const signIn = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     signInWithEmailAndPassword(email, password);
     alert('로그인 완료');
@@ -47,7 +52,11 @@ function SignUpPage({ isSignUp }) {
           <button
             type="submit"
             onClick={signUp}
-            disabled={email.length === 0 || userName.length === 0 || password.length === 0}
+            disabled={
+              email.length === 0 ||
+              userName.length === 0 ||
+              password.length === 0
+            }
           >
             {' '}
             Sign Up
