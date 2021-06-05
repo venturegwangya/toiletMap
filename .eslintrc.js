@@ -16,7 +16,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'react-hooks','@typescript-eslint'],
-  ignorePatterns: ['.*.js'],
+  ignorePatterns: ['*.js'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': [
