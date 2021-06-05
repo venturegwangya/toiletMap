@@ -14,13 +14,12 @@ export default function TestToilet({
   const [reviews, setReviews] = useState<ReviewBase[]>([]);
   useEffect(() => {
     const unsubscribe = subscribeToToiletReviewsChange(toilet.id, reviews => {
-      console.debug(reviews);
       setReviews(reviews);
     });
     return () => {
       unsubscribe();
     };
-  }, []); // 조건, posts 바뀔 때
+  }, [toilet.id]); // 조건, posts 바뀔 때
 
   return (
     <div

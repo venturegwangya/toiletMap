@@ -1,76 +1,42 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { LatLngExpression } from 'leaflet';
-import { SetStateAction } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from 'react-leaflet';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { Toilet } from '../apis/toilets';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import MapViewController from './MapViewController';
 
-const seoul: LatLngExpression = [37.40095, 126.733522];
-const zoom = 13;
+const seoul: LatLngExpression = [36.29095, 127.6043522];
+const zoom = 8;
 
-function DisplayPosition({ map }: any) {
-  const [position, setPosition] = useState(map.getCenter());
-
-  const onClick = useCallback(() => {
-    map.setView(seoul, zoom);
-  }, [map]);
-
-  const onMove = useCallback(() => {
-    setPosition(map.getCenter());
-  }, [map]);
-
-  useEffect(() => {
-    map.on('move', onMove);
-    return () => {
-      map.off('move', onMove);
-    };
-  }, [map, onMove]);
-
+function Map({ toilets }: { toilets: Toilet[] }): EmotionJSX.Element {
   return (
-    <p>
-      latitude: {position.lat.toFixed(4)}, longitude: {position.lng.toFixed(4)}{' '}
-      <button onClick={onClick}>reset</button>
-    </p>
-  );
-}
-
-function Map() {
-  const [map, setMap] = useState<any>(null);
-
-  const displayMap = useMemo(
-    () => (
-      <MapContainer
-        css={css`
-          width: 100%;
-          height: 100vh;
-        `}
-        center={seoul}
-        zoom={zoom}
-        scrollWheelZoom={false}
-        whenCreated={setMap}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </MapContainer>
-    ),
-    [],
-  );
-
-  return (
-    <div>
-      {map ? <DisplayPosition map={map} /> : null}
-      {displayMap}
-    </div>
+    <MapContainer
+      css={css`
+        width: 100%;
+        height: 100vh;
+      `}
+      center={seoul}
+      zoom={zoom}
+      scrollWheelZoom={false}
+    >
+      <MapViewController />
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {toilets.map((toilet, i) => {
+        return (
+          <Marker
+            key={i}
+            position={{
+              lat: toilet.coordinates.latitude,
+              lng: toilet.coordinates.longitude,
+            }}
+          ></Marker>
+        );
+      })}
+    </MapContainer>
   );
 }
 
