@@ -5,8 +5,10 @@ import { useMapEvents } from 'react-leaflet';
 
 export default function MapViewController(): ReactElement {
   const dispatch = useDispatch();
+
   const map = useMapEvents({
     move: () => {
+      // todo => throttling 걸기
       dispatch({ type: CHANGE_MAP_POSITION, position: map.getCenter() });
     },
   });

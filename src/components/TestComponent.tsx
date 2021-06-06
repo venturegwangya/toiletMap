@@ -37,7 +37,7 @@ function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
       `}
     >
       {toilets.map((toilet: Toilet, i: number) => (
-        <TestToilet key={i} toilet={toilet} userId={user?.uid} />
+        <TestToilet key={toilet.id} toilet={toilet} userId={user?.uid} />
       ))}
       <label>JSON파일 Firebase에 업로드</label>
       <input type="file" id="get_the_file" onChange={handleChange}></input>
