@@ -6,7 +6,6 @@ import firebase from 'firebase';
 import { LatLng } from 'leaflet';
 import { Toilet } from '../apis/toilets';
 import { processRawToiletData } from '../util/parseToiletData';
-import SignUpPage from '../pages/SignUp';
 import TestToilet from './TestToilet';
 // import TestToilet from './TestToilet';
 

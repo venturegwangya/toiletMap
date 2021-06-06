@@ -14,7 +14,6 @@
     "@types/react-leaflet": "^2.8.1",
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
-    "bulma": "^0.9.2",
     "firebase": "^8.6.2",
     "geofirestore": "^4.4.1",
     "leaflet": "^1.7.1",
