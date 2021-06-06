@@ -12,6 +12,7 @@ import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import { useSelector } from 'react-redux';
 import { MapState } from './store/mapReducer';
+import { Avartar } from './components/Avatar';
 
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<unknown[]>([]);
@@ -62,6 +63,13 @@ function App(): EmotionJSX.Element {
     >
       <HeaderLayout>
         <div>logo</div>
+        <Avartar
+          size={48}
+          imgSrc={
+            'https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large'
+          }
+          onClick={() => alert('winter')}
+        />
       </HeaderLayout>
       <BodyLayout
         LeftPanel={
