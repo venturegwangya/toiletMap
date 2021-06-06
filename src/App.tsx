@@ -14,6 +14,14 @@ import { useSelector } from 'react-redux';
 import { MapState } from './store/mapReducer';
 import { Avartar } from './components/Avatar';
 
+const goLogin = () => {
+  window.location.href = '/login';
+};
+
+const goHome = () => {
+  window.location.href = '/';
+};
+
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<unknown[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
@@ -62,13 +70,16 @@ function App(): EmotionJSX.Element {
       `}
     >
       <HeaderLayout>
-        <div>logo</div>
+        <img
+          src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg"
+          onClick={goHome}
+        />
         <Avartar
           size={48}
           imgSrc={
             'https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large'
           }
-          onClick={() => alert('winter')}
+          onClick={goLogin}
         />
       </HeaderLayout>
       <BodyLayout
