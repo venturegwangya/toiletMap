@@ -2,27 +2,25 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-function HeaderLayout({ children }: any) {
+function HeaderLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
       css={css`
+        padding: 10px;
+        box-sizing: border-box;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        height: 50px;
+        height: 80px;
       `}
     >
       {children}
     </div>
   );
 }
-
-HeaderLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default HeaderLayout;
