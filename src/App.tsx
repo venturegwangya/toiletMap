@@ -1,18 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import './App.css';
-import BodyLayout from './layouts/BodyLayout';
-import HeaderLayout from './layouts/HeaderLayout';
-import Map from './components/Map';
-import TestComponent from './components/TestComponent';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { useEffect, useState } from 'react';
 import firebase from 'firebase';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
-import { useSelector } from 'react-redux';
-import { MapState } from './store/mapReducer';
+import './App.css';
 import { Avartar } from './components/Avatar';
+import Map from './components/Map';
+import TestComponent from './components/TestComponent';
+import BodyLayout from './layouts/BodyLayout';
+import HeaderLayout from './layouts/HeaderLayout';
+import SignUpPage from './pages/SignUp';
+import { MapState } from './store/mapReducer';
 
 const goLogin = () => {
   window.location.href = '/login';
@@ -82,16 +85,28 @@ function App(): EmotionJSX.Element {
           onClick={goLogin}
         />
       </HeaderLayout>
-      <BodyLayout
-        LeftPanel={
-          <TestComponent
-            user={user}
-            toilets={toilets as Toilet[]}
-            curpos={position}
-          />
-        }
-        RightPanel={<Map toilets={toilets as Toilet[]} />}
-      />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login">
+            <BodyLayout
+              LeftPanel={<SignUpPage />}
+              RightPanel={<Map toilets={toilets as Toilet[]} />}
+            />
+          </Route>
+          <Route path="/">
+            <BodyLayout
+              LeftPanel={
+                <TestComponent
+                  user={user}
+                  toilets={toilets as Toilet[]}
+                  curpos={position}
+                />
+              }
+              RightPanel={<Map toilets={toilets as Toilet[]} />}
+            />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }

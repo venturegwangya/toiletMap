@@ -6,7 +6,7 @@ import firebase from 'firebase';
 import { LatLng } from 'leaflet';
 import { Toilet } from '../apis/toilets';
 import { processRawToiletData } from '../util/parseToiletData';
-import SignUpPage from './SignUp';
+import SignUpPage from '../pages/SignUp';
 import TestToilet from './TestToilet';
 // import TestToilet from './TestToilet';
 
@@ -37,13 +37,6 @@ function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
         background-color: white;
       `}
     >
-      <div>
-        로그인된 유저:{user && user.displayName}, UID: {user && user.uid}
-        <br />
-        위치: {curpos.lat}, {curpos.lng}
-      </div>
-      <SignUpPage isSignUp />
-      <SignUpPage />
       {toilets.map((toilet: Toilet, i: number) => (
         <TestToilet key={i} toilet={toilet} userId={user?.uid} />
       ))}
