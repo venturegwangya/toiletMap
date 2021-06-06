@@ -28,7 +28,7 @@ export type Review = ReviewBase & ReviewReaction;
 
 export function subscribeToToiletReviewsChange(
   toiletId: string,
-  onChangeReviews: (data: ReviewBase[]) => void,
+  onChangeReviews: (data: Review[]) => void,
 ): () => void {
   return reviewsRef(toiletId)
     .orderBy('timestamp', 'desc')
@@ -36,7 +36,7 @@ export function subscribeToToiletReviewsChange(
       onChangeReviews(
         snapshot.docs.map(doc =>
           Object.assign(doc.data(), { id: doc.id }),
-        ) as unknown as ReviewBase[],
+        ) as unknown as Review[],
       );
     });
 }

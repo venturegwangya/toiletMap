@@ -26,7 +26,7 @@ const goHome = () => {
 };
 
 function App(): EmotionJSX.Element {
-  const [toilets, setToilets] = useState<unknown[]>([]);
+  const [toilets, setToilets] = useState<Toilet[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
 
   // TODO: 박민규 2021-06-05 hook파일에 따로 관리
@@ -54,9 +54,7 @@ function App(): EmotionJSX.Element {
       37.40095,
       126.733522,
     );
-    fetchToiletWithArea(seoul, 1000).then(res =>
-      setToilets(res.map(r => Object.assign(r.data(), { id: r.id }))),
-    );
+    fetchToiletWithArea(seoul, 1000).then(toilets => setToilets(toilets));
     // const data = res.map((r: { data: () => any; id: any }) =>
     // );
     // setToilets(data);
@@ -90,7 +88,7 @@ function App(): EmotionJSX.Element {
           <Route path="/login">
             <BodyLayout
               LeftPanel={<SignUpPage />}
-              RightPanel={<Map toilets={toilets as Toilet[]} />}
+              RightPanel={<Map toilets={toilets} />}
             />
           </Route>
           <Route path="/">
@@ -98,11 +96,11 @@ function App(): EmotionJSX.Element {
               LeftPanel={
                 <TestComponent
                   user={user}
-                  toilets={toilets as Toilet[]}
+                  toilets={toilets}
                   curpos={position}
                 />
               }
-              RightPanel={<Map toilets={toilets as Toilet[]} />}
+              RightPanel={<Map toilets={toilets} />}
             />
           </Route>
         </Switch>
