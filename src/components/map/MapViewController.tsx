@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
-import { CHANGE_MAP_POSITION } from '../../store/mapReducer';
+import { changePosition } from '../../reducers/mapReducer';
 import { useMapEvents } from 'react-leaflet';
 
 export default function MapViewController(): ReactElement {
@@ -9,7 +9,7 @@ export default function MapViewController(): ReactElement {
   const map = useMapEvents({
     move: () => {
       // todo => throttling 걸기
-      dispatch({ type: CHANGE_MAP_POSITION, position: map.getCenter() });
+      dispatch(changePosition(map.getCenter()));
     },
   });
   return <div></div>;

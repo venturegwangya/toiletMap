@@ -75,11 +75,9 @@ export default function TestToilet({
         <Card.Content>
           <Columns>
             <Columns.Column>
-              <Heading size={5}>
-                {toilet.name}
-                <Heading size={6} subtitle>
-                  {toilet.type}
-                </Heading>
+              <Heading size={5}>{toilet.name}</Heading>
+              <Heading size={6} subtitle>
+                {toilet.type}
               </Heading>
             </Columns.Column>
             <Columns.Column size={'one-fifth'}>
