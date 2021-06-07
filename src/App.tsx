@@ -10,7 +10,7 @@ import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import './App.css';
 import { Avartar } from './components/Avatar';
-import Map from './components/Map';
+import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
 import BodyLayout from './layouts/BodyLayout';
 import HeaderLayout from './layouts/HeaderLayout';
