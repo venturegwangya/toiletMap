@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
-import { CHANGE_MAP_POSITION } from '../store/mapReducer';
+import { CHANGE_MAP_POSITION } from '../../store/mapReducer';
 import { useMapEvents } from 'react-leaflet';
 
 export default function MapViewController(): ReactElement {
