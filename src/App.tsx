@@ -3,19 +3,18 @@ import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import './App.css';
 import { Avartar } from './components/Avatar';
-import Map from './components/Map';
+import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
 import BodyLayout from './layouts/BodyLayout';
 import HeaderLayout from './layouts/HeaderLayout';
 import SignUpPage from './pages/SignUp';
-import { MapState } from './store/mapReducer';
+import { useMapPosition } from './hooks/useMapPosition';
 
 const goLogin = () => {
   window.location.href = '/login';
@@ -28,13 +27,8 @@ const goHome = () => {
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
-
-  // TODO: 박민규 2021-06-05 hook파일에 따로 관리
-  // @links https://react-redux.js.org/using-react-redux/usage-with-typescript
-  const position = useSelector<MapState, MapState['position']>(
-    state => state.position,
-  );
-
+  const position = useMapPosition();
+  console.debug('위치', position);
   useEffect(() => {
     // user바뀔 때
     const unsubscribe = subscribeToAuthChange(

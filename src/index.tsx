@@ -3,11 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore } from 'redux';
-import { mapReducer } from './store/mapReducer';
 import { Provider } from 'react-redux';
-
-const store = createStore(mapReducer);
+import { store } from './store/index';
 
 ReactDOM.render(
   <React.StrictMode>

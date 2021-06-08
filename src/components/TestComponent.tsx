@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
@@ -36,7 +35,7 @@ function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
         background-color: white;
       `}
     >
-      {toilets.map((toilet: Toilet, i: number) => (
+      {toilets.map((toilet: Toilet) => (
         <TestToilet key={toilet.id} toilet={toilet} userId={user?.uid} />
       ))}
       <label>JSON파일 Firebase에 업로드</label>
