@@ -8,13 +8,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import './App.css';
-import { Avartar } from './components/Avatar';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
 import BodyLayout from './layouts/BodyLayout';
 import HeaderLayout from './layouts/HeaderLayout';
 import SignUpPage from './pages/SignUp';
 import { useMapPosition } from './hooks/useMapPosition';
+import { Avatar } from './components/common';
 
 const goLogin = () => {
   window.location.href = '/login';
@@ -69,7 +69,7 @@ function App(): EmotionJSX.Element {
           src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg"
           onClick={goHome}
         />
-        <Avartar
+        <Avatar
           size={48}
           imgSrc={
             'https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large'

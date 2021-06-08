@@ -1,5 +1,5 @@
 import React from 'react';
-import StyledIcon from './StyledIcon';
+import StyledIcon from './common/StyledIcon';
 
 interface ToiletInfoIconText {
   iconClass: string;

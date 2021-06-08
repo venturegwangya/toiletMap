@@ -9,7 +9,7 @@ interface AvartProps {
   onClick: () => void;
 }
 
-export function Avartar({
+export function Avatar({
   imgSrc,
   size,
   onClick,

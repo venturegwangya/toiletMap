@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
   signInWithEmailAndPassword,
   signUpWithEmailAndPassword,
 } from '../apis/authentication';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function SignUpPage({ isSignUp }: any): JSX.Element {
-  // signup
+export default function SignUp({
+  isSignUp,
+}: {
+  isSignUp?: boolean; // required 한가?
+}): JSX.Element {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -81,9 +82,3 @@ function SignUpPage({ isSignUp }: any): JSX.Element {
     </div>
   );
 }
-
-SignUpPage.propTypes = {
-  isSignUp: PropTypes.bool,
-};
-
-export default SignUpPage;
