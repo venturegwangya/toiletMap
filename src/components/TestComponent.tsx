@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { LatLng } from 'leaflet';
 import { Toilet } from '../apis/toilets';
 import { processRawToiletData } from '../util/parseToiletData';
-import TestToilet from './TestToilet';
+import TestToilet from './toilet/TestToilet';
 // import TestToilet from './TestToilet';
 
 interface Props {

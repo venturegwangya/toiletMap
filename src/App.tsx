@@ -11,10 +11,9 @@ import './App.css';
 import { Avartar } from './components/Avatar';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
-import BodyLayout from './layouts/BodyLayout';
-import HeaderLayout from './layouts/HeaderLayout';
 import SignUpPage from './pages/SignUp';
 import { useMapPosition } from './hooks/useMapPosition';
+import { BodyLayout, Header } from './components/common';
 
 const goLogin = () => {
   window.location.href = '/login';
@@ -64,7 +63,7 @@ function App(): EmotionJSX.Element {
         overflow: hidden;
       `}
     >
-      <HeaderLayout>
+      <Header>
         <img
           src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg"
           onClick={goHome}
@@ -76,25 +75,25 @@ function App(): EmotionJSX.Element {
           }
           onClick={goLogin}
         />
-      </HeaderLayout>
+      </Header>
       <BrowserRouter>
         <Switch>
           <Route path="/login">
             <BodyLayout
-              LeftPanel={<SignUpPage />}
-              RightPanel={<Map toilets={toilets} />}
+              LeftChild={<SignUpPage />}
+              RightChild={<Map toilets={toilets} />}
             />
           </Route>
           <Route path="/">
             <BodyLayout
-              LeftPanel={
+              LeftChild={
                 <TestComponent
                   user={user}
                   toilets={toilets}
                   curpos={position}
                 />
               }
-              RightPanel={<Map toilets={toilets} />}
+              RightChild={<Map toilets={toilets} />}
             />
           </Route>
         </Switch>
