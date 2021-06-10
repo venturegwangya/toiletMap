@@ -3,31 +3,26 @@ import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
 import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import './App.css';
-import { Avartar } from './components/Avatar';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
 import SignUpPage from './pages/SignUp';
 import { useMapPosition } from './hooks/useMapPosition';
 import { BodyLayout, Header } from './components/common';
-
-const goLogin = () => {
-  window.location.href = '/login';
-};
-
-const goHome = () => {
-  window.location.href = '/';
-};
+import { useAppPath } from './hooks/useAppPath';
+import { Avatar } from './components/common/Avatar';
+import { changePath } from './reducers/pathReducer';
 
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
+  const path = useAppPath();
   const position = useMapPosition();
-  console.debug('위치', position);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     // user바뀔 때
     const unsubscribe = subscribeToAuthChange(
@@ -66,38 +61,28 @@ function App(): EmotionJSX.Element {
       <Header>
         <img
           src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg"
-          onClick={goHome}
+          onClick={() => dispatch(changePath('MAIN'))}
         />
-        <Avartar
+        <Avatar
           size={48}
-          imgSrc={
-            'https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large'
-          }
-          onClick={goLogin}
+          imgSrc="https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large"
+          onClick={() => dispatch(changePath('LOGIN'))}
         />
       </Header>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/login">
-            <BodyLayout
-              LeftChild={<SignUpPage />}
-              RightChild={<Map toilets={toilets} />}
-            />
-          </Route>
-          <Route path="/">
-            <BodyLayout
-              LeftChild={
-                <TestComponent
-                  user={user}
-                  toilets={toilets}
-                  curpos={position}
-                />
-              }
-              RightChild={<Map toilets={toilets} />}
-            />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      {path === 'LOGIN' && (
+        <BodyLayout
+          LeftChild={<SignUpPage />}
+          RightChild={<Map toilets={toilets} />}
+        />
+      )}
+      {path === 'MAIN' && (
+        <BodyLayout
+          LeftChild={
+            <TestComponent user={user} toilets={toilets} curpos={position} />
+          }
+          RightChild={<Map toilets={toilets} />}
+        />
+      )}
     </div>
   );
 }

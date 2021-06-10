@@ -2,6 +2,8 @@
 
 import styled from '@emotion/styled';
 import BodyLayout from './BodyLayout';
+import { Avatar } from './Avatar';
+import StyledIcon from './StyledIcon';
 
 const Header = styled.div`
   display: flex;
@@ -40,4 +42,6 @@ export {
   SubtitleSpan,
   BodyLayout,
   Header,
+  Avatar,
+  StyledIcon,
 };

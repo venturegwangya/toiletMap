@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import React from 'react';
-import { FlexRowDiv } from '../common';
-import StyledIcon from '../StyledIcon';
+import { FlexRowDiv, StyledIcon } from '../common';
 
 interface ToiletInfoIconText {
   iconClass: string;
