@@ -1,5 +1,12 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-@import "https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css";
+* {
+   margin:0;
+   padding:0;
+}
+
+html {
+   overflow: hidden;
+}
+
+body {
+   overflow: hidden;
+}

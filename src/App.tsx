@@ -7,14 +7,13 @@ import { useDispatch } from 'react-redux';
 import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import './App.css';
-import { Avatar } from './components/common';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
-import { useAppPath } from './hooks/useAppPath';
-import { useMapPosition } from './hooks/useMapPosition';
-import BodyLayout from './layouts/BodyLayout';
-import HeaderLayout from './layouts/HeaderLayout';
 import SignUpPage from './pages/SignUp';
+import { useMapPosition } from './hooks/useMapPosition';
+import { BodyLayout, Header } from './components/common';
+import { useAppPath } from './hooks/useAppPath';
+import { Avatar } from './components/common/Avatar';
 import { changePath } from './reducers/pathReducer';
 
 function App(): EmotionJSX.Element {
@@ -59,7 +58,7 @@ function App(): EmotionJSX.Element {
         overflow: hidden;
       `}
     >
-      <HeaderLayout>
+      <Header>
         <img
           src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg"
           onClick={() => dispatch(changePath('MAIN'))}
@@ -69,19 +68,19 @@ function App(): EmotionJSX.Element {
           imgSrc="https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large"
           onClick={() => dispatch(changePath('LOGIN'))}
         />
-      </HeaderLayout>
+      </Header>
       {path === 'LOGIN' && (
         <BodyLayout
-          LeftPanel={<SignUpPage />}
-          RightPanel={<Map toilets={toilets} />}
+          LeftChild={<SignUpPage />}
+          RightChild={<Map toilets={toilets} />}
         />
       )}
       {path === 'MAIN' && (
         <BodyLayout
-          LeftPanel={
+          LeftChild={
             <TestComponent user={user} toilets={toilets} curpos={position} />
           }
-          RightPanel={<Map toilets={toilets} />}
+          RightChild={<Map toilets={toilets} />}
         />
       )}
     </div>

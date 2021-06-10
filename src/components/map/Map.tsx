@@ -14,7 +14,7 @@ function Map({ toilets }: { toilets: Toilet[] }): EmotionJSX.Element {
     <MapContainer
       css={css`
         width: 100%;
-        height: 100vh;
+        height: calc(100vh - 80px);
       `}
       center={seoul}
       zoom={zoom}

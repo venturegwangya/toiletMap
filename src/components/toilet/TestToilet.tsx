@@ -1,11 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
-import { ReviewBase, subscribeToToiletReviewsChange } from '../apis/reviews';
+import { ReviewBase, subscribeToToiletReviewsChange } from '../../apis/reviews';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { Card, Columns, Content, Heading } from 'react-bulma-components';
-import { Toilet } from '../apis/toilets';
+import { Toilet } from '../../apis/toilets';
+import { FlexColumnDiv, FlexRowDiv, SubtitleSpan, TitleSpan } from '../common';
+import styled from '@emotion/styled';
 import ToiletInfoIconText from './ToiletInfoIconText';
+
+const ToiletItemBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+  border-bottom: 1px solid #f5f5f5;
+`;
 
 interface ToiletReviewInfo {
   reviewCount: number;
@@ -15,7 +24,7 @@ interface ToiletReviewInfo {
   unisex: boolean;
 }
 
-interface ToiletCardProps {
+interface ToiletListItemProps {
   toilet: Toilet;
   userId: string | undefined;
 }
@@ -47,10 +56,10 @@ const makeToiletReviewInfoFromReviews = (reviews: ReviewBase[]) => {
   };
 };
 
-export default function TestToilet({
+function TestToilet({
   toilet,
   userId,
-}: ToiletCardProps): EmotionJSX.Element {
+}: ToiletListItemProps): EmotionJSX.Element {
   const [reviews, setReviews] = useState<ReviewBase[]>([]);
   const [toiletReviewInfo, setToiletReviewInfo] =
     useState<ToiletReviewInfo | undefined>();
@@ -66,43 +75,40 @@ export default function TestToilet({
   }, [toilet.id]); // 조건, posts 바뀔 때
 
   return (
-    <div
-      css={css`
-        border-bottom: 1px solid black;
-      `}
-    >
-      <Card>
-        <Card.Content>
-          <Columns>
-            <Columns.Column>
-              <Heading size={5}>{toilet.name}</Heading>
-              <Heading size={6} subtitle>
-                {toilet.type}
-              </Heading>
-            </Columns.Column>
-            <Columns.Column size={'one-fifth'}>
-              <Heading size={5}>{toiletReviewInfo?.avgRating} / 5</Heading>
-            </Columns.Column>
-          </Columns>
-          <Content display="flex" flexDirection="column">
-            <ToiletInfoIconText
-              enabled={toiletReviewInfo?.unisex}
-              iconClass={'fa-genderless'}
-              text={'남녀공용화장실'}
-            />
-            <ToiletInfoIconText
-              enabled={toiletReviewInfo?.unisex}
-              iconClass={'fa-wheelchair'}
-              text={'장애인용 시설'}
-            />
-            <ToiletInfoIconText
-              enabled={toiletReviewInfo?.unisex}
-              iconClass={'fa-child'}
-              text={'아동용 시설'}
-            />
-          </Content>
-        </Card.Content>
-      </Card>
+    <ToiletItemBox>
+      <FlexColumnDiv
+        css={css`
+          justify-content: space-between;
+        `}
+      >
+        <FlexColumnDiv>
+          <TitleSpan>{toilet.name}</TitleSpan>
+          <SubtitleSpan>{toilet.type} </SubtitleSpan>
+        </FlexColumnDiv>
+        <TitleSpan>{toiletReviewInfo?.avgRating} / 5</TitleSpan>
+      </FlexColumnDiv>
+      <FlexColumnDiv
+        css={css`
+          height: 100px;
+          justify-content: space-evenly;
+        `}
+      >
+        <ToiletInfoIconText
+          enabled={toiletReviewInfo?.unisex}
+          iconClass={'fa-genderless'}
+          text={'남녀공용화장실'}
+        />
+        <ToiletInfoIconText
+          enabled={toiletReviewInfo?.unisex}
+          iconClass={'fa-wheelchair'}
+          text={'장애인용 시설'}
+        />
+        <ToiletInfoIconText
+          enabled={toiletReviewInfo?.unisex}
+          iconClass={'fa-child'}
+          text={'아동용 시설'}
+        />
+      </FlexColumnDiv>
       {/* {reviews.map((review, i) => {
         return (
           <div key={i}>
@@ -111,6 +117,8 @@ export default function TestToilet({
           </div>
         );
       })} */}
-    </div>
+    </ToiletItemBox>
   );
 }
+
+export default TestToilet;
