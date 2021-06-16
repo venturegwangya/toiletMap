@@ -10,18 +10,20 @@ import './App.css';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
 import SignUpPage from './pages/SignUp';
-import { useMapPosition } from './hooks/useMapPosition';
 import { BodyLayout, Header } from './components/common';
 import { useAppPath } from './hooks/useAppPath';
 import { Avatar } from './components/common/Avatar';
 import { changePath } from './reducers/pathReducer';
+import { useFetchAgain, useMapPosition } from './hooks/map';
 
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
   const path = useAppPath();
-  const position = useMapPosition();
   const dispatch = useDispatch();
+
+  const fetchAgain = useFetchAgain();
+  const position = useMapPosition();
 
   useEffect(() => {
     // user바뀔 때
@@ -58,6 +60,18 @@ function App(): EmotionJSX.Element {
         overflow: hidden;
       `}
     >
+      <div
+        css={css`
+          position: fixed;
+          left: 50%;
+          top: 50px;
+          z-index: 500;
+          background-color: wheat;
+        `}
+        onClick={() => undefined}
+      >
+        이 위치에서 다시 검색
+      </div>
       <Header>
         <img
           src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg"
