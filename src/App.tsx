@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
@@ -10,18 +10,23 @@ import './App.css';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
 import SignUpPage from './pages/SignUp';
-import { useMapPosition } from './hooks/useMapPosition';
 import { BodyLayout, Header } from './components/common';
 import { useAppPath } from './hooks/useAppPath';
 import { Avatar } from './components/common/Avatar';
 import { changePath } from './reducers/pathReducer';
+import { useFetchAgain, useMapPosition } from './hooks/map';
+import { offFetchAgain } from './reducers/mapReducer';
 
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
   const path = useAppPath();
-  const position = useMapPosition();
   const dispatch = useDispatch();
+
+  const fetchAgain = useFetchAgain();
+  const position = useMapPosition();
+  console.debug(fetchAgain);
+  console.debug(position);
 
   useEffect(() => {
     // user바뀔 때
@@ -36,16 +41,19 @@ function App(): EmotionJSX.Element {
     };
   }, []);
 
+  const fetchNearByToilets = useCallback(() => {
+    const { lat, lng } = position;
+    fetchToiletWithArea(new firebase.firestore.GeoPoint(lat, lng), 100).then(
+      toilets => setToilets(toilets),
+    );
+    dispatch(offFetchAgain());
+  }, [dispatch, position]);
+
   useEffect(() => {
     // componentMount/Update
-    const seoul: firebase.firestore.GeoPoint = new firebase.firestore.GeoPoint(
-      37.40095,
-      126.733522,
-    );
-    fetchToiletWithArea(seoul, 1000).then(toilets => setToilets(toilets));
-    // const data = res.map((r: { data: () => any; id: any }) =>
-    // );
-    // setToilets(data);
+    fetchNearByToilets();
+    // 한번만 실행해야함
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div
@@ -58,6 +66,20 @@ function App(): EmotionJSX.Element {
         overflow: hidden;
       `}
     >
+      {fetchAgain && (
+        <div
+          css={css`
+            position: fixed;
+            left: 50%;
+            top: 50px;
+            z-index: 500;
+            background-color: wheat;
+          `}
+          onClick={() => fetchNearByToilets()}
+        >
+          이 위치에서 다시 검색
+        </div>
+      )}
       <Header>
         <img
           src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg"
