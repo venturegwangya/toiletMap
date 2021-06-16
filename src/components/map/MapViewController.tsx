@@ -7,8 +7,7 @@ export default function MapViewController(): ReactElement {
   const dispatch = useDispatch();
 
   const map = useMapEvents({
-    move: () => {
-      // todo => throttling 걸기
+    dragend: () => {
       dispatch(changePosition(map.getCenter()));
     },
   });

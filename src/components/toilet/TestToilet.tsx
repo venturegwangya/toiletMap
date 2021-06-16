@@ -4,15 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { ReviewBase, subscribeToToiletReviewsChange } from '../../apis/reviews';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { Toilet } from '../../apis/toilets';
-import { FlexColumnDiv, FlexRowDiv, SubtitleSpan, TitleSpan } from '../common';
+import { FlexColumnDiv, SubtitleSpan, TitleSpan } from '../common';
 import styled from '@emotion/styled';
 import ToiletInfoIconText from './ToiletInfoIconText';
 
 const ToiletItemBox = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 20px;
   border-bottom: 1px solid #f5f5f5;
 `;
 
@@ -56,7 +56,7 @@ const makeToiletReviewInfoFromReviews = (reviews: ReviewBase[]) => {
   };
 };
 
-function TestToilet({
+function ToiletInfoCard({
   toilet,
   userId,
 }: ToiletListItemProps): EmotionJSX.Element {
@@ -121,4 +121,4 @@ function TestToilet({
   );
 }
 
-export default TestToilet;
+export default ToiletInfoCard;

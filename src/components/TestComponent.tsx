@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { LatLng } from 'leaflet';
 import { Toilet } from '../apis/toilets';
 import { processRawToiletData } from '../util/parseToiletData';
-import TestToilet from './toilet/TestToilet';
+import ToiletInfoCard from './toilet/TestToilet';
 // import TestToilet from './TestToilet';
 
 interface Props {
@@ -36,7 +36,7 @@ function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
       `}
     >
       {toilets.map((toilet: Toilet) => (
-        <TestToilet key={toilet.id} toilet={toilet} userId={user?.uid} />
+        <ToiletInfoCard key={toilet.id} toilet={toilet} userId={user?.uid} />
       ))}
       <label>JSON파일 Firebase에 업로드</label>
       <input type="file" id="get_the_file" onChange={handleChange}></input>

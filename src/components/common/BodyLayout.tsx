@@ -15,7 +15,7 @@ const FixedHeightBodyContainer = styled.div`
 `;
 
 const FlexBodyContainer = styled.div<{
-  flex: number;
+  flex?: number;
   scroll?: boolean;
 }>(props => ({
   display: 'flex',
@@ -30,9 +30,7 @@ function BodyLayout({
 }: BodyLayoutProps): EmotionJSX.Element {
   return (
     <FixedHeightBodyContainer>
-      <FlexBodyContainer flex={2} scroll>
-        {LeftChild}
-      </FlexBodyContainer>
+      <FlexBodyContainer scroll>{LeftChild}</FlexBodyContainer>
       <FlexBodyContainer flex={3}>{RightChild}</FlexBodyContainer>
     </FixedHeightBodyContainer>
   );
