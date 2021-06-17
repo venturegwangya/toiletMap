@@ -7,26 +7,20 @@ import { useDispatch } from 'react-redux';
 import { subscribeToAuthChange } from './apis/authentication';
 import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import './App.css';
+import { BodyLayout, Header } from './components/common';
+import { Avatar } from './components/common/Avatar';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
-import SignUpPage from './pages/SignUp';
-import { BodyLayout, Header } from './components/common';
-import { useAppPath } from './hooks/useAppPath';
-import { Avatar } from './components/common/Avatar';
-import { changePath } from './reducers/pathReducer';
 import { useFetchAgain, useMapPosition } from './hooks/map';
 import { offFetchAgain } from './reducers/mapReducer';
 
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<Toilet[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
-  const path = useAppPath();
   const dispatch = useDispatch();
 
   const fetchAgain = useFetchAgain();
   const position = useMapPosition();
-  console.debug(fetchAgain);
-  console.debug(position);
 
   useEffect(() => {
     // user바뀔 때
@@ -81,30 +75,19 @@ function App(): EmotionJSX.Element {
         </div>
       )}
       <Header>
-        <img
-          src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg"
-          onClick={() => dispatch(changePath('MAIN'))}
-        />
+        <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg" />
         <Avatar
           size={48}
           imgSrc="https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large"
-          onClick={() => dispatch(changePath('LOGIN'))}
+          onClick={() => alert('hi')}
         />
       </Header>
-      {path === 'LOGIN' && (
-        <BodyLayout
-          LeftChild={<SignUpPage />}
-          RightChild={<Map toilets={toilets} />}
-        />
-      )}
-      {path === 'MAIN' && (
-        <BodyLayout
-          LeftChild={
-            <TestComponent user={user} toilets={toilets} curpos={position} />
-          }
-          RightChild={<Map toilets={toilets} />}
-        />
-      )}
+      <BodyLayout
+        LeftChild={
+          <TestComponent user={user} toilets={toilets} curpos={position} />
+        }
+        RightChild={<Map toilets={toilets} />}
+      />
     </div>
   );
 }
