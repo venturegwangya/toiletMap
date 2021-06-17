@@ -1,8 +1,15 @@
-import { ModalPortal } from './ModalPortal';
-export interface Props {
-  onAfterClose: () => void;
-  show: boolean;
-}
-export function LogInModal(props: Props) {
-  return <ModalPortal {...props}>123123</ModalPortal>;
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+
+export function LogInModal() {
+  return (
+    <div
+      css={css`
+        width: 200px;
+        height: 300px;
+      `}
+    >
+      login
+    </div>
+  );
 }

@@ -9,10 +9,13 @@ import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import './App.css';
 import { BodyLayout, Header } from './components/common';
 import { Avatar } from './components/common/Avatar';
+import { LogInModal } from './components/common/modal/LogInModal';
+import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
 import { useFetchAgain, useMapPosition } from './hooks/map';
 import { offFetchAgain } from './reducers/mapReducer';
+import { showModal } from './reducers/modalReducer';
 
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<Toilet[]>([]);
@@ -79,7 +82,7 @@ function App(): EmotionJSX.Element {
         <Avatar
           size={48}
           imgSrc="https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large"
-          onClick={() => alert('hi')}
+          onClick={() => dispatch(showModal(React.createElement(LogInModal)))}
         />
       </Header>
       <BodyLayout
@@ -88,6 +91,7 @@ function App(): EmotionJSX.Element {
         }
         RightChild={<Map toilets={toilets} />}
       />
+      <ModalPortal />
     </div>
   );
 }
