@@ -1,25 +1,33 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { useDispatch } from 'react-redux';
+import { useModalContent, useModalVisibility } from '../../../hooks/modal';
+import { hideModal } from '../../../reducers/modalReducer';
 
 interface Props {
-  onAfterClose: () => void;
   children?: React.ReactNode;
-  show: boolean;
 }
 
+/**
+ * 우선 이 포탈이 hook으로 자신의 상태를 관리한다.
+ * 딱히, stateless할 이유가 없어 우선 이렇게 처리
+ */
 export function ModalPortal(props: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
+  const content = useModalContent();
+  const show = useModalVisibility();
+  const dispatch = useDispatch();
 
   const onClickOutside = (e: React.MouseEvent) => {
     e.stopPropagation();
-    props.onAfterClose();
+    dispatch(hideModal());
   };
 
   return ReactDOM.createPortal(
     <>
-      {props.show && (
+      {show && (
         <>
           <div
             css={css`
@@ -28,22 +36,27 @@ export function ModalPortal(props: Props) {
               top: 0;
               width: 100%;
               height: 100%;
-              z-index: 99999;
+              z-index: 99999; // 추후에 styled-component 지정해둔다.
               background: rgba(0, 0, 0, 0.5); ;
             `}
             onClick={onClickOutside}
           ></div>
           <div
             css={css`
+              display: flex;
               left: 50%;
-              top: 50%;
-              width: 500px;
-              height: 300px;
+              justify-content: center;
+              align-items: center;
               background-color: white;
+              top: 50%;
+              border-radius: 8px;
+              position: absolute;
+              transform: translate(-50%, -50%);
+              z-index: 9999999; // 추후에 styled-component 지정해둔다.
             `}
             ref={contentRef}
           >
-            <div>{props.children}</div>
+            {content}
           </div>
         </>
       )}

@@ -32,9 +32,9 @@ export default function modalReducer(
 ): ModalState {
   switch (action.type) {
     case SHOW_MODAL:
-      return { ...state, modalContent: action.payload };
+      return { ...state, modalContent: action.payload, show: true };
     case HIDE_MODAL:
-      return { ...state };
+      return { ...state, show: false };
     default:
       return state;
   }
