@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { subscribeToAuthChange } from './apis/authentication';
 import './App.css';
 import { BodyLayout, Header } from './components/common';
@@ -19,10 +18,11 @@ import {
 } from './modules/map/hooks';
 import { requestToiletsInArea } from './modules/map/actions';
 import { showModal } from './modules/modal/actions';
+import { useAppDispatch } from './modules/configureStore';
 
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const toilets = useToilets();
   const position = useMapPosition();
