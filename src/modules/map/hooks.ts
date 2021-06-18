@@ -1,15 +1,18 @@
 import { LatLng } from 'leaflet';
-import { useSelector } from 'react-redux';
-import { RootState } from '../configureStore';
+import { Toilet } from '../../apis/toilets';
+import { useAppSelector } from '../configureStore';
 
-function useMapPosition(): LatLng {
-  const position = useSelector((state: RootState) => state.map.position);
+export function useMapPosition(): LatLng {
+  const position = useAppSelector(state => state.map.position);
   return position;
 }
 
-function useFetchAgain(): boolean {
-  const fetchAgain = useSelector((state: RootState) => state.map.fetchAgain);
+export function useNeedRequestAgain(): boolean {
+  const fetchAgain = useAppSelector(state => state.map.needRequestAgain);
   return fetchAgain;
 }
 
-export { useMapPosition, useFetchAgain };
+export function useToilets(): Toilet[] {
+  const toilets = useAppSelector(state => state.map.toilets);
+  return toilets;
+}

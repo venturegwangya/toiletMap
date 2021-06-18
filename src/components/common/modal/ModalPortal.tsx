@@ -7,8 +7,8 @@ import {
   useModalContent,
   useModalVisibility,
 } from '../../../modules/modal/hooks';
-import { hideModal } from '../../../modules/modal/reducer';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { hideModal } from '../../../modules/modal/actions';
 
 /**
  * 우선 이 포탈이 hook으로 자신의 상태를 관리한다.

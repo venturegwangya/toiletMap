@@ -5,7 +5,6 @@ import firebase from 'firebase';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { subscribeToAuthChange } from './apis/authentication';
-import { fetchToiletWithArea, Toilet } from './apis/toilets';
 import './App.css';
 import { BodyLayout, Header } from './components/common';
 import { Avatar } from './components/common/Avatar';
@@ -13,17 +12,21 @@ import { LogInModal } from './components/common/modal/LogInModal';
 import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
-import { useFetchAgain, useMapPosition } from './modules/map/hooks';
-import { offFetchAgain } from './modules/map/reducer';
-import { showModal } from './modules/modal/reducer';
+import {
+  useMapPosition,
+  useToilets,
+  useNeedRequestAgain,
+} from './modules/map/hooks';
+import { requestToiletsInArea } from './modules/map/actions';
+import { showModal } from './modules/modal/actions';
 
 function App(): EmotionJSX.Element {
-  const [toilets, setToilets] = useState<Toilet[]>([]);
   const [user, setUser] = useState<firebase.User | null>(null);
   const dispatch = useDispatch();
 
-  const fetchAgain = useFetchAgain();
+  const toilets = useToilets();
   const position = useMapPosition();
+  const needRequestAgain = useNeedRequestAgain();
 
   useEffect(() => {
     // user바뀔 때
@@ -40,10 +43,9 @@ function App(): EmotionJSX.Element {
 
   const fetchNearByToilets = useCallback(() => {
     const { lat, lng } = position;
-    fetchToiletWithArea(new firebase.firestore.GeoPoint(lat, lng), 100).then(
-      toilets => setToilets(toilets),
+    dispatch(
+      requestToiletsInArea(new firebase.firestore.GeoPoint(lat, lng), 100),
     );
-    dispatch(offFetchAgain());
   }, [dispatch, position]);
 
   useEffect(() => {
@@ -63,7 +65,7 @@ function App(): EmotionJSX.Element {
         overflow: hidden;
       `}
     >
-      {fetchAgain && (
+      {needRequestAgain && (
         <div
           css={css`
             position: fixed;

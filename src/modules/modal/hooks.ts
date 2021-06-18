@@ -1,14 +1,11 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../modules/configureStore';
+import { useAppSelector } from '../configureStore';
 
-function useModalVisibility(): boolean {
-  const show = useSelector((state: RootState) => state.modal.show);
+export function useModalVisibility(): boolean {
+  const show = useAppSelector(state => state.modal.show);
   return show;
 }
 
-function useModalContent(): React.ReactNode {
-  const content = useSelector((state: RootState) => state.modal.modalContent);
+export function useModalContent(): React.ReactNode {
+  const content = useAppSelector(state => state.modal.modalContent);
   return content;
 }
-
-export { useModalVisibility, useModalContent };

@@ -1,7 +1,5 @@
 import React from 'react';
-
-const SHOW_MODAL = 'modal/SHOW_MODAL' as const;
-const HIDE_MODAL = 'modal/HIDE_MODAL' as const;
+import { HIDE_MODAL, ModalActionType, SHOW_MODAL } from './actions';
 
 export interface ModalState {
   show: boolean;
@@ -13,26 +11,13 @@ const initialState: ModalState = {
   modalContent: null,
 };
 
-export const showModal = (modalContent: React.ReactNode) =>
-  <const>{
-    type: SHOW_MODAL,
-    payload: modalContent,
-  };
-
-export const hideModal = () =>
-  <const>{
-    type: HIDE_MODAL,
-  };
-
-type ACTIONTYPE = ReturnType<typeof showModal> | ReturnType<typeof hideModal>;
-
 export default function modalReducer(
   state: ModalState = initialState,
-  action: ACTIONTYPE,
+  action: ModalActionType,
 ): ModalState {
   switch (action.type) {
     case SHOW_MODAL:
-      return { ...state, modalContent: action.payload, show: true };
+      return { ...state, modalContent: action.modalContent, show: true };
     case HIDE_MODAL:
       return { ...state, show: false };
     default:
