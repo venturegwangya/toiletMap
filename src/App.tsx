@@ -14,8 +14,8 @@ import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import TestComponent from './components/TestComponent';
 import { useFetchAgain, useMapPosition } from './hooks/map';
-import { offFetchAgain } from './reducers/mapReducer';
-import { showModal } from './reducers/modalReducer';
+import { offFetchAgain } from './modules/map/mapReducer';
+import { showModal } from './modules/modal/modalReducer';
 
 function App(): EmotionJSX.Element {
   const [toilets, setToilets] = useState<Toilet[]>([]);

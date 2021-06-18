@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import mapReducer from './mapReducer';
-import modalReducer from './modalReducer';
+import mapReducer from './map/mapReducer';
+import modalReducer from './modal/modalReducer';
 
 export const rootReducer = combineReducers({
   mapReducer,

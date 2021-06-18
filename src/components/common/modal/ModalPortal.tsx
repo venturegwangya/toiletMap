@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch } from 'react-redux';
 import { useModalContent, useModalVisibility } from '../../../hooks/modal';
-import { hideModal } from '../../../reducers/modalReducer';
+import { hideModal } from '../../../modules/modal/modalReducer';
 
 interface Props {
   children?: React.ReactNode;
