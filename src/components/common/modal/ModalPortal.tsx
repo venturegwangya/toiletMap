@@ -3,18 +3,18 @@ import { css } from '@emotion/react';
 import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch } from 'react-redux';
-import { useModalContent, useModalVisibility } from '../../../hooks/modal';
-import { hideModal } from '../../../modules/modal/modalReducer';
-
-interface Props {
-  children?: React.ReactNode;
-}
+import {
+  useModalContent,
+  useModalVisibility,
+} from '../../../modules/modal/hooks';
+import { hideModal } from '../../../modules/modal/reducer';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
 /**
  * 우선 이 포탈이 hook으로 자신의 상태를 관리한다.
  * 딱히, stateless할 이유가 없어 우선 이렇게 처리
  */
-export function ModalPortal(props: Props) {
+export function ModalPortal(): EmotionJSX.Element {
   const contentRef = useRef<HTMLDivElement>(null);
   const content = useModalContent();
   const show = useModalVisibility();

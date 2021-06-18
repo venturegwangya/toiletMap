@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
-export function LogInModal() {
+export function LogInModal(): EmotionJSX.Element {
   return (
     <div
       css={css`

@@ -31,7 +31,7 @@ type ACTIONTYPE =
   | ReturnType<typeof offFetchAgain>;
 
 // TODO: 박민규 2021-06-16 fetch하고나서 fetchAgain을 무효화한다
-export default function mapReducer(
+export default function (
   state: MapState = initialState,
   action: ACTIONTYPE,
 ): MapState {
