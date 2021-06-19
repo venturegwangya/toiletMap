@@ -4,7 +4,7 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
 import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
-import { BodyLayout, Header } from './components/common';
+import { BodyLayout, FlexRowDiv, Header } from './components/common';
 import { Avatar } from './components/common/Avatar';
 import { LogInModal } from './components/common/modal/LogInModal';
 import { ModalPortal } from './components/common/modal/ModalPortal';
@@ -85,7 +85,9 @@ function App(): EmotionJSX.Element {
       </Header>
       <BodyLayout
         LeftChild={
-          <TestComponent user={user} toilets={toilets} curpos={position} />
+          <FlexRowDiv>
+            <TestComponent user={user} toilets={toilets} curpos={position} />
+          </FlexRowDiv>
         }
         RightChild={<Map toilets={toilets} />}
       />

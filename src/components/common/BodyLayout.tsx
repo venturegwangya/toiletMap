@@ -21,7 +21,6 @@ const FlexBodyContainer = styled.div<{
   display: 'flex',
   flex: props.flex,
   height: '100%',
-  overflowY: props.scroll ? 'scroll' : 'initial',
 }));
 
 function BodyLayout({
@@ -30,7 +29,7 @@ function BodyLayout({
 }: BodyLayoutProps): EmotionJSX.Element {
   return (
     <FixedHeightBodyContainer>
-      <FlexBodyContainer scroll>{LeftChild}</FlexBodyContainer>
+      <FlexBodyContainer>{LeftChild}</FlexBodyContainer>
       <FlexBodyContainer flex={3}>{RightChild}</FlexBodyContainer>
     </FixedHeightBodyContainer>
   );

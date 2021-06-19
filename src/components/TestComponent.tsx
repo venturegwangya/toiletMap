@@ -33,6 +33,9 @@ function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
     <div
       css={css`
         background-color: white;
+        overflow-y: scroll;
+        padding-left: 20px;
+        padding-right: 20px;
       `}
     >
       {toilets.map((toilet: toiletModels.Toilet) => (
