@@ -1,30 +1,28 @@
 import { css } from '@emotion/react';
 import React from 'react';
-import { FlexRowDiv, StyledIcon } from '../common';
+import { FlexRowDiv, StyledIcon } from '.';
 
-interface ToiletInfoIconText {
+interface Props {
   iconClass: string;
   text: string;
   enabled?: boolean;
 }
 
-export default function ToiletInfoIconText({
+export default function IconText({
   iconClass,
   text,
   enabled,
-}: ToiletInfoIconText): React.ReactElement {
+}: Props): React.ReactElement {
   return (
     <FlexRowDiv>
       <StyledIcon
         enabled={enabled}
         iconClass={iconClass}
-        css={css`
+        iconBoxCss={css`
           margin-right: 8px;
         `}
       />
-      <span>
-        {text} {enabled ? '있음' : '없음'}
-      </span>
+      <span>{text}</span>
     </FlexRowDiv>
   );
 }

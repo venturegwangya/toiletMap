@@ -21,6 +21,7 @@ const FlexBodyContainer = styled.div<{
   display: 'flex',
   flex: props.flex,
   height: '100%',
+  position: 'relative',
 }));
 
 function BodyLayout({
