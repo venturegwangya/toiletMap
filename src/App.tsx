@@ -14,7 +14,7 @@ import TestComponent from './components/TestComponent';
 import { requestToiletsInArea } from './modules/map/actions';
 import { showModal } from './modules/modal/actions';
 import { useAppDispatch } from './modules/configureStore';
-import { authAPI } from './apis/auth';
+import { authAPI } from '@apis/auth';
 
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);

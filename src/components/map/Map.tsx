@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { LatLngExpression } from 'leaflet';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
-import { toiletModels } from '../../apis/toilet';
+import { toiletModels } from '@apis/toilet';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import MapViewController from './MapViewController';
 

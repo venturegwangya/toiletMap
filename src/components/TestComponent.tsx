@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
 import { LatLng } from 'leaflet';
-import { toiletModels } from '../apis/toilet';
+import { toiletModels } from 'src/apis/toilet';
 import { processRawToiletData } from '../util/parseToiletData';
 import ToiletInfoCard from './toilet/TestToilet';
 // import TestToilet from './TestToilet';

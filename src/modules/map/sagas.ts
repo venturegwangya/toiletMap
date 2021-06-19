@@ -4,7 +4,7 @@ import {
   receiveToilets,
 } from './actions';
 import { takeEvery, call, put, StrictEffect } from 'redux-saga/effects';
-import { toiletAPI, toiletModels } from '../../apis/toilet';
+import { toiletAPI, toiletModels } from '@apis/toilet';
 
 export function* requestToiletsInArea({
   center,

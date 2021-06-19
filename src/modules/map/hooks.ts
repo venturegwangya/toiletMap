@@ -1,5 +1,5 @@
 import { LatLng } from 'leaflet';
-import { toiletModels } from '../../apis/toilet';
+import { toiletModels } from '@apis/toilet';
 import { useAppSelector } from '../configureStore';
 
 export function useMapPosition(): LatLng {

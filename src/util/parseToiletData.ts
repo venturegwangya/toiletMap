@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import firebase from 'firebase';
-import { getFirebaseServerTimestamp } from '../apis/configureFirebase';
-import { reviewModels } from '../apis/review';
-import { toiletAPI, toiletModels } from '../apis/toilet';
+import { getFirebaseServerTimestamp } from '@apis/configureFirebase';
+import { reviewModels } from '@apis/review';
+import { toiletAPI, toiletModels } from '@apis/toilet';
 
 interface RawToiletData {
   구분: string;

@@ -1,5 +1,5 @@
 import { LatLng } from 'leaflet';
-import { toiletModels } from '../../apis/toilet';
+import { toiletModels } from '@apis/toilet';
 import { CHANGE_POSITION, MapActionType, RECEIVE_TOILETS } from './actions';
 
 export interface MapState {

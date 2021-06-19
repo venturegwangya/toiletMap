@@ -2,8 +2,8 @@
 import { css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { reviewAPI, reviewModels } from '../../apis/review';
-import { toiletModels } from '../../apis/toilet';
+import { reviewAPI, reviewModels } from '@apis/review';
+import { toiletModels } from '@apis/toilet';
 import { FlexColumnDiv, SubtitleSpan, TitleSpan } from '../common';
 import styled from '@emotion/styled';
 import ToiletInfoIconText from './ToiletInfoIconText';
