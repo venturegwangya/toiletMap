@@ -19,7 +19,7 @@ export default function PopupPill({
       css={css`
         position: absolute;
         left: 50%;
-        top: 50px;
+        top: 100px;
         z-index: 500;
         background-color: white;
         padding: 10px;

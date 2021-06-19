@@ -71,12 +71,13 @@ function App(): EmotionJSX.Element {
         />
       </Header>
       <BodyLayout
-        LeftChild={
+        showLeft={toilets.length > 0}
+        LeftOverlayComponent={
           <FlexRowDiv>
             <ToiletList user={user} toilets={toilets} />
           </FlexRowDiv>
         }
-        RightChild={
+        BodyComponent={
           <>
             {needRequestAgain && (
               <PopupPill
