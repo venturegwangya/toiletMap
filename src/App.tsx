@@ -4,17 +4,18 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
 import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
-import { BodyLayout, Header } from './components/common';
+import { BodyLayout, FlexRowDiv, Header } from './components/common';
 import { Avatar } from './components/common/Avatar';
 import { LogInModal } from './components/common/modal/LogInModal';
 import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import { mapHooks } from './modules/map';
-import TestComponent from './components/TestComponent';
+import ToiletList from './components/toilet/ToiletList';
 import { requestToiletsInArea } from './modules/map/actions';
 import { showModal } from './modules/modal/actions';
 import { useAppDispatch } from './modules/configureStore';
 import { authAPI } from '@apis/auth';
+import PopupPill from '@components/common/PopupPill';
 
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
@@ -61,20 +62,6 @@ function App(): EmotionJSX.Element {
         overflow: hidden;
       `}
     >
-      {needRequestAgain && (
-        <div
-          css={css`
-            position: fixed;
-            left: 50%;
-            top: 50px;
-            z-index: 500;
-            background-color: wheat;
-          `}
-          onClick={() => fetchNearByToilets()}
-        >
-          이 위치에서 다시 검색
-        </div>
-      )}
       <Header>
         <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg" />
         <Avatar
@@ -84,10 +71,24 @@ function App(): EmotionJSX.Element {
         />
       </Header>
       <BodyLayout
-        LeftChild={
-          <TestComponent user={user} toilets={toilets} curpos={position} />
+        showLeft={toilets.length > 0}
+        LeftOverlayComponent={
+          <FlexRowDiv>
+            <ToiletList user={user} toilets={toilets} />
+          </FlexRowDiv>
         }
-        RightChild={<Map toilets={toilets} />}
+        BodyComponent={
+          <>
+            {needRequestAgain && (
+              <PopupPill
+                text={'이 위치에서 다시 검색'}
+                icon={'fa-redo'}
+                onClick={fetchNearByToilets}
+              />
+            )}
+            <Map toilets={toilets} />
+          </>
+        }
       />
       <ModalPortal />
     </div>

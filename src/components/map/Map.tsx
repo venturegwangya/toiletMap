@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { LatLngExpression } from 'leaflet';
-import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, ZoomControl } from 'react-leaflet';
 import { toiletModels } from '@apis/toilet';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import MapViewController from './MapViewController';
@@ -18,12 +18,14 @@ function Map({
     <MapContainer
       css={css`
         width: 100%;
-        height: calc(100vh - 80px);
+        height: calc(100vh - 60px);
       `}
       center={seoul}
       zoom={zoom}
       scrollWheelZoom={false}
+      zoomControl={false}
     >
+      <ZoomControl position={'bottomright'} />
       <MapViewController />
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

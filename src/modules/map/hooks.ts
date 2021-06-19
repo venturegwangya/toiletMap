@@ -13,6 +13,11 @@ export function useNeedRequestAgain(): boolean {
 }
 
 export function useToilets(): toiletModels.Toilet[] {
-  const toilets = useAppSelector(state => state.map.toilets);
+  const toilets = useAppSelector(state => state.map.fetchedToilets);
   return toilets;
+}
+
+export function useSelectedToilet(): toiletModels.Toilet | null {
+  const selectedToilet = useAppSelector(state => state.map.selectedToilet);
+  return selectedToilet;
 }

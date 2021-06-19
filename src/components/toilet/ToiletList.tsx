@@ -2,19 +2,17 @@
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
-import { LatLng } from 'leaflet';
 import { toiletModels } from 'src/apis/toilet';
-import { processRawToiletData } from '../util/parseToiletData';
-import ToiletInfoCard from './toilet/TestToilet';
+import { processRawToiletData } from '../../util/parseToiletData';
+import ToiletInfoCard from './ToiletInfoCard';
 // import TestToilet from './TestToilet';
 
 interface Props {
   user: firebase.User | null;
   toilets: toiletModels.Toilet[];
-  curpos: LatLng;
 }
 
-function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
+function ToiletList({ user, toilets }: Props): EmotionJSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (e: any) => {
     const file = e.target.files[0];
@@ -33,6 +31,9 @@ function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
     <div
       css={css`
         background-color: white;
+        overflow-y: scroll;
+        padding-left: 20px;
+        padding-right: 20px;
       `}
     >
       {toilets.map((toilet: toiletModels.Toilet) => (
@@ -44,4 +45,4 @@ function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
   );
 }
 
-export default TestComponent;
+export default ToiletList;

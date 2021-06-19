@@ -6,7 +6,9 @@ import { reviewAPI, reviewModels } from '@apis/review';
 import { toiletModels } from '@apis/toilet';
 import { FlexColumnDiv, SubtitleSpan, TitleSpan } from '../common';
 import styled from '@emotion/styled';
-import ToiletInfoIconText from './ToiletInfoIconText';
+import IconText from '../common/IconText';
+import { useAppDispatch } from '../../modules/configureStore';
+import { mapActions } from '@modules/map';
 
 const ToiletItemBox = styled.div`
   display: flex;
@@ -28,6 +30,9 @@ interface ToiletListItemProps {
   toilet: toiletModels.Toilet;
   userId: string | undefined;
 }
+
+const availableText = (available: boolean | undefined) =>
+  available ? '있음' : '없음';
 
 const isMoreThanOrEqualToHalf = (count: number, total: number) =>
   count >= total / 2;
@@ -62,6 +67,7 @@ function ToiletInfoCard({
   toilet,
   userId,
 }: ToiletListItemProps): EmotionJSX.Element {
+  const dispatch = useAppDispatch();
   const [reviews, setReviews] = useState<reviewModels.ReviewBase[]>([]);
   const [toiletReviewInfo, setToiletReviewInfo] =
     useState<ToiletReviewInfo | undefined>();
@@ -80,7 +86,7 @@ function ToiletInfoCard({
   }, [toilet.id]); // 조건, posts 바뀔 때
 
   return (
-    <ToiletItemBox>
+    <ToiletItemBox onClick={() => dispatch(mapActions.selectToilet(toilet))}>
       <FlexColumnDiv
         css={css`
           justify-content: space-between;
@@ -98,20 +104,25 @@ function ToiletInfoCard({
           justify-content: space-evenly;
         `}
       >
-        <ToiletInfoIconText
+        <IconText
           enabled={toiletReviewInfo?.unisex}
           iconClass={'fa-genderless'}
-          text={'남녀공용화장실'}
+          text={'남녀공용화장실' + availableText(toiletReviewInfo?.unisex)}
         />
-        <ToiletInfoIconText
-          enabled={toiletReviewInfo?.unisex}
+        <IconText
+          enabled={toiletReviewInfo?.disabledFacilities}
           iconClass={'fa-wheelchair'}
-          text={'장애인용 시설'}
+          text={
+            '장애인용 시설' +
+            availableText(toiletReviewInfo?.disabledFacilities)
+          }
         />
-        <ToiletInfoIconText
-          enabled={toiletReviewInfo?.unisex}
+        <IconText
+          enabled={toiletReviewInfo?.childFacilities}
           iconClass={'fa-child'}
-          text={'아동용 시설'}
+          text={
+            '아동용 시설' + availableText(toiletReviewInfo?.childFacilities)
+          }
         />
       </FlexColumnDiv>
       {/* {reviews.map((review, i) => {

@@ -3,8 +3,9 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
 
 interface BodyLayoutProps {
-  LeftChild: React.ReactNode;
-  RightChild: React.ReactNode;
+  showLeft: boolean;
+  LeftOverlayComponent: React.ReactNode;
+  BodyComponent: React.ReactNode;
 }
 
 const FixedHeightBodyContainer = styled.div`
@@ -14,24 +15,30 @@ const FixedHeightBodyContainer = styled.div`
   height: calc(100vh - 60px);
 `;
 
-const FlexBodyContainer = styled.div<{
-  flex?: number;
-  scroll?: boolean;
-}>(props => ({
+const FlexBodyContainer = styled.div`
+  display: flex;
+  height: 100%;
+  flex: 1;
+`;
+
+const LeftPanel = styled.div<{ show: boolean }>(props => ({
   display: 'flex',
-  flex: props.flex,
   height: '100%',
-  overflowY: props.scroll ? 'scroll' : 'initial',
+  position: 'fixed',
+  zIndex: 500,
+  transform: props.show ? 'none' : 'translateX(-100%)',
+  transition: 'transform 0.5s',
 }));
 
 function BodyLayout({
-  LeftChild,
-  RightChild,
+  showLeft,
+  LeftOverlayComponent,
+  BodyComponent,
 }: BodyLayoutProps): EmotionJSX.Element {
   return (
     <FixedHeightBodyContainer>
-      <FlexBodyContainer scroll>{LeftChild}</FlexBodyContainer>
-      <FlexBodyContainer flex={3}>{RightChild}</FlexBodyContainer>
+      <LeftPanel show={showLeft}>{LeftOverlayComponent}</LeftPanel>
+      <FlexBodyContainer>{BodyComponent}</FlexBodyContainer>
     </FixedHeightBodyContainer>
   );
 }

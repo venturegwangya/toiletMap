@@ -2,7 +2,7 @@
 import firebase from 'firebase';
 import { getFirebaseServerTimestamp } from '@apis/configureFirebase';
 import { reviewModels } from '@apis/review';
-import { toiletAPI, toiletModels } from '@apis/toilet';
+import { toiletAPI, toiletModels, toiletTypes } from '@apis/toilet';
 
 interface RawToiletData {
   구분: string;
@@ -20,10 +20,13 @@ interface RawToiletData {
 function makeToiletBaseFromRawData(rawToiletData: RawToiletData) {
   const type = rawToiletData.구분;
   const name = rawToiletData.화장실명;
-
   const lat = parseFloat(rawToiletData.위도);
   const long = parseFloat(rawToiletData.경도);
-  if (!lat || !long) return null;
+
+  if (!toiletTypes.isToiletRegisterType(type))
+    throw new Error('잘못된 화장실 타입');
+  if (!lat || !long) throw new Error('위도, 경도 정보 없음!');
+
   const coordinates = new firebase.firestore.GeoPoint(lat, long);
   const newToilet: toiletModels.ToiletBase = {
     name,
