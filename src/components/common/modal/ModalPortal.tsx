@@ -2,13 +2,13 @@
 import { css } from '@emotion/react';
 import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
-import { useDispatch } from 'react-redux';
 import {
   useModalContent,
   useModalVisibility,
 } from '../../../modules/modal/hooks';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { hideModal } from '../../../modules/modal/actions';
+import { useAppDispatch } from '../../../modules/configureStore';
+import { modalActions } from '../../../modules/modal';
 
 /**
  * 우선 이 포탈이 hook으로 자신의 상태를 관리한다.
@@ -18,11 +18,11 @@ export function ModalPortal(): EmotionJSX.Element {
   const contentRef = useRef<HTMLDivElement>(null);
   const content = useModalContent();
   const show = useModalVisibility();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClickOutside = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(hideModal());
+    dispatch(modalActions.hideModal());
   };
 
   return ReactDOM.createPortal(

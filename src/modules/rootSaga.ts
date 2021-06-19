@@ -1,6 +1,6 @@
 import { fork } from '@redux-saga/core/effects';
 import { all } from 'redux-saga/effects';
-import { sagas as mapSagas } from './map';
+import { mapSagas } from './map';
 
 const allSagas = [...mapSagas];
 

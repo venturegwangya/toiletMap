@@ -3,34 +3,30 @@ import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { subscribeToAuthChange } from './apis/authentication';
 import './App.css';
 import { BodyLayout, Header } from './components/common';
 import { Avatar } from './components/common/Avatar';
 import { LogInModal } from './components/common/modal/LogInModal';
 import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
+import { mapHooks } from './modules/map';
 import TestComponent from './components/TestComponent';
-import {
-  useMapPosition,
-  useToilets,
-  useNeedRequestAgain,
-} from './modules/map/hooks';
 import { requestToiletsInArea } from './modules/map/actions';
 import { showModal } from './modules/modal/actions';
+import { useAppDispatch } from './modules/configureStore';
+import { authAPI } from '@apis/auth';
 
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const toilets = useToilets();
-  const position = useMapPosition();
-  const needRequestAgain = useNeedRequestAgain();
+  const toilets = mapHooks.useToilets();
+  const position = mapHooks.useMapPosition();
+  const needRequestAgain = mapHooks.useNeedRequestAgain();
 
   useEffect(() => {
     // user바뀔 때
-    const unsubscribe = subscribeToAuthChange(
+    const unsubscribe = authAPI.subscribeToAuthChange(
       authUser => {
         setUser(authUser);
       },

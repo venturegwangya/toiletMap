@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
-import { ReviewBase, subscribeToToiletReviewsChange } from '../../apis/reviews';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { Toilet } from '../../apis/toilets';
+import { reviewAPI, reviewModels } from '@apis/review';
+import { toiletModels } from '@apis/toilet';
 import { FlexColumnDiv, SubtitleSpan, TitleSpan } from '../common';
 import styled from '@emotion/styled';
 import ToiletInfoIconText from './ToiletInfoIconText';
@@ -25,14 +25,16 @@ interface ToiletReviewInfo {
 }
 
 interface ToiletListItemProps {
-  toilet: Toilet;
+  toilet: toiletModels.Toilet;
   userId: string | undefined;
 }
 
 const isMoreThanOrEqualToHalf = (count: number, total: number) =>
   count >= total / 2;
 
-const makeToiletReviewInfoFromReviews = (reviews: ReviewBase[]) => {
+const makeToiletReviewInfoFromReviews = (
+  reviews: reviewModels.ReviewBase[],
+) => {
   const reviewCount = reviews.length;
   let sumRating = 0;
   let childFacilitiesCount = 0;
@@ -60,15 +62,18 @@ function ToiletInfoCard({
   toilet,
   userId,
 }: ToiletListItemProps): EmotionJSX.Element {
-  const [reviews, setReviews] = useState<ReviewBase[]>([]);
+  const [reviews, setReviews] = useState<reviewModels.ReviewBase[]>([]);
   const [toiletReviewInfo, setToiletReviewInfo] =
     useState<ToiletReviewInfo | undefined>();
 
   useEffect(() => {
-    const unsubscribe = subscribeToToiletReviewsChange(toilet.id, reviews => {
-      setReviews(reviews);
-      setToiletReviewInfo(makeToiletReviewInfoFromReviews(reviews));
-    });
+    const unsubscribe = reviewAPI.subscribeToToiletReviewsChange(
+      toilet.id,
+      reviews => {
+        setReviews(reviews);
+        setToiletReviewInfo(makeToiletReviewInfoFromReviews(reviews));
+      },
+    );
     return () => {
       unsubscribe();
     };

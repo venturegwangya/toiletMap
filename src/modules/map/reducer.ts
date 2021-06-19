@@ -1,10 +1,10 @@
 import { LatLng } from 'leaflet';
-import { Toilet } from '../../apis/toilets';
+import { toiletModels } from '@apis/toilet';
 import { CHANGE_POSITION, MapActionType, RECEIVE_TOILETS } from './actions';
 
 export interface MapState {
   position: LatLng;
-  toilets: Toilet[];
+  toilets: toiletModels.Toilet[];
   needRequestAgain: boolean;
 }
 

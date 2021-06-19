@@ -2,14 +2,18 @@
 import { css } from '@emotion/react';
 import { LatLngExpression } from 'leaflet';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
-import { Toilet } from '../../apis/toilets';
+import { toiletModels } from '@apis/toilet';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import MapViewController from './MapViewController';
 
 const seoul: LatLngExpression = [36.29095, 127.6043522];
 const zoom = 8;
 
-function Map({ toilets }: { toilets: Toilet[] }): EmotionJSX.Element {
+function Map({
+  toilets,
+}: {
+  toilets: toiletModels.Toilet[];
+}): EmotionJSX.Element {
   return (
     <MapContainer
       css={css`

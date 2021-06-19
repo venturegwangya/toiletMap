@@ -3,14 +3,14 @@ import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
 import { LatLng } from 'leaflet';
-import { Toilet } from '../apis/toilets';
+import { toiletModels } from 'src/apis/toilet';
 import { processRawToiletData } from '../util/parseToiletData';
 import ToiletInfoCard from './toilet/TestToilet';
 // import TestToilet from './TestToilet';
 
 interface Props {
   user: firebase.User | null;
-  toilets: Toilet[];
+  toilets: toiletModels.Toilet[];
   curpos: LatLng;
 }
 
@@ -35,7 +35,7 @@ function TestComponent({ user, toilets, curpos }: Props): EmotionJSX.Element {
         background-color: white;
       `}
     >
-      {toilets.map((toilet: Toilet) => (
+      {toilets.map((toilet: toiletModels.Toilet) => (
         <ToiletInfoCard key={toilet.id} toilet={toilet} userId={user?.uid} />
       ))}
       <label>JSON파일 Firebase에 업로드</label>

@@ -1,7 +1,7 @@
-import reducer from './reducer';
-import * as hooks from './hooks';
-import * as actions from './actions';
+import modalReducer from './reducer';
+import * as modalHooks from './hooks';
+import * as modalActions from './actions';
 
-export { hooks, actions };
+export { modalHooks, modalActions };
 
-export default reducer;
+export default modalReducer;

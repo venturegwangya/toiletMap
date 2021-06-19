@@ -1,14 +1,14 @@
 import React, { ReactElement } from 'react';
-import { useDispatch } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
-import { changePosition } from '../../modules/map/actions';
+import { useAppDispatch } from '../../modules/configureStore';
+import { mapActions } from '../../modules/map';
 
 export default function MapViewController(): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const map = useMapEvents({
     dragend: () => {
-      dispatch(changePosition(map.getCenter()));
+      dispatch(mapActions.changePosition(map.getCenter()));
     },
   });
   return <div></div>;
