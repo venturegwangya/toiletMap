@@ -10,7 +10,7 @@ import { LogInModal } from './components/common/modal/LogInModal';
 import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import { mapHooks } from './modules/map';
-import TestComponent from './components/TestComponent';
+import ToiletList from './components/toilet/ToiletList';
 import { requestToiletsInArea } from './modules/map/actions';
 import { showModal } from './modules/modal/actions';
 import { useAppDispatch } from './modules/configureStore';
@@ -73,7 +73,7 @@ function App(): EmotionJSX.Element {
       <BodyLayout
         LeftChild={
           <FlexRowDiv>
-            <TestComponent user={user} toilets={toilets} curpos={position} />
+            <ToiletList user={user} toilets={toilets} />
           </FlexRowDiv>
         }
         RightChild={
