@@ -6,7 +6,7 @@ import {
 import { takeEvery, call, put, StrictEffect } from 'redux-saga/effects';
 import { toiletAPI, toiletModels } from '@apis/toilet';
 
-export function* requestToiletsInArea({
+function* requestToiletsInArea({
   center,
   radius,
 }: RequestToiletsInAreaAction): Generator<

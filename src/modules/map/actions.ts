@@ -54,7 +54,23 @@ export function receiveToilets(
   };
 }
 
+/**
+ * 화장실 선택 (맵 마커 혹은 목록에서 선택)
+ */
+export const SELECT_TOILET = 'map/SELECT_TOILET' as const;
+export interface SelectToiletAction {
+  type: typeof SELECT_TOILET;
+  toilet: toiletModels.Toilet;
+}
+export function selectToilet(toilet: toiletModels.Toilet): SelectToiletAction {
+  return {
+    type: SELECT_TOILET,
+    toilet,
+  };
+}
+
 export type MapActionType =
   | ChangePositionAction
   | RequestToiletsInAreaAction
-  | ReceiveToiletsAction;
+  | ReceiveToiletsAction
+  | SelectToiletAction;
