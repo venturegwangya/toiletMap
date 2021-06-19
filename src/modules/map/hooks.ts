@@ -1,5 +1,5 @@
 import { LatLng } from 'leaflet';
-import { Toilet } from '../../apis/toilets';
+import { toiletModels } from '../../apis/toilet';
 import { useAppSelector } from '../configureStore';
 
 export function useMapPosition(): LatLng {
@@ -12,7 +12,7 @@ export function useNeedRequestAgain(): boolean {
   return fetchAgain;
 }
 
-export function useToilets(): Toilet[] {
+export function useToilets(): toiletModels.Toilet[] {
   const toilets = useAppSelector(state => state.map.toilets);
   return toilets;
 }

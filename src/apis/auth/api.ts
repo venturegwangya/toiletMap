@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import firebase from 'firebase';
-import { firebaseAuth } from './common';
+import { firebaseAuth } from '../configureFirebase';
 
 export function signUpWithEmailAndPassword(
   email: string,

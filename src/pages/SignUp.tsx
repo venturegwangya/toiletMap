@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { useState } from 'react';
-import {
-  signInWithEmailAndPassword,
-  signUpWithEmailAndPassword,
-} from '../apis/authentication';
+import { authAPI } from '../apis/auth';
 
 export default function SignUp({
   isSignUp,
@@ -16,13 +13,13 @@ export default function SignUp({
 
   const signUp = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    signUpWithEmailAndPassword(email, password, userName);
+    authAPI.signUpWithEmailAndPassword(email, password, userName);
     alert('계정 생성');
   };
 
   const signIn = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    signInWithEmailAndPassword(email, password);
+    authAPI.signInWithEmailAndPassword(email, password);
     alert('로그인 완료');
   };
 

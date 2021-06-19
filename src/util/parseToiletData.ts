@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import firebase from 'firebase';
-import { getFirebaseServerTimestamp } from '../apis/common';
-import { ReviewBase } from '../apis/reviews';
-import { ToiletBase, createToilet } from '../apis/toilets';
+import { getFirebaseServerTimestamp } from '../apis/configureFirebase';
+import { reviewModels } from '../apis/review';
+import { toiletAPI, toiletModels } from '../apis/toilet';
 
 interface RawToiletData {
   구분: string;
@@ -25,7 +25,7 @@ function makeToiletBaseFromRawData(rawToiletData: RawToiletData) {
   const long = parseFloat(rawToiletData.경도);
   if (!lat || !long) return null;
   const coordinates = new firebase.firestore.GeoPoint(lat, long);
-  const newToilet: ToiletBase = {
+  const newToilet: toiletModels.ToiletBase = {
     name,
     type,
     coordinates,
@@ -38,7 +38,7 @@ function makeReviewBaseFromRawData(
   user: { displayName: string; uid: string },
   rawToiletData: RawToiletData,
 ) {
-  const newReview: ReviewBase = {
+  const newReview: reviewModels.ReviewBase = {
     author: user.displayName || '관리자',
     authorUserId: user.uid,
     childFacilities:
@@ -67,6 +67,6 @@ export function processRawToiletData(records: RawToiletData[]): void {
     const newReview = makeReviewBaseFromRawData(user, record);
     if (!newReview) return;
 
-    createToilet(newToilet, newReview);
+    toiletAPI.createToilet(newToilet, newReview);
   });
 }

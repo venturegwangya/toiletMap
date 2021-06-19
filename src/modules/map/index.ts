@@ -1,8 +1,8 @@
-import reducer from './reducer';
-import * as hooks from './hooks';
-import * as actions from './actions';
-import { sagas } from './sagas';
+import mapReducer from './reducer';
+import * as mapHooks from './hooks';
+import * as mapActions from './actions';
+import { sagas as mapSagas } from './sagas';
 
-export { hooks, actions, sagas };
+export { mapHooks, mapActions, mapSagas };
 
-export default reducer;
+export default mapReducer;

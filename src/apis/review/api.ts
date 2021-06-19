@@ -1,30 +1,9 @@
-import { toiletsRef } from './toilets';
-import firebase from 'firebase';
+import { Review, ReviewBase } from './models';
+import { toiletAPI } from '../toilet';
 
 const REVIEW_COLLECTION_NAME = 'reviews';
 const reviewsRef = (toiletId: string) =>
-  toiletsRef.doc(toiletId).collection(REVIEW_COLLECTION_NAME);
-
-/**
- * 기본 리뷰 데이터
- */
-export interface ReviewBase {
-  author: string;
-  authorUserId: string;
-  text: string;
-  rating: number;
-  disabledFacilities: boolean;
-  childFacilities: boolean;
-  unisex: boolean;
-  timestamp: firebase.firestore.FieldValue;
-}
-
-export interface ReviewReaction {
-  like: number;
-  dislike: number;
-}
-
-export type Review = ReviewBase & ReviewReaction;
+  toiletAPI.toiletsRef.doc(toiletId).collection(REVIEW_COLLECTION_NAME);
 
 export function subscribeToToiletReviewsChange(
   toiletId: string,
