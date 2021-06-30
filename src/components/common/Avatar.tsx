@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 
 type Size = 40 | 48 | 56;
 
-interface AvartProps {
+interface AvatarProps {
   imgSrc: string;
   size: Size;
   onClick: () => void;
@@ -13,7 +13,7 @@ export function Avatar({
   imgSrc,
   size,
   onClick,
-}: AvartProps): React.ReactElement {
+}: AvatarProps): React.ReactElement {
   return (
     <img
       onClick={onClick}
