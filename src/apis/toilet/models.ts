@@ -13,6 +13,12 @@ export interface ToiletBase {
   type: ToiletRegisterType;
   coordinates: firebase.firestore.GeoPoint;
   timestamp: firebase.firestore.FieldValue;
+  reviewCount: number;
+  avgRating: number;
+  // 갱신시 >= 1 일 때 true
+  childFacilities: number;
+  disabledFacilities: number;
+  unisex: number;
 }
 
 /**

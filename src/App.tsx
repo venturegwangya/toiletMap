@@ -71,7 +71,7 @@ function App(): EmotionJSX.Element {
         />
       </Header>
       <BodyLayout
-        showLeft={toilets.length > 0}
+        showLeft
         LeftOverlayComponent={
           <FlexRowDiv>
             <ToiletList user={user} toilets={toilets} />
