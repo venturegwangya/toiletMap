@@ -1,6 +1,7 @@
 import { LatLng } from 'leaflet';
 import firebase from 'firebase';
 import { toiletModels } from '../../apis/toilet';
+import { reviewModels } from '@apis/review';
 
 /**
  * 지도 위치가 바뀔 때 상태 값을 변경
@@ -69,8 +70,45 @@ export function selectToilet(toilet: toiletModels.Toilet): SelectToiletAction {
   };
 }
 
+/**
+ * 화장실 리뷰 가져옴
+ */
+export const REQUEST_REVIEWS_BY_TOILET_ID =
+  'map/REQUEST_REVIEWS_BY_TOILET_ID' as const;
+export interface RequestReviewsByToiletIdAction {
+  type: typeof REQUEST_REVIEWS_BY_TOILET_ID;
+  toiletId: string;
+}
+export function requestReviewsByToiletId(
+  toiletId: string,
+): RequestReviewsByToiletIdAction {
+  return {
+    type: REQUEST_REVIEWS_BY_TOILET_ID,
+    toiletId,
+  };
+}
+
+/**
+ * 화장실 리뷰를 성공적으로 가져왔을 때
+ */
+export const RECEIVE_REVIEWS = 'map/RECEIVE_REVIEWS' as const;
+export interface ReceiveReviewsAction {
+  type: typeof RECEIVE_REVIEWS;
+  reviews: reviewModels.Review[];
+}
+export function receiveReviews(
+  reviews: reviewModels.Review[],
+): ReceiveReviewsAction {
+  return {
+    type: RECEIVE_REVIEWS,
+    reviews,
+  };
+}
+
 export type MapActionType =
   | ChangePositionAction
   | RequestToiletsInAreaAction
   | ReceiveToiletsAction
-  | SelectToiletAction;
+  | SelectToiletAction
+  | RequestReviewsByToiletIdAction
+  | ReceiveReviewsAction;

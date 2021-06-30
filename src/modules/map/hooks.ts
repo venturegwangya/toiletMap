@@ -1,6 +1,7 @@
 import { LatLng } from 'leaflet';
 import { toiletModels } from '@apis/toilet';
 import { useAppSelector } from '../configureStore';
+import { reviewModels } from '@apis/review';
 
 export function useMapPosition(): LatLng {
   const position = useAppSelector(state => state.map.position);
@@ -20,4 +21,9 @@ export function useToilets(): toiletModels.Toilet[] {
 export function useSelectedToilet(): toiletModels.Toilet | null {
   const selectedToilet = useAppSelector(state => state.map.selectedToilet);
   return selectedToilet;
+}
+
+export function useReviews(): reviewModels.Review[] {
+  const reviews = useAppSelector(state => state.map.fetchedReviews);
+  return reviews;
 }
