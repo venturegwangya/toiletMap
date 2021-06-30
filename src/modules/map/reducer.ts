@@ -1,5 +1,7 @@
 import { LatLng } from 'leaflet';
 import { toiletModels } from '@apis/toilet';
+import { reviewModels } from '@apis/review';
+import { RECEIVE_REVIEWS } from './actions';
 import {
   CHANGE_POSITION,
   MapActionType,
@@ -12,12 +14,14 @@ export interface MapState {
   fetchedToilets: toiletModels.Toilet[];
   selectedToilet: toiletModels.Toilet | null;
   needRequestAgain: boolean;
+  fetchedReviews: reviewModels.Review[];
 }
 
 const initialState: MapState = {
   position: new LatLng(37.65095, 126.843522),
   fetchedToilets: [],
   selectedToilet: null,
+  fetchedReviews: [],
   needRequestAgain: false,
 };
 
@@ -38,6 +42,11 @@ export default function (
       return {
         ...state,
         selectedToilet: action.toilet,
+      };
+    case RECEIVE_REVIEWS:
+      return {
+        ...state,
+        fetchedReviews: action.reviews,
       };
     default:
       return state;

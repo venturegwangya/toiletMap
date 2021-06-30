@@ -17,6 +17,13 @@ export async function fetchToiletWithArea(
   );
 }
 
+export async function updateToilet(
+  toiletId: string,
+  toiletProps: Partial<ToiletBase>,
+): Promise<void> {
+  await toiletsRef.doc(toiletId).set(toiletProps);
+}
+
 /**
  * 화장실 등록 함수. 화장실 이름/위치 정보 정도를 받고 나머지 상태는 리뷰로 등록한다.
  */
@@ -25,6 +32,6 @@ export function createToilet(
   review: reviewModels.ReviewBase,
 ): void {
   toiletsGeoRef.add(newToilet).then(doc => {
-    reviewAPI.createReview(doc.id, review);
+    reviewAPI.createReview(Object.assign(newToilet, { id: doc.id }), review);
   });
 }

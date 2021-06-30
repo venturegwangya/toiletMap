@@ -17,15 +17,19 @@ interface RawToiletData {
   데이터기준일자: string;
 }
 
-function makeToiletBaseFromRawData(rawToiletData: RawToiletData) {
+function makeToiletBaseFromRawData(
+  rawToiletData: RawToiletData,
+  reviewData: reviewModels.ReviewBase,
+) {
   const type = rawToiletData.구분;
   const name = rawToiletData.화장실명;
+  console.debug(rawToiletData);
   const lat = parseFloat(rawToiletData.위도);
   const long = parseFloat(rawToiletData.경도);
 
   if (!toiletTypes.isToiletRegisterType(type))
-    throw new Error('잘못된 화장실 타입');
-  if (!lat || !long) throw new Error('위도, 경도 정보 없음!');
+    throw new Error(`잘못된 화장실 타입 ${type}`);
+  if (!lat || !long) throw new Error(`위도, 경도 정보 없음! ${lat}, ${long}`);
 
   const coordinates = new firebase.firestore.GeoPoint(lat, long);
   const newToilet: toiletModels.ToiletBase = {
@@ -33,6 +37,11 @@ function makeToiletBaseFromRawData(rawToiletData: RawToiletData) {
     type,
     coordinates,
     timestamp: getFirebaseServerTimestamp(),
+    avgRating: reviewData.rating,
+    childFacilities: Number(reviewData.childFacilities),
+    disabledFacilities: Number(reviewData.disabledFacilities),
+    unisex: Number(reviewData.unisex),
+    reviewCount: 1,
   };
   return newToilet;
 }
@@ -65,11 +74,14 @@ export function processRawToiletData(records: RawToiletData[]): void {
   };
   console.log(records);
   records.map((record: RawToiletData) => {
-    const newToilet = makeToiletBaseFromRawData(record);
-    if (!newToilet) return;
     const newReview = makeReviewBaseFromRawData(user, record);
     if (!newReview) return;
-
-    toiletAPI.createToilet(newToilet, newReview);
+    try {
+      const newToilet = makeToiletBaseFromRawData(record, newReview);
+      if (!newToilet) return;
+      toiletAPI.createToilet(newToilet, newReview);
+    } catch (err) {
+      console.log(err);
+    }
   });
 }
