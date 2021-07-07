@@ -16,9 +16,15 @@ import { showModal } from './modules/modal/actions';
 import { useAppDispatch } from './modules/configureStore';
 import { authAPI } from '@apis/auth';
 import PopupPill from '@components/common/PopupPill';
+import LeftMenuContainer from '@components/menu/LeftMenuContainer';
+import LeftMenuItemView from '@components/menu/LeftMenu';
+import { faList, faPoop, faUser } from '@fortawesome/free-solid-svg-icons';
+
+export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
+  const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
   const dispatch = useAppDispatch();
 
   const toilets = mapHooks.useToilets();
@@ -51,6 +57,14 @@ function App(): EmotionJSX.Element {
     // 한번만 실행해야함
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleMenuClick = useCallback(
+    (menu: LeftMenu) => {
+      setMenu(menu === selectedMenu ? null : menu);
+    },
+    [selectedMenu],
+  );
+
   return (
     <div
       css={css`
@@ -74,7 +88,45 @@ function App(): EmotionJSX.Element {
         showLeft
         LeftOverlayComponent={
           <FlexRowDiv>
-            <ToiletList user={user} toilets={toilets} />
+            <LeftMenuContainer>
+              <LeftMenuItemView
+                onClick={handleMenuClick}
+                id={'USER_SETTING'}
+                selected={'USER_SETTING' === selectedMenu}
+                iconProps={{
+                  icon: faUser,
+                }}
+              />
+              <LeftMenuItemView
+                onClick={handleMenuClick}
+                id={'LIST'}
+                selected={'LIST' === selectedMenu}
+                iconProps={{
+                  icon: faList,
+                }}
+              />
+              <LeftMenuItemView
+                onClick={handleMenuClick}
+                id={'WRITE_REVIEW'}
+                selected={'WRITE_REVIEW' === selectedMenu}
+                iconProps={{
+                  icon: faPoop,
+                }}
+              />
+            </LeftMenuContainer>
+            {selectedMenu === 'LIST' && (
+              <ToiletList user={user} toilets={toilets} />
+            )}
+            {selectedMenu === 'USER_SETTING' && (
+              <div style={{ width: '300px', backgroundColor: 'yellow' }}>
+                <text>CANVAS처럼 트랜지션 넣을 거임 </text>
+              </div>
+            )}
+            {selectedMenu === 'WRITE_REVIEW' && (
+              <div style={{ width: '300px', backgroundColor: 'yellow' }}>
+                <text>리뷰쓰기</text>
+              </div>
+            )}
           </FlexRowDiv>
         }
         BodyComponent={
