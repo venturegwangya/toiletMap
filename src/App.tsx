@@ -19,8 +19,10 @@ import PopupPill from '@components/common/PopupPill';
 import LeftMenuContainer from '@components/menu/LeftMenuContainer';
 import LeftMenuItemView from '@components/menu/LeftMenu';
 import { faList, faPoop, faUser } from '@fortawesome/free-solid-svg-icons';
+import { ReviewPanel } from '@components/review/ReviewPanel';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
+const LEFT_PANEL_MENU_WIDTH = '300px';
 
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
@@ -118,15 +120,16 @@ function App(): EmotionJSX.Element {
               <ToiletList user={user} toilets={toilets} />
             )}
             {selectedMenu === 'USER_SETTING' && (
-              <div style={{ width: '300px', backgroundColor: 'yellow' }}>
+              <div
+                style={{
+                  width: LEFT_PANEL_MENU_WIDTH,
+                  backgroundColor: 'yellow',
+                }}
+              >
                 <text>CANVAS처럼 트랜지션 넣을 거임 </text>
               </div>
             )}
-            {selectedMenu === 'WRITE_REVIEW' && (
-              <div style={{ width: '300px', backgroundColor: 'yellow' }}>
-                <text>리뷰쓰기</text>
-              </div>
-            )}
+            {selectedMenu === 'WRITE_REVIEW' && <ReviewPanel />}
           </FlexRowDiv>
         }
         BodyComponent={
