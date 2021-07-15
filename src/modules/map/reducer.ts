@@ -41,7 +41,8 @@ export default function (
     case SELECT_TOILET:
       return {
         ...state,
-        selectedToilet: action.toilet,
+        selectedToilet:
+          state.selectedToilet != action.toilet ? action.toilet : null,
       };
     case RECEIVE_REVIEWS:
       return {

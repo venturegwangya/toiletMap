@@ -32,6 +32,7 @@ function App(): EmotionJSX.Element {
   const toilets = mapHooks.useToilets();
   const position = mapHooks.useMapPosition();
   const needRequestAgain = mapHooks.useNeedRequestAgain();
+  const selectedToilet = mapHooks.useSelectedToilet();
 
   useEffect(() => {
     // user바뀔 때
@@ -116,9 +117,14 @@ function App(): EmotionJSX.Element {
                 }}
               />
             </LeftMenuContainer>
+            {/* 화장실 리스트 */}
             {selectedMenu === 'LIST' && (
-              <ToiletList user={user} toilets={toilets} />
+              <>
+                <ToiletList user={user} toilets={toilets} />
+                {selectedToilet && <ReviewPanel />}
+              </>
             )}
+            {/* 리뷰 리스트 */}
             {selectedMenu === 'USER_SETTING' && (
               <div
                 style={{

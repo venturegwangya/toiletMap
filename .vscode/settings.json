@@ -1,4 +1,5 @@
 {
+    "eslint.format.enable": true,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "eslint.alwaysShowStatus": true,
     "editor.tabSize": 2,
@@ -17,7 +18,7 @@
     },
     "editor.codeActionsOnSave": {
         // For ESLint
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": true,
     },
     "typescript.tsdk": "node_modules/typescript/lib",
 }
