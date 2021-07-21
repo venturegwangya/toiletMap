@@ -1,6 +1,5 @@
-import { reviewModels } from '@apis/review';
-import { ReviewBase } from '@apis/review/models';
-import { toiletModels } from '@apis/toilet';
+import { Review, ReviewBase } from '@modules/review/models';
+import { Toilet } from '@modules/toilet/models';
 
 /**
  * 리뷰 생성
@@ -9,12 +8,12 @@ export const CREATE_REVIEW = 'review/CREATE_REVIEW';
 
 export interface CreateReviewAction {
   type: typeof CREATE_REVIEW;
-  toilet: toiletModels.Toilet;
+  toilet: Toilet;
   review: ReviewBase;
 }
 
 export function createReview(
-  toilet: toiletModels.Toilet,
+  toilet: Toilet,
   review: ReviewBase,
 ): CreateReviewAction {
   return {
@@ -48,11 +47,9 @@ export function requestReviewsByToiletId(
 export const RECEIVE_REVIEWS = 'review/RECEIVE_REVIEWS' as const;
 export interface ReceiveReviewsAction {
   type: typeof RECEIVE_REVIEWS;
-  reviews: reviewModels.Review[];
+  reviews: Review[];
 }
-export function receiveReviews(
-  reviews: reviewModels.Review[],
-): ReceiveReviewsAction {
+export function receiveReviews(reviews: Review[]): ReceiveReviewsAction {
   return {
     type: RECEIVE_REVIEWS,
     reviews,

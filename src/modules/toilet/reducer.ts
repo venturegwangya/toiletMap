@@ -1,14 +1,14 @@
-import { toiletModels } from '@apis/toilet';
 import {
   NEED_REQUEST_AGAIN,
   RECEIVE_TOILETS,
   SELECT_TOILET,
   ToiletActionType,
 } from './actions';
+import { Toilet } from './models';
 
 export interface ToiletState {
-  fetchedToilets: toiletModels.Toilet[];
-  selectedToilet: toiletModels.Toilet | null;
+  fetchedToilets: Toilet[];
+  selectedToilet: Toilet | null;
   needRequestAgain: boolean;
 }
 

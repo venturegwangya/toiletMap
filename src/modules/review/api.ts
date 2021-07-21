@@ -1,6 +1,5 @@
+import { toiletAPI, toiletModels } from '@modules/toilet';
 import { Review, ReviewBase } from './models';
-import { toiletAPI } from '../toilet';
-import { toiletModels } from '@apis/toilet';
 
 const REVIEW_COLLECTION_NAME = 'reviews';
 const reviewsRef = (toiletId: string) =>
@@ -32,7 +31,7 @@ export async function fetchToiletReviews(toiletId: string): Promise<Review[]> {
 /**
  * 화장실에 대한 리뷰를 추가하고 관련 정보를 갱신
  */
-export async function createReview(
+export async function createNewReview(
   toilet: toiletModels.Toilet,
   review: ReviewBase,
 ): Promise<void> {

@@ -1,5 +1,4 @@
-import { reviewModels } from '@apis/review';
-import { ReviewBase } from '@apis/review/models';
+import { ReviewBase, Review } from '@modules/review/models';
 import {
   CREATE_REVIEW,
   RECEIVE_REVIEWS,
@@ -9,7 +8,7 @@ import {
 
 export interface ReviewState {
   review: Partial<ReviewBase | null>;
-  fetchedReviews: reviewModels.Review[];
+  fetchedReviews: Review[];
 }
 
 const initialState: ReviewState = {

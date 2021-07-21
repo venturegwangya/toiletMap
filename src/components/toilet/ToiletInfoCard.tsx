@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { toiletModels } from '@apis/toilet';
 import { FlexColumnDiv, SubtitleSpan, TitleSpan } from '../common';
 import styled from '@emotion/styled';
 import IconText from '../common/IconText';
 import { useAppDispatch } from '../../modules/configureStore';
 import { toiletActions } from '@modules/toilet';
+import { Toilet } from '@modules/toilet/models';
 
 const ToiletItemBox = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const ToiletItemBox = styled.div`
 `;
 
 interface ToiletListItemProps {
-  toilet: toiletModels.Toilet;
+  toilet: Toilet;
   userId: string | undefined;
 }
 

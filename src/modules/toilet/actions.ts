@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { toiletModels } from '@apis/toilet';
+import { Toilet } from './models';
 
 /**
  * 주어진 위치값/범위로 화장실 정보를 가져온다.
@@ -41,11 +41,9 @@ export function requestToiletsInArea(
 export const RECEIVE_TOILETS = 'toilet/RECEIVE_TOILETS' as const;
 export interface ReceiveToiletsAction {
   type: typeof RECEIVE_TOILETS;
-  toilets: toiletModels.Toilet[];
+  toilets: Toilet[];
 }
-export function receiveToilets(
-  toilets: toiletModels.Toilet[],
-): ReceiveToiletsAction {
+export function receiveToilets(toilets: Toilet[]): ReceiveToiletsAction {
   return {
     type: RECEIVE_TOILETS,
     toilets,
@@ -58,9 +56,9 @@ export function receiveToilets(
 export const SELECT_TOILET = 'toilet/SELECT_TOILET' as const;
 export interface SelectToiletAction {
   type: typeof SELECT_TOILET;
-  toilet: toiletModels.Toilet;
+  toilet: Toilet;
 }
-export function selectToilet(toilet: toiletModels.Toilet): SelectToiletAction {
+export function selectToilet(toilet: Toilet): SelectToiletAction {
   return {
     type: SELECT_TOILET,
     toilet,

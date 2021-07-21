@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
-import { toiletModels } from 'src/apis/toilet';
+import { toiletModels } from '@modules/toilet';
 import { processRawToiletData } from '../../util/parseToiletData';
 import ToiletInfoCard from './ToiletInfoCard';
 // import TestToilet from './TestToilet';

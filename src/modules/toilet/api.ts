@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import { Toilet, ToiletBase } from './models';
 import { firebaseDB, firebaseGeoDB } from '../configureFirebase';
-import { reviewAPI, reviewModels } from '../review';
+import { reviewModels, reviewAPI } from '@modules/review';
 
 const TOILET_COLLECTION_NAME = 'toilets';
 export const toiletsRef = firebaseDB.collection(TOILET_COLLECTION_NAME);
@@ -32,6 +32,6 @@ export function createToilet(
   review: reviewModels.ReviewBase,
 ): void {
   toiletsGeoRef.add(newToilet).then(doc => {
-    reviewAPI.createReview(Object.assign(newToilet, { id: doc.id }), review);
+    reviewAPI.createNewReview(Object.assign(newToilet, { id: doc.id }), review);
   });
 }

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { reviewModels } from '@apis/review';
+import { reviewModels } from '@modules/review';
 
 interface Props {
   review: reviewModels.Review;
