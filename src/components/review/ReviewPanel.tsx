@@ -1,8 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
-import { reviewModels, reviewAPI } from '@apis/review';
+import { reviewModels } from '@apis/review';
 import { useAppDispatch } from '@modules/configureStore';
-import { requestReviewsByToiletId } from '../../modules/map/actions';
-import { mapHooks } from '@modules/map';
+import { reviewActions, reviewHooks } from '@modules/review';
 
 type Props = {
   name: string;
@@ -30,10 +29,10 @@ export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [review, setReview] = useState<ReviewFor>({});
-  const reviews = mapHooks.useReviews();
+  const reviews = reviewHooks.useSelectedToiletReviews();
 
   useEffect(() => {
-    dispatch(requestReviewsByToiletId(toiletId));
+    dispatch(reviewActions.requestReviewsByToiletId(toiletId));
     return () => {
       //
     };

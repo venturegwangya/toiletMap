@@ -1,10 +1,13 @@
-import { reviewAPI } from '@apis/review';
+import { reviewAPI, reviewModels } from '@apis/review';
 import { ReviewBase } from '@apis/review/models';
 import { call, put, StrictEffect, takeEvery } from 'redux-saga/effects';
 import {
   CreateReviewAction,
   CREATE_REVIEW,
-  receiveCreateReview,
+  onCreateReviewSuccess,
+  receiveReviews,
+  RequestReviewsByToiletIdAction,
+  REQUEST_REVIEWS_BY_TOILET_ID,
 } from './actions';
 
 function* createReview({
@@ -17,7 +20,7 @@ function* createReview({
       toilet,
       review,
     );
-    yield put(receiveCreateReview(_review));
+    yield put(onCreateReviewSuccess(_review));
   } catch (err) {
     console.error(err);
   }
@@ -27,4 +30,26 @@ export function* watchCreateReview(): Generator {
   yield takeEvery(CREATE_REVIEW, createReview);
 }
 
-export const sagas = [watchCreateReview];
+function* requestReviewsByToiletId({
+  toiletId,
+}: RequestReviewsByToiletIdAction): Generator<
+  StrictEffect,
+  void,
+  reviewModels.Review[]
+> {
+  try {
+    const reviews: reviewModels.Review[] = yield call(
+      reviewAPI.fetchToiletReviews,
+      toiletId,
+    );
+    yield put(receiveReviews(reviews));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* watchRequestReviewsByToiletId(): Generator {
+  yield takeEvery(REQUEST_REVIEWS_BY_TOILET_ID, requestReviewsByToiletId);
+}
+
+export const sagas = [watchCreateReview, watchRequestReviewsByToiletId];
