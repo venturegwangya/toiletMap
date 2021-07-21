@@ -1,5 +1,7 @@
-import { ReviewBase } from '@apis/review/models';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
+import { reviewModels } from '@apis/review';
+import { useAppDispatch } from '@modules/configureStore';
+import { reviewActions, reviewHooks } from '@modules/review';
 
 type Props = {
   name: string;
@@ -10,16 +12,31 @@ type Props = {
 function TempInput({ name, id, onChange }: Props) {
   return (
     <div style={{ display: 'inline-block' }}>
-      <div>{name}</div>
-      <input onChange={e => onChange(id, e.currentTarget.value)} />
+      <div>{name}</div>{' '}
+      <input onChange={e => onChange(id, e.currentTarget.value)} />{' '}
     </div>
   );
 }
 
-type ReviewFor = Partial<ReviewBase>;
+type ReviewFor = Partial<reviewModels.ReviewBase>;
 
-export function ReviewPanel() {
+interface ReviewPanelProps {
+  toiletId: string;
+}
+
+export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
+  toiletId,
+}) => {
+  const dispatch = useAppDispatch();
   const [review, setReview] = useState<ReviewFor>({});
+  const reviews = reviewHooks.useSelectedToiletReviews();
+
+  useEffect(() => {
+    dispatch(reviewActions.requestReviewsByToiletId(toiletId));
+    return () => {
+      //
+    };
+  }, [dispatch, toiletId]);
 
   const onChange = useCallback(
     (id: string, value: string) => {
@@ -32,9 +49,21 @@ export function ReviewPanel() {
 
   return (
     <div style={{ width: '300px', background: 'white' }}>
-      <div style={{ fontSize: '20px' }}>리뷰 쓰시오</div>
-      <TempInput name="리뷰" id="text" onChange={onChange} />
-      <button onClick={onComplete}>리뷰 등록</button>
+      <div>
+        <div style={{ fontSize: '20px' }}>리뷰 쓰시오</div>
+        <TempInput name="리뷰" id="text" onChange={onChange} />
+        <button onClick={onComplete}>리뷰 등록</button>
+      </div>
+      <div>
+        {' '}
+        {reviews.map((r, i) => (
+          <div key={i}>
+            {' '}
+            {r.author} <br></br>
+            {r.text}
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+};

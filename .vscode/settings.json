@@ -1,6 +1,7 @@
 {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "eslint.format.enable": true,
     "eslint.alwaysShowStatus": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2,
     // Enable per-language
     "[javascript]": {
@@ -17,7 +18,8 @@
     },
     "editor.codeActionsOnSave": {
         // For ESLint
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": true,
+        "source.fixAll.prettier": true
     },
     "typescript.tsdk": "node_modules/typescript/lib",
 }

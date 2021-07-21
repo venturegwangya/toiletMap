@@ -11,7 +11,6 @@ import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import { mapHooks } from './modules/map';
 import ToiletList from './components/toilet/ToiletList';
-import { requestToiletsInArea } from './modules/map/actions';
 import { showModal } from './modules/modal/actions';
 import { useAppDispatch } from './modules/configureStore';
 import { authAPI } from '@apis/auth';
@@ -20,6 +19,7 @@ import LeftMenuContainer from '@components/menu/LeftMenuContainer';
 import LeftMenuItemView from '@components/menu/LeftMenu';
 import { faList, faPoop, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
+import { toiletActions, toiletHooks } from '@modules/toilet';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
@@ -29,9 +29,10 @@ function App(): EmotionJSX.Element {
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
   const dispatch = useAppDispatch();
 
-  const toilets = mapHooks.useToilets();
+  const toilets = toiletHooks.useToilets();
   const position = mapHooks.useMapPosition();
-  const needRequestAgain = mapHooks.useNeedRequestAgain();
+  const needRequestAgain = toiletHooks.useNeedRequestAgain();
+  const selectedToilet = toiletHooks.useSelectedToilet();
 
   useEffect(() => {
     // user바뀔 때
@@ -49,7 +50,10 @@ function App(): EmotionJSX.Element {
   const fetchNearByToilets = useCallback(() => {
     const { lat, lng } = position;
     dispatch(
-      requestToiletsInArea(new firebase.firestore.GeoPoint(lat, lng), 100),
+      toiletActions.requestToiletsInArea(
+        new firebase.firestore.GeoPoint(lat, lng),
+        100,
+      ),
     );
   }, [dispatch, position]);
 
@@ -116,9 +120,14 @@ function App(): EmotionJSX.Element {
                 }}
               />
             </LeftMenuContainer>
+            {/* 화장실 리스트 */}
             {selectedMenu === 'LIST' && (
-              <ToiletList user={user} toilets={toilets} />
+              <>
+                <ToiletList user={user} toilets={toilets} />
+                {selectedToilet && <ReviewPanel toiletId={selectedToilet.id} />}
+              </>
             )}
+            {/* 리뷰 리스트 */}
             {selectedMenu === 'USER_SETTING' && (
               <div
                 style={{
@@ -129,7 +138,6 @@ function App(): EmotionJSX.Element {
                 <text>CANVAS처럼 트랜지션 넣을 거임 </text>
               </div>
             )}
-            {selectedMenu === 'WRITE_REVIEW' && <ReviewPanel />}
           </FlexRowDiv>
         }
         BodyComponent={

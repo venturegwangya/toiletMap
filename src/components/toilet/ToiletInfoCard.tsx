@@ -6,7 +6,7 @@ import { FlexColumnDiv, SubtitleSpan, TitleSpan } from '../common';
 import styled from '@emotion/styled';
 import IconText from '../common/IconText';
 import { useAppDispatch } from '../../modules/configureStore';
-import { mapActions } from '@modules/map';
+import { toiletActions } from '@modules/toilet';
 
 const ToiletItemBox = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ function ToiletInfoCard({
   // }, [toilet.id]); // 조건, posts 바뀔 때
 
   return (
-    <ToiletItemBox onClick={() => dispatch(mapActions.selectToilet(toilet))}>
+    <ToiletItemBox onClick={() => dispatch(toiletActions.selectToilet(toilet))}>
       <FlexColumnDiv
         css={css`
           justify-content: space-between;
