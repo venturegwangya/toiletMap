@@ -56,4 +56,4 @@ export function* watchRequestReviewsByToiletId(): Generator {
   yield takeEvery(REQUEST_REVIEWS_BY_TOILET_ID, requestReviewsByToiletId);
 }
 
-export const sagas = [watchRequestToiletsInArea];
+export const sagas = [watchRequestToiletsInArea, watchRequestReviewsByToiletId];

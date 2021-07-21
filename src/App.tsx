@@ -121,7 +121,7 @@ function App(): EmotionJSX.Element {
             {selectedMenu === 'LIST' && (
               <>
                 <ToiletList user={user} toilets={toilets} />
-                {selectedToilet && <ReviewPanel />}
+                {selectedToilet && <ReviewPanel toiletId={selectedToilet.id} />}
               </>
             )}
             {/* 리뷰 리스트 */}
@@ -135,7 +135,6 @@ function App(): EmotionJSX.Element {
                 <text>CANVAS처럼 트랜지션 넣을 거임 </text>
               </div>
             )}
-            {selectedMenu === 'WRITE_REVIEW' && <ReviewPanel />}
           </FlexRowDiv>
         }
         BodyComponent={
