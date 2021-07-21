@@ -1,7 +1,6 @@
 import { useCallback, useState, useEffect } from 'react';
-import { reviewModels } from '@apis/review';
 import { useAppDispatch } from '@modules/configureStore';
-import { reviewActions, reviewHooks } from '@modules/review';
+import { reviewActions, reviewHooks, reviewModels } from '@modules/review';
 
 type Props = {
   name: string;

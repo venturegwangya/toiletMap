@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Marker } from 'react-leaflet';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { toiletModels } from '@apis/toilet';
+import { toiletModels } from '@modules/toilet';
 
 interface MarkerLayerProps {
   toilets: toiletModels.Toilet[];

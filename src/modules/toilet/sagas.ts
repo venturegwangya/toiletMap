@@ -1,25 +1,18 @@
 import { takeEvery, call, put, StrictEffect } from 'redux-saga/effects';
-import { toiletAPI, toiletModels } from '@apis/toilet';
+import { Toilet } from './models';
 import {
   RequestToiletsInAreaAction,
   receiveToilets,
   REQUEST_TOILETS_IN_AREA,
 } from '@modules/toilet/actions';
+import { fetchToiletWithArea } from './api';
 
 function* requestToiletsInArea({
   center,
   radius,
-}: RequestToiletsInAreaAction): Generator<
-  StrictEffect,
-  void,
-  toiletModels.Toilet[]
-> {
+}: RequestToiletsInAreaAction): Generator<StrictEffect, void, Toilet[]> {
   try {
-    const toilets: toiletModels.Toilet[] = yield call(
-      toiletAPI.fetchToiletWithArea,
-      center,
-      radius,
-    );
+    const toilets: Toilet[] = yield call(fetchToiletWithArea, center, radius);
     yield put(receiveToilets(toilets));
   } catch (err) {
     console.log(err);

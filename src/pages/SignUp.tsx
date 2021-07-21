@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { useState } from 'react';
-import { authAPI } from '@apis/auth';
+import { authAPI } from '@modules/auth';
 
 export default function SignUp({
   isSignUp,

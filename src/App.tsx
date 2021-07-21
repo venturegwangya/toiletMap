@@ -13,7 +13,7 @@ import { mapHooks } from './modules/map';
 import ToiletList from './components/toilet/ToiletList';
 import { showModal } from './modules/modal/actions';
 import { useAppDispatch } from './modules/configureStore';
-import { authAPI } from '@apis/auth';
+import { authAPI } from '@modules/auth';
 import PopupPill from '@components/common/PopupPill';
 import LeftMenuContainer from '@components/menu/LeftMenuContainer';
 import LeftMenuItemView from '@components/menu/LeftMenu';
