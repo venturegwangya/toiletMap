@@ -7,6 +7,11 @@ import IconText from '../common/IconText';
 import { useAppDispatch } from '../../modules/configureStore';
 import { toiletActions } from '@modules/toilet';
 import { Toilet } from '@modules/toilet/models';
+import {
+  faChild,
+  faGenderless,
+  faWheelchair,
+} from '@fortawesome/free-solid-svg-icons';
 
 const ToiletItemBox = styled.div`
   display: flex;
@@ -64,17 +69,17 @@ function ToiletInfoCard({
       >
         <IconText
           enabled={toilet.unisex >= 1}
-          iconClass={'fa-genderless'}
+          icon={faGenderless}
           text={'남녀공용화장실' + availableText(toilet.unisex >= 1)}
         />
         <IconText
           enabled={toilet.disabledFacilities >= 1}
-          iconClass={'fa-wheelchair'}
+          icon={faWheelchair}
           text={'장애인용 시설' + availableText(toilet.disabledFacilities >= 1)}
         />
         <IconText
           enabled={toilet.childFacilities >= 1}
-          iconClass={'fa-child'}
+          icon={faChild}
           text={'아동용 시설' + availableText(toilet.childFacilities >= 1)}
         />
       </FlexColumnDiv>

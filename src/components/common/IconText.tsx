@@ -1,15 +1,16 @@
 import { css } from '@emotion/react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React from 'react';
 import { FlexRowDiv, StyledIcon } from '.';
 
 interface Props {
-  iconClass: string;
+  icon: IconProp;
   text: string;
   enabled?: boolean;
 }
 
 export default function IconText({
-  iconClass,
+  icon,
   text,
   enabled,
 }: Props): React.ReactElement {
@@ -17,7 +18,7 @@ export default function IconText({
     <FlexRowDiv>
       <StyledIcon
         enabled={enabled}
-        iconClass={iconClass}
+        icon={icon}
         iconBoxCss={css`
           margin-right: 8px;
         `}
