@@ -1,7 +1,8 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useAppDispatch } from '@modules/configureStore';
 import { reviewActions, reviewHooks, reviewModels } from '@modules/review';
-import ReviewCard from './ReviewCard';
+import ReviewListItem from './ReviewListItem';
+import tw from 'twin.macro';
 
 type Props = {
   name: string;
@@ -9,6 +10,7 @@ type Props = {
   onChange: (id: string, value: string) => void;
 };
 
+// TODO: 파일 분리
 function TempInput({ name, id, onChange }: Props) {
   return (
     <div style={{ display: 'inline-block' }}>
@@ -17,6 +19,9 @@ function TempInput({ name, id, onChange }: Props) {
     </div>
   );
 }
+
+// TODO: 회색 디바이서 리스트 컨테이너 공통으로 추출
+const ReviewListContainer = tw.ul`divide-y divide-gray-100`;
 
 type ReviewFor = Partial<reviewModels.ReviewBase>;
 
@@ -54,11 +59,11 @@ export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
         <TempInput name="리뷰" id="text" onChange={onChange} />
         <button onClick={onComplete}>리뷰 등록</button>
       </div>
-      <div>
+      <ReviewListContainer>
         {reviews.map((r, i) => (
-          <ReviewCard key={`review-${i}`} review={r} />
+          <ReviewListItem key={`review-${i}`} review={r} />
         ))}
-      </div>
+      </ReviewListContainer>
     </div>
   );
 };

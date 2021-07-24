@@ -2,12 +2,8 @@
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
-import { SerializedStyles } from '@emotion/utils';
-import { Icon, IconProp } from '@fortawesome/fontawesome-svg-core';
-import {
-  FontAwesomeIcon,
-  FontAwesomeIconProps,
-} from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const IconBox = styled.div<{ enabled?: boolean }>(props => ({
   display: 'flex',
@@ -21,16 +17,11 @@ const IconBox = styled.div<{ enabled?: boolean }>(props => ({
 interface StyledIconProps {
   icon: IconProp;
   enabled?: boolean;
-  iconBoxCss: SerializedStyles;
 }
 
-function StyledIcon({
-  icon,
-  enabled,
-  iconBoxCss,
-}: StyledIconProps): EmotionJSX.Element {
+function StyledIcon({ icon, enabled }: StyledIconProps): EmotionJSX.Element {
   return (
-    <IconBox css={iconBoxCss} enabled={enabled}>
+    <IconBox enabled={enabled}>
       <FontAwesomeIcon icon={icon} />
     </IconBox>
   );

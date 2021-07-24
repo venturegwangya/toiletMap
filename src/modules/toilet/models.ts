@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { ToiletRegisterType } from './types';
 
 export interface Unique {
