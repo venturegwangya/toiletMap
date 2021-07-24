@@ -6,7 +6,12 @@ interface Props {
 }
 
 function ReviewCard({ review }: Props): ReactElement {
-  return <div></div>;
+  return (
+    <div>
+      {review.author} <br></br>
+      {review.text}
+    </div>
+  );
 }
 
 export default ReviewCard;

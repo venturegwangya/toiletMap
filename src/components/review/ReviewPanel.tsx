@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useAppDispatch } from '@modules/configureStore';
 import { reviewActions, reviewHooks, reviewModels } from '@modules/review';
+import ReviewCard from './ReviewCard';
 
 type Props = {
   name: string;
@@ -54,13 +55,8 @@ export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
         <button onClick={onComplete}>리뷰 등록</button>
       </div>
       <div>
-        {' '}
         {reviews.map((r, i) => (
-          <div key={i}>
-            {' '}
-            {r.author} <br></br>
-            {r.text}
-          </div>
+          <ReviewCard key={`review-${i}`} review={r} />
         ))}
       </div>
     </div>
