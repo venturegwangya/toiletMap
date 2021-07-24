@@ -1,10 +1,15 @@
-const path = require("path");
+const path = require('path');
 module.exports = {
   webpack: {
     alias: {
-      '@apis': path.resolve(__dirname, "./src/apis/"),
-      '@modules': path.resolve(__dirname, "./src/modules/"),
-      '@components': path.resolve(__dirname, "./src/components/")
-    }
-  }
-}
+      '@apis': path.resolve(__dirname, './src/apis/'),
+      '@modules': path.resolve(__dirname, './src/modules/'),
+      '@components': path.resolve(__dirname, './src/components/'),
+    },
+  },
+  style: {
+    postcss: {
+      plugins: [require('tailwindcss'), require('autoprefixer')],
+    },
+  },
+};

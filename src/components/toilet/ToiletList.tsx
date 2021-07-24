@@ -1,18 +1,19 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { toiletModels } from '@modules/toilet';
 import { processRawToiletData } from '../../util/parseToiletData';
 import ToiletInfoCard from './ToiletInfoCard';
-// import TestToilet from './TestToilet';
+import tw from 'twin.macro';
 
-interface Props {
+// TODO: divide 부분 리뷰 리스트에도 있으므로 공통으로 추출하고 함수형으로 Composition하기
+const ToiletListContainer = tw.ul`divide-y divide-gray-300 p-8 bg-white overflow-y-scroll`;
+
+interface ToiletListProps {
   user: firebase.User | null;
   toilets: toiletModels.Toilet[];
 }
 
-function ToiletList({ user, toilets }: Props): EmotionJSX.Element {
+function ToiletList({ user, toilets }: ToiletListProps): EmotionJSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (e: any) => {
     const file = e.target.files[0];
@@ -28,20 +29,13 @@ function ToiletList({ user, toilets }: Props): EmotionJSX.Element {
   };
 
   return (
-    <div
-      css={css`
-        background-color: white;
-        overflow-y: scroll;
-        padding-left: 20px;
-        padding-right: 20px;
-      `}
-    >
+    <ToiletListContainer>
       {toilets.map((toilet: toiletModels.Toilet) => (
         <ToiletInfoCard key={toilet.id} toilet={toilet} userId={user?.uid} />
       ))}
       <label>JSON파일 Firebase에 업로드</label>
       <input type="file" id="get_the_file" onChange={handleChange}></input>
-    </div>
+    </ToiletListContainer>
   );
 }
 

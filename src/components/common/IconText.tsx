@@ -1,28 +1,40 @@
+/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { FlexRowDiv, StyledIcon } from '.';
+import tw from 'twin.macro';
+
+const IconTextContainer = styled.div<{ enabled?: boolean }>(props => [
+  tw`flex`,
+  tw`flex-row`,
+  tw`items-center`,
+  tw`gap-3`,
+  !props.enabled && tw`text-gray-300`,
+]);
 
 interface Props {
-  iconClass: string;
+  icon: IconProp;
   text: string;
   enabled?: boolean;
 }
 
 export default function IconText({
-  iconClass,
+  icon,
   text,
   enabled,
 }: Props): React.ReactElement {
   return (
-    <FlexRowDiv>
-      <StyledIcon
-        enabled={enabled}
-        iconClass={iconClass}
-        iconBoxCss={css`
-          margin-right: 8px;
+    <IconTextContainer enabled={enabled}>
+      <FontAwesomeIcon
+        icon={icon}
+        css={css`
+          width: 16px !important;
         `}
+        // className={!enabled ? `text-gray-300` : undefined}
       />
       <span>{text}</span>
-    </FlexRowDiv>
+    </IconTextContainer>
   );
 }

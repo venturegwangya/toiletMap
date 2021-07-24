@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { Toilet } from './models';
 
 /**
@@ -56,9 +56,9 @@ export function receiveToilets(toilets: Toilet[]): ReceiveToiletsAction {
 export const SELECT_TOILET = 'toilet/SELECT_TOILET' as const;
 export interface SelectToiletAction {
   type: typeof SELECT_TOILET;
-  toilet: Toilet;
+  toilet: Toilet | null;
 }
-export function selectToilet(toilet: Toilet): SelectToiletAction {
+export function selectToilet(toilet: Toilet | null): SelectToiletAction {
   return {
     type: SELECT_TOILET,
     toilet,

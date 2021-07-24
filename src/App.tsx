@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { BodyLayout, FlexRowDiv, Header } from './components/common';
@@ -17,7 +17,12 @@ import { authAPI } from '@modules/auth';
 import PopupPill from '@components/common/PopupPill';
 import LeftMenuContainer from '@components/menu/LeftMenuContainer';
 import LeftMenuItemView from '@components/menu/LeftMenu';
-import { faList, faPoop, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faList,
+  faPoop,
+  faRedo,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletActions, toiletHooks } from '@modules/toilet';
 
@@ -55,6 +60,7 @@ function App(): EmotionJSX.Element {
         100,
       ),
     );
+    dispatch(toiletActions.selectToilet(null));
   }, [dispatch, position]);
 
   useEffect(() => {
@@ -145,7 +151,7 @@ function App(): EmotionJSX.Element {
             {needRequestAgain && (
               <PopupPill
                 text={'이 위치에서 다시 검색'}
-                icon={'fa-redo'}
+                icon={faRedo}
                 onClick={fetchNearByToilets}
               />
             )}
