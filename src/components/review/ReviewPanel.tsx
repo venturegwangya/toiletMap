@@ -3,10 +3,6 @@ import { useAppDispatch } from '@modules/configureStore';
 import { reviewActions, reviewHooks, reviewModels } from '@modules/review';
 import ReviewListItem from './ReviewListItem';
 import tw from 'twin.macro';
-
-// TODO: 회색 디바이서 리스트 컨테이너 공통으로 추출
-const ReviewListContainer = tw.ul`divide-y divide-gray-100`;
-
 import { Toilet } from '@modules/toilet/models';
 import IconText from '@components/common/IconText';
 import {
@@ -14,6 +10,10 @@ import {
   faGenderless,
   faWheelchair,
 } from '@fortawesome/free-solid-svg-icons';
+import { StartRatingBar } from '@components/common/StarRatingBar';
+
+// TODO: 회색 디바이서 리스트 컨테이너 공통으로 추출
+const ReviewListContainer = tw.ul`divide-y divide-gray-100`;
 
 interface ReviewPanelProps {
   toilet: Toilet;
@@ -70,7 +70,7 @@ export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
     >
       <div style={{ fontSize: '20px', marginBottom: '10px' }}>리뷰 작성</div>
       <div style={{ fontSize: '16px', marginBottom: '6px' }}>평점</div>
-      <div>rating bar</div>
+      <StartRatingBar value={1 + ''} />
       <div
         style={{ fontSize: '16px', marginBottom: '10px', marginTop: '10px' }}
       >
