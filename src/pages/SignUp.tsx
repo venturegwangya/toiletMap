@@ -24,7 +24,7 @@ export default function SignUp({
   };
 
   return (
-    <div className="signUpPage">
+    <div>
       <form className="signUpPage__form">
         {isSignUp && (
           <input

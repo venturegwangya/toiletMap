@@ -131,7 +131,9 @@ function App(): EmotionJSX.Element {
             {selectedMenu === 'LIST' && (
               <>
                 <ToiletList user={user} toilets={toilets} />
-                {selectedToilet && <ReviewPanel toilet={selectedToilet} />}
+                {selectedToilet && (
+                  <ReviewPanel toilet={selectedToilet} user={user} />
+                )}
               </>
             )}
             {/* 리뷰 리스트 */}
