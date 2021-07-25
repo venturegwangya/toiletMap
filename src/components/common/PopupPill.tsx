@@ -21,12 +21,14 @@ interface Props {
   icon: IconProp;
   text: string;
   onClick: () => void;
+  left?: string;
 }
 
 export default function PopupPill({
   icon,
   text,
   onClick,
+  left = '50%',
 }: Props): ReactElement {
   return (
     <div css={roundPopupPillCSS} onClick={onClick}>

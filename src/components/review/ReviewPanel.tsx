@@ -1,63 +1,135 @@
-import { useCallback, useState, useEffect } from 'react';
+import IconText from '@components/common/IconText';
+import { StartRatingBar } from '@components/common/StarRatingBar';
+import {
+  faChild,
+  faGenderless,
+  faWheelchair,
+} from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch } from '@modules/configureStore';
-import { reviewActions, reviewHooks, reviewModels } from '@modules/review';
-import ReviewListItem from './ReviewListItem';
+import { reviewActions, reviewHooks } from '@modules/review';
+import { Toilet } from '@modules/toilet/models';
+import React, { useEffect, useState } from 'react';
 import tw from 'twin.macro';
+import firebase from 'firebase';
+import ReviewListItem from './ReviewListItem';
 
-type Props = {
-  name: string;
-  id: string;
-  onChange: (id: string, value: string) => void;
-};
-
-// TODO: 파일 분리
-function TempInput({ name, id, onChange }: Props) {
-  return (
-    <div style={{ display: 'inline-block' }}>
-      <div>{name}</div>{' '}
-      <input onChange={e => onChange(id, e.currentTarget.value)} />{' '}
-    </div>
-  );
-}
-
-// TODO: 회색 디바이서 리스트 컨테이너 공통으로 추출
 const ReviewListContainer = tw.ul`divide-y divide-gray-100`;
-
-type ReviewFor = Partial<reviewModels.ReviewBase>;
+const CompleteButton = tw.button`
+  py-2
+  px-4 
+  bg-blue-500
+  text-white
+  font-semibold 
+  rounded-lg
+  shadow-md
+  hover:bg-blue-700
+  focus:outline-none
+  focus:ring-2
+  focus:ring-blue-400 
+  focus:ring-opacity-75`;
 
 interface ReviewPanelProps {
-  toiletId: string;
+  toilet: Toilet;
+  user: firebase.User | null;
+}
+interface ReviewPanelState {
+  disabledFacilities: boolean;
+  unisex: boolean;
+  childFacilities: boolean;
+  text: string;
+  rating: number;
 }
 
 export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
-  toiletId,
+  toilet,
+  user,
 }) => {
   const dispatch = useAppDispatch();
-  const [review, setReview] = useState<ReviewFor>({});
+  const [review, setReview] = useState<ReviewPanelState>({
+    disabledFacilities: false,
+    unisex: false,
+    childFacilities: false,
+    text: '',
+    rating: 1,
+  });
   const reviews = reviewHooks.useSelectedToiletReviews();
 
   useEffect(() => {
-    dispatch(reviewActions.requestReviewsByToiletId(toiletId));
+    dispatch(reviewActions.requestReviewsByToiletId(toilet.id));
     return () => {
       //
     };
-  }, [dispatch, toiletId]);
+  }, [dispatch, toilet]);
 
-  const onChange = useCallback(
-    (id: string, value: string) => {
-      setReview({ ...review, [id]: value });
-    },
-    [review],
-  );
+  const onChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setReview({
+      ...review,
+      [e.currentTarget.id]: e.currentTarget.checked,
+    });
+  };
 
-  const onComplete = useCallback(() => console.log(review), [review]);
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setReview({
+      ...review,
+      [e.currentTarget.id]: e.currentTarget.value,
+    });
+  };
+
+  const onComplete = () => {
+    dispatch(
+      reviewActions.createReview(toilet, {
+        ...review,
+        author: user?.uid || '',
+        authorUserId: user?.email || '',
+      }),
+    );
+  };
 
   return (
-    <div style={{ width: '300px', background: 'white' }}>
-      <div>
-        <div style={{ fontSize: '20px' }}>리뷰 쓰시오</div>
-        <TempInput name="리뷰" id="text" onChange={onChange} />
-        <button onClick={onComplete}>리뷰 등록</button>
+    <div
+      style={{
+        width: '300px',
+        background: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <div style={{ fontSize: '20px', marginBottom: '10px' }}>리뷰 작성</div>
+      <div style={{ fontSize: '16px', marginBottom: '6px' }}>평점</div>
+      <StartRatingBar value={1 + ''} />
+      <div
+        style={{ fontSize: '16px', marginBottom: '10px', marginTop: '10px' }}
+      >
+        화장실 편의시설이 잘되어 있었나요?
+      </div>
+      {/** TODO: 아래 반복되는 것들 컴포넌트로 분리 (+ 스타일링) */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          padding: '10px',
+          alignItems: 'center',
+        }}
+      >
+        <IconText icon={faGenderless} enabled />
+        <label htmlFor="unisex">남녀공용</label>
+        <input id="unisex" type="checkbox" onChange={onChecked} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'row', padding: '10px' }}>
+        <IconText icon={faWheelchair} enabled />
+        <label htmlFor="disabledFacilities">장애인용 시설</label>
+        <input id="disabledFacilities" type="checkbox" onChange={onChecked} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'row', padding: '10px' }}>
+        <IconText icon={faChild} enabled />
+        <label htmlFor="childFacilities">아동용 시설</label>
+        <input id="childFacilities" type="checkbox" onChange={onChecked} />
+      </div>
+      화장실에 대해 간단하게 알려주세요.
+      <textarea id="text" onChange={onChange} />
+      <div style={{ fontSize: '14px', marginBottom: '4px' }}>
+        <CompleteButton onClick={onComplete}>리뷰 등록</CompleteButton>
       </div>
       <ReviewListContainer>
         {reviews.map((r, i) => (

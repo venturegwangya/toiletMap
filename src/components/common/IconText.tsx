@@ -16,7 +16,7 @@ const IconTextContainer = styled.div<{ enabled?: boolean }>(props => [
 
 interface Props {
   icon: IconProp;
-  text: string;
+  text?: string;
   enabled?: boolean;
 }
 

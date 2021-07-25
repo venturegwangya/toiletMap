@@ -32,6 +32,7 @@ const LEFT_PANEL_MENU_WIDTH = '300px';
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
+  const [searchLocationLeftPosition, setLeftPosition] = useState<string>('50%');
   const dispatch = useAppDispatch();
 
   const toilets = toiletHooks.useToilets();
@@ -130,7 +131,9 @@ function App(): EmotionJSX.Element {
             {selectedMenu === 'LIST' && (
               <>
                 <ToiletList user={user} toilets={toilets} />
-                {selectedToilet && <ReviewPanel toiletId={selectedToilet.id} />}
+                {selectedToilet && (
+                  <ReviewPanel toilet={selectedToilet} user={user} />
+                )}
               </>
             )}
             {/* 리뷰 리스트 */}
@@ -141,7 +144,7 @@ function App(): EmotionJSX.Element {
                   backgroundColor: 'yellow',
                 }}
               >
-                <text>CANVAS처럼 트랜지션 넣을 거임 </text>
+                <text>CANVA처럼 트랜지션 넣을 거임 </text>
               </div>
             )}
           </FlexRowDiv>
@@ -152,6 +155,7 @@ function App(): EmotionJSX.Element {
               <PopupPill
                 text={'이 위치에서 다시 검색'}
                 icon={faRedo}
+                left={searchLocationLeftPosition}
                 onClick={fetchNearByToilets}
               />
             )}

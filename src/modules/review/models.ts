@@ -11,7 +11,7 @@ export interface ReviewBase {
   disabledFacilities: boolean;
   childFacilities: boolean;
   unisex: boolean;
-  timestamp: firebase.firestore.FieldValue;
+  timestamp?: firebase.firestore.FieldValue;
 }
 
 export interface ReviewReaction {
