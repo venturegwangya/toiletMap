@@ -4,6 +4,11 @@ import { Review, ReviewBase } from './models';
 const REVIEW_COLLECTION_NAME = 'reviews';
 const reviewsRef = (toiletId: string) =>
   toiletAPI.toiletsRef.doc(toiletId).collection(REVIEW_COLLECTION_NAME);
+const reviewRef = (toiletId: string, reviewId: string) =>
+  toiletAPI.toiletsRef
+    .doc(toiletId)
+    .collection(REVIEW_COLLECTION_NAME)
+    .doc(reviewId);
 
 // export function subscribeToToiletReviewsChange(
 //   toiletId: string,
@@ -32,12 +37,14 @@ export async function fetchToiletReviews(toiletId: string): Promise<Review[]> {
  * 화장실에 대한 리뷰를 추가하고 관련 정보를 갱신
  */
 export async function createNewReview(
-  toilet: toiletModels.Toilet,
+  userId: string,
+  toiletId: string,
+  toilet: toiletModels.ToiletBase,
   review: ReviewBase,
 ): Promise<void> {
   const booleanToNumericSign = (bool: boolean) => (bool ? 1 : -1);
 
-  toiletAPI.updateToilet(toilet.id, {
+  toiletAPI.updateToilet(toiletId, {
     ...toilet,
     avgRating: (toilet.avgRating + review.rating) / 2,
     reviewCount: toilet.reviewCount + 1,
@@ -48,5 +55,6 @@ export async function createNewReview(
       toilet.disabledFacilities +
       booleanToNumericSign(review.disabledFacilities),
   });
-  reviewsRef(toilet.id).add(review);
+  // 각 화장실의 리뷰는 유저당 하나를 가정하여 리뷰 document의 ID는 UID로 지정
+  reviewsRef(toiletId).doc(userId).set(review);
 }

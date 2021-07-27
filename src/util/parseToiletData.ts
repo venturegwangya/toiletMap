@@ -23,7 +23,6 @@ function makeToiletBaseFromRawData(
 ) {
   const type = rawToiletData.구분;
   const name = rawToiletData.화장실명;
-  console.debug(rawToiletData);
   const lat = parseFloat(rawToiletData.위도);
   const long = parseFloat(rawToiletData.경도);
 
@@ -52,7 +51,6 @@ function makeReviewBaseFromRawData(
 ) {
   const newReview: reviewModels.ReviewBase = {
     author: user.displayName || '관리자',
-    authorUserId: user.uid,
     childFacilities:
       parseInt(rawToiletData['남성용-어린이용대변기수']) > 0 ||
       parseInt(rawToiletData['남성용-어린이용소변기수']) > 0,
@@ -79,7 +77,7 @@ export function processRawToiletData(records: RawToiletData[]): void {
     try {
       const newToilet = makeToiletBaseFromRawData(record, newReview);
       if (!newToilet) return;
-      toiletAPI.createToilet(newToilet, newReview);
+      toiletAPI.createToilet(user.uid, newToilet, newReview);
     } catch (err) {
       console.log(err);
     }

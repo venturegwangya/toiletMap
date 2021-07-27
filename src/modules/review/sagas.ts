@@ -11,11 +11,19 @@ import {
 import { fetchToiletReviews, createNewReview as createNewReview } from './api';
 
 function* createReview({
+  userId,
+  toiletId,
   toilet,
   review,
 }: CreateReviewAction): Generator<StrictEffect, void, any> {
   try {
-    const _review: ReviewBase = yield call(createNewReview, toilet, review);
+    const _review: ReviewBase = yield call(
+      createNewReview,
+      userId,
+      toiletId,
+      toilet,
+      review,
+    );
     yield put(onCreateReviewSuccess(_review));
   } catch (err) {
     console.error(err);

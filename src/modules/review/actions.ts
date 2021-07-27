@@ -8,16 +8,22 @@ export const CREATE_REVIEW = 'review/CREATE_REVIEW';
 
 export interface CreateReviewAction {
   type: typeof CREATE_REVIEW;
+  userId: string;
+  toiletId: string;
   toilet: Toilet;
   review: ReviewBase;
 }
 
 export function createReview(
+  userId: string,
+  toiletId: string,
   toilet: Toilet,
   review: ReviewBase,
 ): CreateReviewAction {
   return {
     type: CREATE_REVIEW,
+    userId,
+    toiletId,
     toilet,
     review,
   };
