@@ -32,13 +32,14 @@ const LEFT_PANEL_MENU_WIDTH = '300px';
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
-  const [searchLocationLeftPosition, setLeftPosition] = useState<string>('50%');
+
   const dispatch = useAppDispatch();
 
   const toilets = toiletHooks.useToilets();
   const position = mapHooks.useMapPosition();
   const needRequestAgain = toiletHooks.useNeedRequestAgain();
   const selectedToilet = toiletHooks.useSelectedToilet();
+  const refreshPillButtonPosition = mapHooks.useRefreshPillPosition();
 
   useEffect(() => {
     // user바뀔 때
@@ -74,6 +75,7 @@ function App(): EmotionJSX.Element {
   const handleMenuClick = useCallback(
     (menu: LeftMenu) => {
       setMenu(menu === selectedMenu ? null : menu);
+      // changeRefreshPillLeftPosition(position);
     },
     [selectedMenu],
   );
@@ -155,7 +157,7 @@ function App(): EmotionJSX.Element {
               <PopupPill
                 text={'이 위치에서 다시 검색'}
                 icon={faRedo}
-                left={searchLocationLeftPosition}
+                left={refreshPillButtonPosition}
                 onClick={fetchNearByToilets}
               />
             )}

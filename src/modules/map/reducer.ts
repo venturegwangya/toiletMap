@@ -3,10 +3,12 @@ import { CHANGE_POSITION, MapActionType } from './actions';
 
 export interface MapState {
   position: LatLng;
+  pillLeftPosition: string;
 }
 
 const initialState: MapState = {
   position: new LatLng(37.65095, 126.843522),
+  pillLeftPosition: '50%',
 };
 
 export default function (
