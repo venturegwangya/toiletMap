@@ -130,7 +130,7 @@ function App(): EmotionJSX.Element {
             {/* 화장실 리스트 */}
             {selectedMenu === 'LIST' && (
               <>
-                <ToiletList user={user} toilets={toilets} />
+                <ToiletList toilets={toilets} />
                 {selectedToilet && (
                   <ReviewPanel toilet={selectedToilet} user={user} />
                 )}

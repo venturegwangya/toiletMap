@@ -38,13 +38,12 @@ export async function fetchToiletReviews(toiletId: string): Promise<Review[]> {
  */
 export async function createNewReview(
   userId: string,
-  toiletId: string,
-  toilet: toiletModels.ToiletBase,
+  toilet: toiletModels.Toilet,
   review: ReviewBase,
 ): Promise<void> {
   const booleanToNumericSign = (bool: boolean) => (bool ? 1 : -1);
 
-  toiletAPI.updateToilet(toiletId, {
+  toiletAPI.updateToilet(toilet.id, {
     ...toilet,
     avgRating: (toilet.avgRating + review.rating) / 2,
     reviewCount: toilet.reviewCount + 1,
@@ -56,5 +55,5 @@ export async function createNewReview(
       booleanToNumericSign(review.disabledFacilities),
   });
   // 각 화장실의 리뷰는 유저당 하나를 가정하여 리뷰 document의 ID는 UID로 지정
-  reviewsRef(toiletId).doc(userId).set(review);
+  reviewsRef(toilet.id).doc(userId).set(review);
 }

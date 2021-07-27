@@ -23,16 +23,12 @@ const ToiletItemBox = styled.div`
 
 interface ToiletListItemProps {
   toilet: Toilet;
-  userId: string | undefined;
 }
 
 const availableText = (available: boolean | undefined) =>
   available ? '있음' : '없음';
 
-function ToiletInfoCard({
-  toilet,
-  userId,
-}: ToiletListItemProps): EmotionJSX.Element {
+function ToiletInfoCard({ toilet }: ToiletListItemProps): EmotionJSX.Element {
   const dispatch = useAppDispatch();
 
   // useEffect(() => {

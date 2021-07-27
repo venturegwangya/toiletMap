@@ -9,11 +9,10 @@ import tw from 'twin.macro';
 const ToiletListContainer = tw.ul`divide-y divide-gray-300 p-8 bg-white overflow-y-scroll`;
 
 interface ToiletListProps {
-  user: firebase.User | null;
   toilets: toiletModels.Toilet[];
 }
 
-function ToiletList({ user, toilets }: ToiletListProps): EmotionJSX.Element {
+function ToiletList({ toilets }: ToiletListProps): EmotionJSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (e: any) => {
     const file = e.target.files[0];
@@ -31,7 +30,7 @@ function ToiletList({ user, toilets }: ToiletListProps): EmotionJSX.Element {
   return (
     <ToiletListContainer>
       {toilets.map((toilet: toiletModels.Toilet) => (
-        <ToiletInfoCard key={toilet.id} toilet={toilet} userId={user?.uid} />
+        <ToiletInfoCard key={toilet.id} toilet={toilet} />
       ))}
       <label>JSON파일 Firebase에 업로드</label>
       <input type="file" id="get_the_file" onChange={handleChange}></input>

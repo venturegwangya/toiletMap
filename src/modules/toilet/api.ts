@@ -33,6 +33,10 @@ export function createToilet(
   review: reviewModels.ReviewBase,
 ): void {
   toiletsGeoRef.add(newToilet).then(doc => {
-    reviewAPI.createNewReview(userId, doc.id, newToilet, review);
+    reviewAPI.createNewReview(
+      userId,
+      Object.assign(newToilet, { id: doc.id }),
+      review,
+    );
   });
 }

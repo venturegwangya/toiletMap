@@ -12,7 +12,6 @@ import { fetchToiletReviews, createNewReview as createNewReview } from './api';
 
 function* createReview({
   userId,
-  toiletId,
   toilet,
   review,
 }: CreateReviewAction): Generator<StrictEffect, void, any> {
@@ -20,7 +19,6 @@ function* createReview({
     const _review: ReviewBase = yield call(
       createNewReview,
       userId,
-      toiletId,
       toilet,
       review,
     );
