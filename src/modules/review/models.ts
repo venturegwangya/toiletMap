@@ -5,7 +5,6 @@ import firebase from 'firebase/app';
  */
 export interface ReviewBase {
   author: string;
-  authorUserId: string;
   text: string;
   rating: number;
   disabledFacilities: boolean;
