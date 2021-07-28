@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
  * 기본 리뷰 데이터
  */
 export interface ReviewBase {
+  id: string;
   author: string;
   text: string;
   rating: number;
@@ -14,8 +15,7 @@ export interface ReviewBase {
 }
 
 export interface ReviewReaction {
-  like: number;
-  dislike: number;
+  dislikedUIDs: { [key: string]: boolean };
 }
 
 export type Review = ReviewBase & ReviewReaction;

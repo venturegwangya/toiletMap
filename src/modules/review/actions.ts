@@ -8,22 +8,16 @@ export const CREATE_REVIEW = 'review/CREATE_REVIEW';
 
 export interface CreateReviewAction {
   type: typeof CREATE_REVIEW;
-  userId: string;
-  toiletId: string;
   toilet: Toilet;
   review: ReviewBase;
 }
 
 export function createReview(
-  userId: string,
-  toiletId: string,
   toilet: Toilet,
   review: ReviewBase,
 ): CreateReviewAction {
   return {
     type: CREATE_REVIEW,
-    userId,
-    toiletId,
     toilet,
     review,
   };
@@ -80,8 +74,48 @@ export function onCreateReviewSuccess(res: any): OnCreateReviewSuccessAction {
   };
 }
 
+export const LIKE_OR_DISLIKE_REVIEW = 'review/LIKE_OR_DISLIKE_REVIEW';
+export interface LikeOrDislikeReviewAction {
+  type: typeof LIKE_OR_DISLIKE_REVIEW;
+  userId: string;
+  toiletId: string;
+  reviewId: string;
+  dislike: boolean;
+}
+export function likeOrDislikeReview(
+  userId: string,
+  toiletId: string,
+  reviewId: string,
+  dislike: boolean,
+): LikeOrDislikeReviewAction {
+  return {
+    type: LIKE_OR_DISLIKE_REVIEW,
+    userId,
+    toiletId,
+    reviewId,
+    dislike,
+  };
+}
+
+export const LIKE_OR_DISLIKE_REVIEW_SUCCESS =
+  'review/LIKE_OR_DISLIKE_REVIEW_SUCCESS';
+export interface LikeOrDislikeReviewSuccessAction {
+  type: typeof LIKE_OR_DISLIKE_REVIEW_SUCCESS;
+  review: Review;
+}
+export function likeOrDislikeReviewSuccess(
+  review: Review,
+): LikeOrDislikeReviewSuccessAction {
+  return {
+    type: LIKE_OR_DISLIKE_REVIEW_SUCCESS,
+    review,
+  };
+}
+
 export type ReviewActionType =
   | CreateReviewAction
   | OnCreateReviewSuccessAction
   | RequestReviewsByToiletIdAction
-  | ReceiveReviewsAction;
+  | ReceiveReviewsAction
+  | LikeOrDislikeReviewAction
+  | LikeOrDislikeReviewSuccessAction;

@@ -28,11 +28,10 @@ export async function updateToilet(
  * 화장실 등록 함수. 화장실 이름/위치 정보 정도를 받고 나머지 상태는 리뷰로 등록한다.
  */
 export function createToilet(
-  userId: string,
   newToilet: ToiletBase,
   review: reviewModels.ReviewBase,
 ): void {
   toiletsGeoRef.add(newToilet).then(doc => {
-    reviewAPI.createNewReview(userId, doc.id, newToilet, review);
+    reviewAPI.createNewReview(Object.assign(newToilet, { id: doc.id }), review);
   });
 }

@@ -3,24 +3,25 @@ import { call, put, StrictEffect, takeEvery } from 'redux-saga/effects';
 import {
   CreateReviewAction,
   CREATE_REVIEW,
+  LIKE_OR_DISLIKE_REVIEW,
   onCreateReviewSuccess,
   receiveReviews,
   RequestReviewsByToiletIdAction,
   REQUEST_REVIEWS_BY_TOILET_ID,
 } from './actions';
-import { fetchToiletReviews, createNewReview as createNewReview } from './api';
+import {
+  LikeOrDislikeReviewAction,
+  likeOrDislikeReviewSuccess,
+} from './actions';
+import { reviewAPI } from '.';
 
 function* createReview({
-  userId,
-  toiletId,
   toilet,
   review,
 }: CreateReviewAction): Generator<StrictEffect, void, any> {
   try {
     const _review: ReviewBase = yield call(
-      createNewReview,
-      userId,
-      toiletId,
+      reviewAPI.createNewReview,
       toilet,
       review,
     );
@@ -38,10 +39,13 @@ function* requestReviewsByToiletId({
   toiletId,
 }: RequestReviewsByToiletIdAction): Generator<StrictEffect, void, Review[]> {
   try {
-    const reviews: Review[] = yield call(fetchToiletReviews, toiletId);
+    const reviews: Review[] = yield call(
+      reviewAPI.fetchToiletReviews,
+      toiletId,
+    );
     yield put(receiveReviews(reviews));
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 }
 
@@ -49,4 +53,32 @@ export function* watchRequestReviewsByToiletId(): Generator {
   yield takeEvery(REQUEST_REVIEWS_BY_TOILET_ID, requestReviewsByToiletId);
 }
 
-export const sagas = [watchCreateReview, watchRequestReviewsByToiletId];
+export function* likeOrDislikeReview({
+  userId,
+  toiletId,
+  reviewId,
+  dislike,
+}: LikeOrDislikeReviewAction): Generator<StrictEffect, void, Review> {
+  try {
+    const updatedReview: Review = yield call(
+      reviewAPI.likeOrDislikeReview,
+      userId,
+      toiletId,
+      reviewId,
+      dislike,
+    );
+    yield put(likeOrDislikeReviewSuccess(updatedReview));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export function* watchLikeOrDislikeReview(): Generator {
+  yield takeEvery(LIKE_OR_DISLIKE_REVIEW, likeOrDislikeReview);
+}
+
+export const sagas = [
+  watchCreateReview,
+  watchRequestReviewsByToiletId,
+  watchLikeOrDislikeReview,
+];
