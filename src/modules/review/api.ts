@@ -37,7 +37,6 @@ export async function fetchToiletReviews(toiletId: string): Promise<Review[]> {
  * 화장실에 대한 리뷰를 추가하고 관련 정보를 갱신
  */
 export async function createNewReview(
-  userId: string,
   toilet: toiletModels.Toilet,
   review: ReviewBase,
 ): Promise<void> {
@@ -55,5 +54,5 @@ export async function createNewReview(
       booleanToNumericSign(review.disabledFacilities),
   });
   // 각 화장실의 리뷰는 유저당 하나를 가정하여 리뷰 document의 ID는 UID로 지정
-  reviewsRef(toilet.id).doc(userId).set(review);
+  reviewsRef(toilet.id).doc(review.id).set(review);
 }

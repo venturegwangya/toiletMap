@@ -65,9 +65,10 @@ export function ReviewForm({ toilet, user }: ReviewPanelProps): JSX.Element {
 
   const onComplete = () => {
     dispatch(
-      reviewActions.createReview(user.uid, toilet, {
+      reviewActions.createReview(toilet, {
         ...newReview,
-        author: user?.displayName || '',
+        id: user.uid,
+        author: user.displayName || '',
       }),
     );
   };

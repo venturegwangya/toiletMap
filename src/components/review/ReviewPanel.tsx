@@ -6,6 +6,7 @@ import tw from 'twin.macro';
 import firebase from 'firebase';
 import ReviewListItem from './ReviewListItem';
 import { ReviewForm } from './ReviewForm';
+import { useCallback } from 'react';
 
 const ReviewListContainer = tw.ul`divide-y divide-gray-100`;
 
@@ -20,6 +21,9 @@ export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const reviews = reviewHooks.useSelectedToiletReviews();
+  const userHasReview = useCallback(() => {
+    return reviews.some(review => review.id === user?.uid);
+  }, [reviews, user]);
 
   useEffect(() => {
     dispatch(reviewActions.requestReviewsByToiletId(toilet.id));

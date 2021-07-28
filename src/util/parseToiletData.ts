@@ -50,6 +50,7 @@ function makeReviewBaseFromRawData(
   rawToiletData: RawToiletData,
 ) {
   const newReview: reviewModels.ReviewBase = {
+    id: user.uid,
     author: user.displayName || '관리자',
     childFacilities:
       parseInt(rawToiletData['남성용-어린이용대변기수']) > 0 ||
@@ -66,6 +67,7 @@ function makeReviewBaseFromRawData(
 }
 
 export function processRawToiletData(records: RawToiletData[]): void {
+  // TODO: 박민규 2021-07-28 관리자도 그냥 관리자 계정으로 하도록
   const user = {
     displayName: '화장실 관리자',
     uid: 'HOVBfPDq3qO3QcWJja0ZTAw5gAW2',
@@ -77,7 +79,7 @@ export function processRawToiletData(records: RawToiletData[]): void {
     try {
       const newToilet = makeToiletBaseFromRawData(record, newReview);
       if (!newToilet) return;
-      toiletAPI.createToilet(user.uid, newToilet, newReview);
+      toiletAPI.createToilet(newToilet, newReview);
     } catch (err) {
       console.log(err);
     }
