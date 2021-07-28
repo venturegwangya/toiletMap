@@ -15,8 +15,7 @@ export interface ReviewBase {
 }
 
 export interface ReviewReaction {
-  like: number;
-  dislike: number;
+  dislikedUIDs: { [key: string]: boolean };
 }
 
 export type Review = ReviewBase & ReviewReaction;

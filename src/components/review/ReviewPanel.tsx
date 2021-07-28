@@ -45,7 +45,12 @@ export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
       {user != null && <ReviewForm toilet={toilet} user={user} />}
       <ReviewListContainer>
         {reviews.map((r, i) => (
-          <ReviewListItem key={`review-${i}`} review={r} />
+          <ReviewListItem
+            key={`review-${i}`}
+            userId={user?.uid}
+            review={r}
+            toiletId={toilet.id}
+          />
         ))}
       </ReviewListContainer>
     </div>

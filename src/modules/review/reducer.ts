@@ -1,4 +1,5 @@
 import { ReviewBase, Review } from '@modules/review/models';
+import { LIKE_OR_DISLIKE_REVIEW_SUCCESS } from './actions';
 import {
   CREATE_REVIEW,
   RECEIVE_REVIEWS,
@@ -33,6 +34,14 @@ export default function (
     case CREATE_REVIEW_SUCCESS:
       return {
         ...state,
+      };
+    case LIKE_OR_DISLIKE_REVIEW_SUCCESS:
+      return {
+        ...state,
+        fetchedReviews: state.fetchedReviews.map(review => {
+          if (action.review.id === review.id) return action.review;
+          return review;
+        }),
       };
     default:
       return state;
