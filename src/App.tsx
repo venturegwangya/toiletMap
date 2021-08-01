@@ -11,7 +11,7 @@ import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import { mapHooks } from './modules/map';
 import ToiletList from './components/toilet/ToiletList';
-import { showModal } from './modules/modal/actions';
+import { showModal } from './modules/window/actions';
 import { useAppDispatch } from './modules/configureStore';
 import { authAPI } from '@modules/auth';
 import PopupPill from '@components/common/PopupPill';
@@ -25,6 +25,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletActions, toiletHooks } from '@modules/toilet';
+import { windowHooks } from '@modules/window';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
@@ -39,7 +40,7 @@ function App(): EmotionJSX.Element {
   const position = mapHooks.useMapPosition();
   const needRequestAgain = toiletHooks.useNeedRequestAgain();
   const selectedToilet = toiletHooks.useSelectedToilet();
-  const refreshPillButtonPosition = mapHooks.useRefreshPillPosition();
+  const refreshPillButtonPosition = windowHooks.useRefreshPillPosition();
 
   useEffect(() => {
     // user바뀔 때
@@ -75,7 +76,11 @@ function App(): EmotionJSX.Element {
   const handleMenuClick = useCallback(
     (menu: LeftMenu) => {
       setMenu(menu === selectedMenu ? null : menu);
-      // changeRefreshPillLeftPosition(position);
+      // dispatch(
+      //   mapActions.changeRefreshPillLeftPosition(
+      //     menu === selectedMenu ? '50%' : '200px',
+      //   ),
+      // );
     },
     [selectedMenu],
   );
@@ -100,6 +105,7 @@ function App(): EmotionJSX.Element {
         />
       </Header>
       <BodyLayout
+        id="leftContainer"
         showLeft
         LeftOverlayComponent={
           <FlexRowDiv>
@@ -155,7 +161,7 @@ function App(): EmotionJSX.Element {
           <>
             {needRequestAgain && (
               <PopupPill
-                text={'이 위치에서 다시 검색'}
+                text="이 위치에서 다시 검색"
                 icon={faRedo}
                 left={refreshPillButtonPosition}
                 onClick={fetchNearByToilets}

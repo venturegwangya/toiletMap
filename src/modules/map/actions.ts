@@ -9,6 +9,7 @@ export interface ChangePositionAction {
   type: typeof CHANGE_POSITION;
   position: LatLng;
 }
+
 export function changePosition(position: LatLng): ChangePositionAction {
   return {
     type: CHANGE_POSITION,
@@ -22,18 +23,20 @@ export function changePosition(position: LatLng): ChangePositionAction {
 export const CHANGE_REFRESH_LEFT_POSITION =
   'map/CHANGE_REFRESH_LEFT_POSITION' as const;
 
-export interface ChangeRefreshPillPosition {
+export interface ChangeRefreshPillPositionAction {
   type: typeof CHANGE_REFRESH_LEFT_POSITION;
-  position: number;
+  position: string;
 }
 
 export function changeRefreshPillLeftPosition(
-  position: number,
-): ChangeRefreshPillPosition {
+  position: string,
+): ChangeRefreshPillPositionAction {
   return {
     type: CHANGE_REFRESH_LEFT_POSITION,
     position,
   };
 }
 
-export type MapActionType = ChangePositionAction;
+export type MapActionType =
+  | ChangePositionAction
+  | ChangeRefreshPillPositionAction;

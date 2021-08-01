@@ -1,5 +1,9 @@
 import { LatLng } from 'leaflet';
-import { CHANGE_POSITION, MapActionType } from './actions';
+import {
+  CHANGE_POSITION,
+  CHANGE_REFRESH_LEFT_POSITION,
+  MapActionType,
+} from './actions';
 
 export interface MapState {
   position: LatLng;
@@ -18,6 +22,8 @@ export default function (
   switch (action.type) {
     case CHANGE_POSITION:
       return { ...state, position: action.position };
+    case CHANGE_REFRESH_LEFT_POSITION:
+      return { ...state, pillLeftPosition: action.position };
     default:
       return state;
   }

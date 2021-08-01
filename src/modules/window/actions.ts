@@ -1,7 +1,7 @@
 /**
  * 모달을 보여준다.
  */
-export const SHOW_MODAL = 'modal/SHOW_MODAL' as const;
+export const SHOW_MODAL = 'window/SHOW_MODAL' as const;
 export interface ShowModalAction {
   type: typeof SHOW_MODAL;
   modalContent: React.ReactNode;
@@ -14,9 +14,9 @@ export function showModal(modalContent: React.ReactNode): ShowModalAction {
 }
 
 /**
- * 모달을 숨긴다.
+ * 모달을 숨긴다.s
  */
-export const HIDE_MODAL = 'modal/HIDE_MODAL' as const;
+export const HIDE_MODAL = 'window/HIDE_MODAL' as const;
 export interface HideModalAction {
   type: typeof HIDE_MODAL;
 }
@@ -26,4 +26,4 @@ export function hideModal(): HideModalAction {
   };
 }
 
-export type ModalActionType = ShowModalAction | HideModalAction;
+export type WindowActionType = ShowModalAction | HideModalAction;

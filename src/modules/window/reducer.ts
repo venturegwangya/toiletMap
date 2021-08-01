@@ -1,20 +1,22 @@
 import React from 'react';
-import { HIDE_MODAL, ModalActionType, SHOW_MODAL } from './actions';
+import { HIDE_MODAL, WindowActionType, SHOW_MODAL } from './actions';
 
-export interface ModalState {
+export interface WindowState {
   show: boolean;
   modalContent: React.ReactNode;
+  pillLeftPosition: string;
 }
 
-const initialState: ModalState = {
+const initialState: WindowState = {
   show: false,
   modalContent: null,
+  pillLeftPosition: '50%',
 };
 
-export default function modalReducer(
-  state: ModalState = initialState,
-  action: ModalActionType,
-): ModalState {
+export default function windowReducer(
+  state: WindowState = initialState,
+  action: WindowActionType,
+): WindowState {
   switch (action.type) {
     case SHOW_MODAL:
       return { ...state, modalContent: action.modalContent, show: true };

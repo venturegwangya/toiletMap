@@ -6,6 +6,7 @@ interface BodyLayoutProps {
   showLeft: boolean;
   LeftOverlayComponent: React.ReactNode;
   BodyComponent: React.ReactNode;
+  id?: string;
 }
 
 const FixedHeightBodyContainer = styled.div`
@@ -34,9 +35,10 @@ function BodyLayout({
   showLeft,
   LeftOverlayComponent,
   BodyComponent,
+  id,
 }: BodyLayoutProps): EmotionJSX.Element {
   return (
-    <FixedHeightBodyContainer>
+    <FixedHeightBodyContainer id={id}>
       <LeftPanel show={showLeft}>{LeftOverlayComponent}</LeftPanel>
       <FlexBodyContainer>{BodyComponent}</FlexBodyContainer>
     </FixedHeightBodyContainer>
