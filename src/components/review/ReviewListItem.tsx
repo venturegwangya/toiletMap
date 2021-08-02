@@ -31,16 +31,22 @@ function ReviewListItem({
       <ReviewAuthorName>{review.author}</ReviewAuthorName>
       <IconText icon={faStar} text={String(review.rating)} />
       {review.text}
-      <button onClick={() => handleLikeButton(false)}>
-        좋아요:
-        {review.dislikedUIDs &&
-          Object.values(review.dislikedUIDs).filter(dislike => !dislike).length}
-      </button>
-      <button onClick={() => handleLikeButton(true)}>
-        싫어요:
-        {review.dislikedUIDs &&
-          Object.values(review.dislikedUIDs).filter(dislike => dislike).length}
-      </button>
+      {userId != null && (
+        <>
+          <button onClick={() => handleLikeButton(false)}>
+            좋아요:
+            {review.dislikedUIDs &&
+              Object.values(review.dislikedUIDs).filter(dislike => !dislike)
+                .length}
+          </button>
+          <button onClick={() => handleLikeButton(true)}>
+            싫어요:
+            {review.dislikedUIDs &&
+              Object.values(review.dislikedUIDs).filter(dislike => dislike)
+                .length}
+          </button>
+        </>
+      )}
     </ReviewListItemContainer>
   );
 }
