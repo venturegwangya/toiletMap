@@ -7,7 +7,7 @@ const TOILET_COLLECTION_NAME = 'toilets';
 export const toiletsRef = firebaseDB.collection(TOILET_COLLECTION_NAME);
 export const toiletsGeoRef = firebaseGeoDB.collection(TOILET_COLLECTION_NAME);
 
-export async function fetchToiletWithArea(
+export async function fetchToiletsInArea(
   center: firebase.firestore.GeoPoint,
   radius: number,
 ): Promise<Toilet[]> {
@@ -32,6 +32,6 @@ export function createToilet(
   review: reviewModels.ReviewBase,
 ): void {
   toiletsGeoRef.add(newToilet).then(doc => {
-    reviewAPI.createNewReview(Object.assign(newToilet, { id: doc.id }), review);
+    reviewAPI.createReview(Object.assign(newToilet, { id: doc.id }), review);
   });
 }

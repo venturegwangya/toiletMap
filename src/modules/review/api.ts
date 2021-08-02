@@ -34,7 +34,9 @@ function snapshotToReview(
   }) as Review;
 }
 
-export async function fetchToiletReviews(toiletId: string): Promise<Review[]> {
+export async function fetchReviewsByToiletId(
+  toiletId: string,
+): Promise<Review[]> {
   const reviewData = await reviewsRef(toiletId)
     .orderBy('timestamp', 'desc')
     .get();
@@ -43,7 +45,7 @@ export async function fetchToiletReviews(toiletId: string): Promise<Review[]> {
 /**
  * 화장실에 대한 리뷰를 추가하고 관련 정보를 갱신
  */
-export async function createNewReview(
+export async function createReview(
   toilet: toiletModels.Toilet,
   review: ReviewBase,
 ): Promise<void> {
@@ -67,7 +69,7 @@ export async function createNewReview(
 
 function likeReview(userId: string, review: Review): Review {
   if (review.dislikedUIDs === undefined) review.dislikedUIDs = {};
-  if (review.dislikedUIDs[userId] != null && review.dislikedUIDs[userId]) {
+  if (review.dislikedUIDs[userId] != null && !review.dislikedUIDs[userId]) {
     // like가 있으면 취소
     delete review.dislikedUIDs[userId];
   } else {
@@ -80,7 +82,7 @@ function likeReview(userId: string, review: Review): Review {
 //
 function dislikeReview(userId: string, review: Review): Review {
   if (review.dislikedUIDs === undefined) review.dislikedUIDs = {};
-  if (review.dislikedUIDs[userId] != null && !review.dislikedUIDs[userId]) {
+  if (review.dislikedUIDs[userId] != null && review.dislikedUIDs[userId]) {
     // dislike가 있으면 취소
     delete review.dislikedUIDs[userId];
   } else {
@@ -106,7 +108,7 @@ export async function likeOrDislikeReview(
     likeReview(userId, review);
   }
   await reviewRef(toiletId, review.id).update({
-    likedUserIDs: review.dislikedUIDs,
+    dislikedUIDs: review.dislikedUIDs,
   });
   return review;
 }

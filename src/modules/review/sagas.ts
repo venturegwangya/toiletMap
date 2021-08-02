@@ -3,6 +3,8 @@ import { call, put, StrictEffect, takeEvery } from 'redux-saga/effects';
 import {
   CreateReviewAction,
   CREATE_REVIEW,
+  LikeOrDislikeReviewAction,
+  likeOrDislikeReviewSuccess,
   LIKE_OR_DISLIKE_REVIEW,
   onCreateReviewSuccess,
   receiveReviews,
@@ -10,50 +12,43 @@ import {
   REQUEST_REVIEWS_BY_TOILET_ID,
 } from './actions';
 import {
-  LikeOrDislikeReviewAction,
-  likeOrDislikeReviewSuccess,
-} from './actions';
-import { reviewAPI } from '.';
+  createReview,
+  fetchReviewsByToiletId,
+  likeOrDislikeReview,
+} from './api';
 
-function* createReview({
+function* createReviewSaga({
   toilet,
   review,
-}: CreateReviewAction): Generator<StrictEffect, void, any> {
+}: CreateReviewAction): Generator<StrictEffect, void, ReviewBase> {
   try {
-    const _review: ReviewBase = yield call(
-      reviewAPI.createNewReview,
-      toilet,
-      review,
-    );
+    const _review: ReviewBase = yield call(createReview, toilet, review);
     yield put(onCreateReviewSuccess(_review));
   } catch (err) {
     console.error(err);
   }
 }
 
-export function* watchCreateReview(): Generator {
-  yield takeEvery(CREATE_REVIEW, createReview);
+export function* watchCreateReviewSaga(): Generator {
+  yield takeEvery(CREATE_REVIEW, createReviewSaga);
 }
 
-function* requestReviewsByToiletId({
+function* fetchReviewsByToiletIdSaga({
   toiletId,
 }: RequestReviewsByToiletIdAction): Generator<StrictEffect, void, Review[]> {
   try {
-    const reviews: Review[] = yield call(
-      reviewAPI.fetchToiletReviews,
-      toiletId,
-    );
+    const reviews: Review[] = yield call(fetchReviewsByToiletId, toiletId);
     yield put(receiveReviews(reviews));
   } catch (err) {
     console.error(err);
   }
 }
 
-export function* watchRequestReviewsByToiletId(): Generator {
-  yield takeEvery(REQUEST_REVIEWS_BY_TOILET_ID, requestReviewsByToiletId);
+export function* watchFetchReviewsByToiletIdSaga(): Generator {
+  yield takeEvery(REQUEST_REVIEWS_BY_TOILET_ID, fetchReviewsByToiletIdSaga);
 }
 
-export function* likeOrDislikeReview({
+export function* likeOrDislikeReviewSaga({
   userId,
   toiletId,
   reviewId,
@@ -61,7 +56,7 @@ export function* likeOrDislikeReview({
 }: LikeOrDislikeReviewAction): Generator<StrictEffect, void, Review> {
   try {
     const updatedReview: Review = yield call(
-      reviewAPI.likeOrDislikeReview,
+      likeOrDislikeReview,
       userId,
       toiletId,
       reviewId,
@@ -73,12 +68,12 @@ export function* likeOrDislikeReview({
   }
 }
 
-export function* watchLikeOrDislikeReview(): Generator {
-  yield takeEvery(LIKE_OR_DISLIKE_REVIEW, likeOrDislikeReview);
+export function* watchLikeOrDislikeReviewSaga(): Generator {
+  yield takeEvery(LIKE_OR_DISLIKE_REVIEW, likeOrDislikeReviewSaga);
 }
 
 export const sagas = [
-  watchCreateReview,
-  watchRequestReviewsByToiletId,
-  watchLikeOrDislikeReview,
+  watchCreateReviewSaga,
+  watchFetchReviewsByToiletIdSaga,
+  watchLikeOrDislikeReviewSaga,
 ];
