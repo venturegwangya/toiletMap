@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import './App.css';
 import { BodyLayout, FlexRowDiv, Header } from './components/common';
 import { Avatar } from './components/common/Avatar';
@@ -25,7 +25,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletActions, toiletHooks } from '@modules/toilet';
-import { windowHooks } from '@modules/window';
+import { windowActions, windowHooks } from '@modules/window';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
@@ -33,6 +33,7 @@ const LEFT_PANEL_MENU_WIDTH = '300px';
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
+  const leftContainerRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useAppDispatch();
 
@@ -44,6 +45,20 @@ function App(): EmotionJSX.Element {
 
   useEffect(() => {
     // user바뀔 때
+    let resizeObserver: ResizeObserver;
+    if (leftContainerRef?.current) {
+      resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+        const [target] = entries;
+        const contentWidth: number = target.contentRect.width;
+        dispatch(
+          windowActions.changeRefreshPillLeftPosition(
+            `${(window.innerWidth + contentWidth) / 2}px`,
+          ),
+        );
+      });
+      resizeObserver.observe(leftContainerRef.current);
+    }
+
     const unsubscribe = authAPI.subscribeToAuthChange(
       authUser => {
         setUser(authUser);
@@ -52,6 +67,7 @@ function App(): EmotionJSX.Element {
     );
     return () => {
       unsubscribe(); // detach backend listener
+      resizeObserver.disconnect();
     };
   }, []);
 
@@ -76,11 +92,6 @@ function App(): EmotionJSX.Element {
   const handleMenuClick = useCallback(
     (menu: LeftMenu) => {
       setMenu(menu === selectedMenu ? null : menu);
-      // dispatch(
-      //   mapActions.changeRefreshPillLeftPosition(
-      //     menu === selectedMenu ? '50%' : '200px',
-      //   ),
-      // );
     },
     [selectedMenu],
   );
@@ -105,10 +116,9 @@ function App(): EmotionJSX.Element {
         />
       </Header>
       <BodyLayout
-        id="leftContainer"
         showLeft
         LeftOverlayComponent={
-          <FlexRowDiv>
+          <FlexRowDiv id="leftContainer" ref={leftContainerRef}>
             <LeftMenuContainer>
               <LeftMenuItemView
                 onClick={handleMenuClick}
