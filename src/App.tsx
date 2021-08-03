@@ -41,35 +41,8 @@ function App(): EmotionJSX.Element {
   const position = mapHooks.useMapPosition();
   const needRequestAgain = toiletHooks.useNeedRequestAgain();
   const selectedToilet = toiletHooks.useSelectedToilet();
-  const refreshPillButtonPosition = windowHooks.useRefreshPillPosition();
-
-  useEffect(() => {
-    // user바뀔 때
-    let resizeObserver: ResizeObserver;
-    if (leftContainerRef?.current) {
-      resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
-        const [target] = entries;
-        const contentWidth: number = target.contentRect.width;
-        dispatch(
-          windowActions.changeRefreshPillLeftPosition(
-            `${(window.innerWidth + contentWidth) / 2}px`,
-          ),
-        );
-      });
-      resizeObserver.observe(leftContainerRef.current);
-    }
-
-    const unsubscribe = authAPI.subscribeToAuthChange(
-      authUser => {
-        setUser(authUser);
-      },
-      () => setUser(null),
-    );
-    return () => {
-      unsubscribe(); // detach backend listener
-      resizeObserver.disconnect();
-    };
-  }, []);
+  const refreshPillButtonPosition =
+    windowHooks.useLeftPosition(leftContainerRef);
 
   const fetchNearByToilets = useCallback(() => {
     const { lat, lng } = position;

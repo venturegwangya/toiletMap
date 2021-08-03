@@ -8,7 +8,7 @@ interface Props {
   icon: IconProp;
   text: string;
   onClick: () => void;
-  left?: string;
+  left?: number;
 }
 
 export default function PopupPill({
@@ -21,7 +21,7 @@ export default function PopupPill({
     <div
       css={css`
         position: absolute;
-        left: ${left || '50%'};
+        left: ${left}px;
         top: 100px;
         z-index: 500;
         background-color: white;
