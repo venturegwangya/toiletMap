@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import './App.css';
 import { BodyLayout, FlexRowDiv, Header } from './components/common';
 import { Avatar } from './components/common/Avatar';
@@ -11,7 +11,7 @@ import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import { mapHooks } from './modules/map';
 import ToiletList from './components/toilet/ToiletList';
-import { showModal } from './modules/modal/actions';
+import { showModal } from './modules/window/actions';
 import { useAppDispatch } from './modules/configureStore';
 import { authAPI } from '@modules/auth';
 import PopupPill from '@components/common/PopupPill';
@@ -25,6 +25,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletActions, toiletHooks } from '@modules/toilet';
+import { windowActions, windowHooks } from '@modules/window';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
@@ -32,26 +33,16 @@ const LEFT_PANEL_MENU_WIDTH = '300px';
 function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
-  const [searchLocationLeftPosition, setLeftPosition] = useState<string>('50%');
+  const leftContainerRef = useRef<HTMLDivElement>(null);
+
   const dispatch = useAppDispatch();
 
   const toilets = toiletHooks.useToilets();
   const position = mapHooks.useMapPosition();
   const needRequestAgain = toiletHooks.useNeedRequestAgain();
   const selectedToilet = toiletHooks.useSelectedToilet();
-
-  useEffect(() => {
-    // user바뀔 때
-    const unsubscribe = authAPI.subscribeToAuthChange(
-      authUser => {
-        setUser(authUser);
-      },
-      () => setUser(null),
-    );
-    return () => {
-      unsubscribe(); // detach backend listener
-    };
-  }, []);
+  const refreshPillButtonPosition =
+    windowHooks.useLeftPosition(leftContainerRef);
 
   const fetchNearByToilets = useCallback(() => {
     const { lat, lng } = position;
@@ -100,7 +91,7 @@ function App(): EmotionJSX.Element {
       <BodyLayout
         showLeft
         LeftOverlayComponent={
-          <FlexRowDiv>
+          <FlexRowDiv id="leftContainer" ref={leftContainerRef}>
             <LeftMenuContainer>
               <LeftMenuItemView
                 onClick={handleMenuClick}
@@ -153,9 +144,9 @@ function App(): EmotionJSX.Element {
           <>
             {needRequestAgain && (
               <PopupPill
-                text={'이 위치에서 다시 검색'}
+                text="이 위치에서 다시 검색"
                 icon={faRedo}
-                left={searchLocationLeftPosition}
+                left={refreshPillButtonPosition}
                 onClick={fetchNearByToilets}
               />
             )}
