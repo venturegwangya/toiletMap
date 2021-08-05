@@ -5,26 +5,35 @@ import { firebaseAuth } from '../configureFirebase';
 /**
  * @override 회원가입
  */
-export function signUpWithEmailAndPassword(
+export async function signUpWithEmailAndPassword(
   email: string,
   password: string,
   displayName: string,
-) {
-  if (email.length === 0 || password.length === 0) return;
-  firebaseAuth
-    .createUserWithEmailAndPassword(email, password)
-    .then(authUser => authUser.user?.updateProfile({ displayName }))
-    .catch(error => alert(error.message));
+): Promise<firebase.User | null | undefined> {
+  try {
+    const userCredential: firebase.auth.UserCredential =
+      await firebaseAuth.createUserWithEmailAndPassword(email, password);
+    userCredential.user?.updateProfile({ displayName });
+    return userCredential.user;
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
 /**
  * @override 로그인
  */
-export function signInWithEmailAndPassword(email: string, password: string) {
-  if (email.length === 0 || password.length === 0) return;
-  firebaseAuth
-    .signInWithEmailAndPassword(email, password)
-    .catch(error => alert(error.message));
+export async function signInWithEmailAndPassword(
+  email: string,
+  password: string,
+): Promise<firebase.User | undefined | null> {
+  try {
+    const userCredential: firebase.auth.UserCredential =
+      await firebaseAuth.signInWithEmailAndPassword(email, password);
+    return userCredential.user;
+  } catch (error) {
+    alert(error);
+  }
 }
 
 export function subscribeToAuthChange(
@@ -42,6 +51,10 @@ export function subscribeToAuthChange(
 /**
  * @override 로그아웃
  */
-export function logout() {
-  firebaseAuth.signOut();
+export async function logout() {
+  try {
+    await firebaseAuth.signOut();
+  } catch (err) {
+    alert(err);
+  }
 }
