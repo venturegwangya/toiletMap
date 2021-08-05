@@ -13,7 +13,6 @@ import { mapHooks } from './modules/map';
 import ToiletList from './components/toilet/ToiletList';
 import { showModal } from './modules/window/actions';
 import { useAppDispatch } from './modules/configureStore';
-import { authAPI } from '@modules/auth';
 import PopupPill from '@components/common/PopupPill';
 import LeftMenuContainer from '@components/menu/LeftMenuContainer';
 import LeftMenuItemView from '@components/menu/LeftMenu';
@@ -26,6 +25,7 @@ import {
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletActions, toiletHooks } from '@modules/toilet';
 import { windowActions, windowHooks } from '@modules/window';
+import { subscribeToAuthChange } from '@modules/auth/api';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
@@ -57,7 +57,18 @@ function App(): EmotionJSX.Element {
 
   useEffect(() => {
     // componentMount/Update
+    const unsub = subscribeToAuthChange(
+      user => {
+        setUser(user);
+      },
+      () => {
+        setUser(null);
+      },
+    );
     fetchNearByToilets();
+    return () => {
+      unsub();
+    };
     // 한번만 실행해야함
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
