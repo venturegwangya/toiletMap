@@ -5,7 +5,7 @@ import { FlexColumnDiv, SubtitleSpan, TitleSpan } from '../common';
 import styled from '@emotion/styled';
 import IconText from '../common/IconText';
 import { useAppDispatch } from '../../modules/configureStore';
-import { toiletActions } from '@modules/toilet';
+import { toiletActions, toiletHooks } from '@modules/toilet';
 import { Toilet } from '@modules/toilet/models';
 import {
   faChild,
@@ -29,8 +29,7 @@ const availableText = (available: boolean | undefined) =>
   available ? '있음' : '없음';
 
 function ToiletInfoCard({ toilet }: ToiletListItemProps): EmotionJSX.Element {
-  const dispatch = useAppDispatch();
-
+  const { setSelectedToilet } = toiletHooks.useToiletActions();
   // useEffect(() => {
   //   const unsubscribe = reviewAPI.subscribeToToiletReviewsChange(
   //     toilet.id,
@@ -45,7 +44,7 @@ function ToiletInfoCard({ toilet }: ToiletListItemProps): EmotionJSX.Element {
   // }, [toilet.id]); // 조건, posts 바뀔 때
 
   return (
-    <ToiletItemBox onClick={() => dispatch(toiletActions.selectToilet(toilet))}>
+    <ToiletItemBox onClick={() => setSelectedToilet(toilet)}>
       <FlexColumnDiv
         css={css`
           justify-content: space-between;
