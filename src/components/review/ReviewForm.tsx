@@ -8,9 +8,8 @@ import {
   faGenderless,
   faWheelchair,
 } from '@fortawesome/free-solid-svg-icons';
-import { useAppDispatch } from '@modules/configureStore';
 import { useState } from 'react';
-import { reviewActions } from '@modules/review';
+import { reviewHooks } from '@modules/review';
 
 const ReviewFormContainer = tw.form`flex flex-col items-center`;
 const CompleteButton = tw.button`
@@ -40,7 +39,7 @@ interface ReviewPanelState {
   rating: number;
 }
 export function ReviewForm({ toilet, user }: ReviewPanelProps): JSX.Element {
-  const dispatch = useAppDispatch();
+  const createReview = reviewHooks.useCreateReview();
   const [newReview, setNewReview] = useState<ReviewPanelState>({
     disabledFacilities: false,
     unisex: false,
@@ -61,16 +60,6 @@ export function ReviewForm({ toilet, user }: ReviewPanelProps): JSX.Element {
       ...newReview,
       [e.currentTarget.id]: e.currentTarget.value,
     });
-  };
-
-  const onComplete = () => {
-    dispatch(
-      reviewActions.createReview(toilet, {
-        ...newReview,
-        id: user.uid,
-        author: user.displayName || '',
-      }),
-    );
   };
 
   return (
@@ -102,7 +91,17 @@ export function ReviewForm({ toilet, user }: ReviewPanelProps): JSX.Element {
       화장실에 대해 간단하게 알려주세요.
       <textarea id="text" onChange={onChange} />
       <div style={{ fontSize: '14px', marginBottom: '4px' }}>
-        <CompleteButton onClick={onComplete}>리뷰 등록</CompleteButton>
+        <CompleteButton
+          onClick={() =>
+            createReview(toilet, {
+              ...newReview,
+              id: user.uid,
+              author: user.displayName || '',
+            })
+          }
+        >
+          리뷰 등록
+        </CompleteButton>
       </div>
     </ReviewFormContainer>
   );

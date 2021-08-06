@@ -9,11 +9,9 @@ import { Avatar } from './components/common/Avatar';
 import { LogInModal } from './components/common/modal/LogInModal';
 import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
-import { mapHooks } from './modules/map';
 import ToiletList from './components/toilet/ToiletList';
 import { showModal } from './modules/window/actions';
 import { useAppDispatch } from './modules/configureStore';
-import { authAPI } from '@modules/auth';
 import PopupPill from '@components/common/PopupPill';
 import LeftMenuContainer from '@components/menu/LeftMenuContainer';
 import LeftMenuItemView from '@components/menu/LeftMenu';
@@ -24,8 +22,9 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
-import { toiletActions, toiletHooks } from '@modules/toilet';
+import { toiletHooks } from '@modules/toilet';
 import { windowActions, windowHooks } from '@modules/window';
+import { subscribeToAuthChange } from '@modules/auth/api';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
@@ -34,30 +33,26 @@ function App(): EmotionJSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
   const leftContainerRef = useRef<HTMLDivElement>(null);
-
   const dispatch = useAppDispatch();
-
-  const toilets = toiletHooks.useToilets();
-  const position = mapHooks.useMapPosition();
-  const needRequestAgain = toiletHooks.useNeedRequestAgain();
-  const selectedToilet = toiletHooks.useSelectedToilet();
+  const { toilets, selectedToilet, requestAgain } = toiletHooks.useToilet();
+  const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
   const refreshPillButtonPosition =
     windowHooks.useLeftPosition(leftContainerRef);
 
-  const fetchNearByToilets = useCallback(() => {
-    const { lat, lng } = position;
-    dispatch(
-      toiletActions.requestToiletsInArea(
-        new firebase.firestore.GeoPoint(lat, lng),
-        100,
-      ),
-    );
-    dispatch(toiletActions.selectToilet(null));
-  }, [dispatch, position]);
-
   useEffect(() => {
     // componentMount/Update
+    const unsub = subscribeToAuthChange(
+      user => {
+        setUser(user);
+      },
+      () => {
+        setUser(null);
+      },
+    );
     fetchNearByToilets();
+    return () => {
+      unsub();
+    };
     // 한번만 실행해야함
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -142,7 +137,7 @@ function App(): EmotionJSX.Element {
         }
         BodyComponent={
           <>
-            {needRequestAgain && (
+            {requestAgain && (
               <PopupPill
                 text="이 위치에서 다시 검색"
                 icon={faRedo}
