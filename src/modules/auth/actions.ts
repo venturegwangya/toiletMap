@@ -45,5 +45,13 @@ export function signIn(
  * 로그아웃 액션
  */
 export const LOG_OUT = 'auth/LOG_OUT' as const;
+export interface LogOutAction {
+  type: typeof LOG_OUT;
+}
+export function logOut(): LogOutAction {
+  return {
+    type: LOG_OUT,
+  };
+}
 
-export type AuthActionTypes = SignInAction | SignUpAction;
+export type AuthActionTypes = SignInAction | SignUpAction | LogOutAction;
