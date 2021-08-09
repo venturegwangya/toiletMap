@@ -1,3 +1,5 @@
+import firebase from 'firebase/app';
+
 /**
  * 회원가입
  */
@@ -51,6 +53,26 @@ export interface LogOutAction {
 export function logOut(): LogOutAction {
   return {
     type: LOG_OUT,
+  };
+}
+
+/**
+ * User 정보 update
+ */
+export const UPDATE_USER = 'auth/UPDATE_USER' as const;
+
+// TODO: 이준희 => null, undefined WrapperType 정의(?)
+export interface UpdateUserAction {
+  type: typeof UPDATE_USER;
+  user: firebase.User | null | undefined;
+}
+
+export function updateUser(
+  user: firebase.User | undefined | null,
+): UpdateUserAction {
+  return {
+    type: UPDATE_USER,
+    user,
   };
 }
 
