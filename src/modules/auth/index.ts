@@ -1,5 +1,7 @@
+import authReducer from './reducer';
 import * as authAPI from './api';
 import * as authActions from './actions';
-import * as authReducers from './reducer';
+import * as authHooks from './hooks';
 
-export { authAPI, authActions, authReducers as authHooks };
+export { authAPI, authActions, authHooks };
+export default authReducer;

@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { AuthActionTypes, SIGN_IN, SIGN_UP } from './actions';
 
 export interface AuthState {

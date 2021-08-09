@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { call, StrictEffect } from 'redux-saga/effects';
 import { SignInAction } from './actions';
 import { signUpWithEmailAndPassword } from './api';

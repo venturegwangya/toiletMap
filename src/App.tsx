@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import './App.css';
 import { BodyLayout, FlexRowDiv, Header } from './components/common';

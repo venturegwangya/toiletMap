@@ -3,7 +3,7 @@ import { reviewActions, reviewHooks, reviewModels } from '@modules/review';
 import { Toilet } from '@modules/toilet/models';
 import React, { useEffect, useState } from 'react';
 import tw from 'twin.macro';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import ReviewListItem from './ReviewListItem';
 import { ReviewForm } from './ReviewForm';
 import { useCallback } from 'react';

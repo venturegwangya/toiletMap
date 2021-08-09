@@ -1,5 +1,5 @@
 import IconText from '@components/common/IconText';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { toiletModels } from '@modules/toilet';
 import tw from 'twin.macro';
 import { StartRatingBar } from '@components/common/StarRatingBar';
