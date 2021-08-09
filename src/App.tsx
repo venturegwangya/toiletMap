@@ -13,8 +13,8 @@ import ToiletList from './components/toilet/ToiletList';
 import { showModal } from './modules/window/actions';
 import { useAppDispatch } from './modules/configureStore';
 import PopupPill from '@components/common/PopupPill';
-import LeftMenuContainer from '@components/menu/LeftMenuContainer';
-import LeftMenuItemView from '@components/menu/LeftMenu';
+import LeftMenuContainer from '@components/window/LeftMenuContainer';
+import LeftMenuItemView from '@components/window/LeftMenu';
 import {
   faList,
   faPoop,
