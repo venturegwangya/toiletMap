@@ -26,12 +26,13 @@ import {
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletActions, toiletHooks } from '@modules/toilet';
 import { windowActions, windowHooks } from '@modules/window';
+import { useUser } from '@modules/auth/hooks';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
 
 function App(): EmotionJSX.Element {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const user = useUser();
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
   const leftContainerRef = useRef<HTMLDivElement>(null);
 

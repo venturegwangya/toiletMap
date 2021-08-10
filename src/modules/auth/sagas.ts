@@ -1,6 +1,13 @@
 import firebase from 'firebase/app';
-import { call, put, StrictEffect } from 'redux-saga/effects';
-import { SignInAction, SignUpAction, updateUser } from './actions';
+import { call, put, StrictEffect, take, takeEvery } from 'redux-saga/effects';
+import {
+  LOG_OUT,
+  SignInAction,
+  SignUpAction,
+  SIGN_IN,
+  SIGN_UP,
+  updateUser,
+} from './actions';
 import {
   logout,
   signInWithEmailAndPassword,
@@ -25,6 +32,14 @@ function* signUpSaga({
   }
 }
 
+export function* watchSignUpReviewSaga(): Generator<
+  StrictEffect,
+  void,
+  firebase.User
+> {
+  yield takeEvery(SIGN_UP, signUpSaga);
+}
+
 function* signInSaga({
   email,
   password,
@@ -41,6 +56,10 @@ function* signInSaga({
   }
 }
 
+export function* watchSignInSaga(): Generator<StrictEffect, void, void> {
+  yield takeEvery(SIGN_IN, signInSaga);
+}
+
 function* logOutSaga(): Generator<StrictEffect, void, void> {
   try {
     yield call(logout);
@@ -50,4 +69,8 @@ function* logOutSaga(): Generator<StrictEffect, void, void> {
   }
 }
 
-export const sagas = [signUpSaga, signInSaga, logOutSaga];
+export function* watchLogOutSaga(): Generator<StrictEffect, void, void> {
+  yield takeEvery(LOG_OUT, logOutSaga);
+}
+
+export const sagas = [watchSignUpReviewSaga, watchSignInSaga, watchLogOutSaga];

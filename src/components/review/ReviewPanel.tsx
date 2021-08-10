@@ -12,7 +12,8 @@ const ReviewListContainer = tw.ul`divide-y divide-gray-100`;
 
 interface ReviewPanelProps {
   toilet: Toilet;
-  user: firebase.User | null;
+  // TODO: MayBe 타입 만들기
+  user: firebase.User | null | undefined;
 }
 
 export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
