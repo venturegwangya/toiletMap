@@ -22,15 +22,15 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
-import { toiletActions, toiletHooks } from '@modules/toilet';
-import { windowHooks } from '@modules/window';
+import { toiletHooks } from '@modules/toilet';
+import { windowHooks, windowTypes } from '@modules/window';
 import { subscribeToAuthChange } from '@modules/auth/api';
 
-export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
 
 function App(): EmotionJSX.Element {
-  const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
+  const [user, setUser] = useState<firebase.User | null>(null);
+  const selectedMenu = windowHooks.useSelectedLeftMenu();
   const leftContainerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const { toilets, selectedToilet, requestAgain } = toiletHooks.useToilet();
@@ -55,13 +55,6 @@ function App(): EmotionJSX.Element {
     // 한번만 실행해야함
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleMenuClick = useCallback(
-    (menu: LeftMenu) => {
-      setMenu(menu === selectedMenu ? null : menu);
-    },
-    [selectedMenu],
-  );
 
   return (
     <div
@@ -88,7 +81,6 @@ function App(): EmotionJSX.Element {
           <FlexRowDiv id="leftContainer" ref={leftContainerRef}>
             <LeftMenuContainer>
               <LeftMenuItemView
-                onClick={handleMenuClick}
                 id={'USER_SETTING'}
                 selected={'USER_SETTING' === selectedMenu}
                 iconProps={{
@@ -96,7 +88,6 @@ function App(): EmotionJSX.Element {
                 }}
               />
               <LeftMenuItemView
-                onClick={handleMenuClick}
                 id={'LIST'}
                 selected={'LIST' === selectedMenu}
                 iconProps={{
@@ -104,7 +95,6 @@ function App(): EmotionJSX.Element {
                 }}
               />
               <LeftMenuItemView
-                onClick={handleMenuClick}
                 id={'WRITE_REVIEW'}
                 selected={'WRITE_REVIEW' === selectedMenu}
                 iconProps={{

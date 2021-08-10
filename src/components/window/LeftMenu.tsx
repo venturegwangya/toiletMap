@@ -4,31 +4,24 @@ import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome';
-import { ReactElement, useCallback } from 'react';
-import { LeftMenu } from 'src/App';
+import { ReactElement } from 'react';
+import { windowHooks, windowTypes } from '@modules/window';
 
 type LeftMenuItemViewProps = {
-  onClick: (id: LeftMenu) => void;
-  id: LeftMenu;
+  id: windowTypes.LeftMenu;
   iconProps: FontAwesomeIconProps;
   selected: boolean;
 };
 
 export default function LeftMenuItemView({
-  onClick,
   id,
   iconProps,
   selected,
 }: LeftMenuItemViewProps): ReactElement {
-  const handleClick = useCallback(
-    (_id: LeftMenu) => {
-      onClick(_id);
-    },
-    [onClick],
-  );
+  const setSelectedLeftMenu = windowHooks.useSelectLeftMenu();
   return (
     <div
-      onClick={() => handleClick(id)}
+      onClick={() => setSelectedLeftMenu(id)}
       css={css`
         width: 50px;
         height: 50px;
