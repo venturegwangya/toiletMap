@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import SignUp from '../../../pages/SignUp';
+import { SignUp } from '../../../pages';
 
 export function LogInModal(): EmotionJSX.Element {
   return (
@@ -11,8 +11,8 @@ export function LogInModal(): EmotionJSX.Element {
         height: 300px;
       `}
     >
-      {/* <SignUp></SignUp> */}
-      {/* <SignUp isSignUp></SignUp> */}
+      <SignUp></SignUp>
+      <SignUp isSignUp></SignUp>
     </div>
   );
 }

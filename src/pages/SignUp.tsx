@@ -13,13 +13,13 @@ export default function SignUp({
 
   const signUp = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    authAPI.signUpWithEmailAndPassword(email, password, userName);
+    // authAPI.signUpWithEmailAndPassword(email, password, userName);
     alert('계정 생성');
   };
 
   const signIn = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    authAPI.signInWithEmailAndPassword(email, password);
+    // authAPI.signInWithEmailAndPassword(email, password);
     alert('로그인 완료');
   };
 
