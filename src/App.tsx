@@ -22,15 +22,14 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
-import { toiletHooks } from '@modules/toilet';
-import { windowActions, windowHooks } from '@modules/window';
+import { toiletActions, toiletHooks } from '@modules/toilet';
+import { windowHooks } from '@modules/window';
 import { subscribeToAuthChange } from '@modules/auth/api';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
 
 function App(): EmotionJSX.Element {
-  const [user, setUser] = useState<firebase.User | null>(null);
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
   const leftContainerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -43,10 +42,10 @@ function App(): EmotionJSX.Element {
     // componentMount/Update
     const unsub = subscribeToAuthChange(
       user => {
-        setUser(user);
+        // setUser(user);
       },
       () => {
-        setUser(null);
+        // setUser(null);
       },
     );
     fetchNearByToilets();
@@ -118,7 +117,7 @@ function App(): EmotionJSX.Element {
               <>
                 <ToiletList toilets={toilets} />
                 {selectedToilet && (
-                  <ReviewPanel toilet={selectedToilet} user={user} />
+                  <ReviewPanel toilet={selectedToilet} user={null} />
                 )}
               </>
             )}

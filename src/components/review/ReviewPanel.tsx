@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@modules/configureStore';
-import { reviewActions, reviewHooks, reviewModels } from '@modules/review';
+import { reviewActions, reviewHooks } from '@modules/review';
 import { Toilet } from '@modules/toilet/models';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import tw from 'twin.macro';
 import firebase from 'firebase';
 import ReviewListItem from './ReviewListItem';
@@ -12,6 +12,7 @@ const ReviewListContainer = tw.ul`divide-y divide-gray-100`;
 
 interface ReviewPanelProps {
   toilet: Toilet;
+  // TODO: MayBe 타입 만들기
   user: firebase.User | null;
 }
 
