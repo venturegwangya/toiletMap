@@ -11,8 +11,8 @@ export function LogInModal(): EmotionJSX.Element {
         height: 300px;
       `}
     >
-      <SignUp></SignUp>
-      <SignUp isSignUp></SignUp>
+      {/* <SignUp></SignUp> */}
+      {/* <SignUp isSignUp></SignUp> */}
     </div>
   );
 }
