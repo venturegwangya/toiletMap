@@ -13,14 +13,8 @@ import ToiletList from './components/toilet/ToiletList';
 import { showModal } from './modules/window/actions';
 import { useAppDispatch } from './modules/configureStore';
 import PopupPill from '@components/common/PopupPill';
-import LeftMenuContainer from '@components/window/LeftMenuContainer';
-import LeftMenuItemView from '@components/window/LeftMenu';
-import {
-  faList,
-  faPoop,
-  faRedo,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons';
+import SideMenu from '@components/window/SideMenu';
+import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletHooks } from '@modules/toilet';
 import { windowHooks, windowTypes } from '@modules/window';
@@ -79,29 +73,7 @@ function App(): EmotionJSX.Element {
         showLeft
         LeftOverlayComponent={
           <FlexRowDiv id="leftContainer" ref={leftContainerRef}>
-            <LeftMenuContainer>
-              <LeftMenuItemView
-                id={'USER_SETTING'}
-                selected={'USER_SETTING' === selectedMenu}
-                iconProps={{
-                  icon: faUser,
-                }}
-              />
-              <LeftMenuItemView
-                id={'LIST'}
-                selected={'LIST' === selectedMenu}
-                iconProps={{
-                  icon: faList,
-                }}
-              />
-              <LeftMenuItemView
-                id={'WRITE_REVIEW'}
-                selected={'WRITE_REVIEW' === selectedMenu}
-                iconProps={{
-                  icon: faPoop,
-                }}
-              />
-            </LeftMenuContainer>
+            <SideMenu />
             {/* 화장실 리스트 */}
             {selectedMenu === 'LIST' && (
               <>

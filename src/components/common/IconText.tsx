@@ -7,9 +7,7 @@ import React from 'react';
 import tw from 'twin.macro';
 
 const IconTextContainer = styled.div<{ enabled?: boolean }>(props => [
-  tw`flex`,
-  tw`flex-row`,
-  tw`items-center`,
+  tw`flex flex-row items-center`,
   tw`gap-3`,
   !props.enabled && tw`text-gray-300`,
 ]);
