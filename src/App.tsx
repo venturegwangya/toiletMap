@@ -24,7 +24,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletActions, toiletHooks } from '@modules/toilet';
-import { windowActions, windowHooks } from '@modules/window';
+import { windowHooks } from '@modules/window';
+import { authHooks } from '@modules/auth';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
@@ -34,6 +35,7 @@ function App(): EmotionJSX.Element {
   const leftContainerRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useAppDispatch();
+  const user = authHooks.useUser();
 
   const toilets = toiletHooks.useToilets();
   const position = mapHooks.useMapPosition();
@@ -121,7 +123,7 @@ function App(): EmotionJSX.Element {
               <>
                 <ToiletList toilets={toilets} />
                 {selectedToilet && (
-                  <ReviewPanel toilet={selectedToilet} user={null} />
+                  <ReviewPanel toilet={selectedToilet} user={user} />
                 )}
               </>
             )}
