@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import { toiletAPI, toiletModels } from '@modules/toilet';
 import { Review, ReviewBase } from './models';
 import { getFirebaseServerTimestamp } from '@modules/configureFirebase';

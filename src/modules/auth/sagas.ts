@@ -1,5 +1,5 @@
-import firebase from 'firebase/app';
-import { call, put, StrictEffect, take, takeEvery } from 'redux-saga/effects';
+import firebase from 'firebase';
+import { call, put, StrictEffect, takeEvery } from 'redux-saga/effects';
 import {
   LOG_OUT,
   SignInAction,

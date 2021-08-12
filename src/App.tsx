@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import './App.css';
 import { BodyLayout, FlexRowDiv, Header } from './components/common';
@@ -13,7 +13,6 @@ import { mapHooks } from './modules/map';
 import ToiletList from './components/toilet/ToiletList';
 import { showModal } from './modules/window/actions';
 import { useAppDispatch } from './modules/configureStore';
-import { authAPI } from '@modules/auth';
 import PopupPill from '@components/common/PopupPill';
 import LeftMenuContainer from '@components/menu/LeftMenuContainer';
 import LeftMenuItemView from '@components/menu/LeftMenu';
@@ -26,13 +25,11 @@ import {
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletActions, toiletHooks } from '@modules/toilet';
 import { windowActions, windowHooks } from '@modules/window';
-import { useUser } from '@modules/auth/hooks';
 
 export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
 
 function App(): EmotionJSX.Element {
-  const user = useUser();
   const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
   const leftContainerRef = useRef<HTMLDivElement>(null);
 
@@ -124,7 +121,7 @@ function App(): EmotionJSX.Element {
               <>
                 <ToiletList toilets={toilets} />
                 {selectedToilet && (
-                  <ReviewPanel toilet={selectedToilet} user={user} />
+                  <ReviewPanel toilet={selectedToilet} user={null} />
                 )}
               </>
             )}
