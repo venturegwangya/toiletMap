@@ -14,3 +14,30 @@ export function useUser(): {
   }, []);
   return { user, setUser };
 }
+
+export function useLogOut() {
+  const dispatch = useAppDispatch();
+  const signOut = useCallback(() => {
+    dispatch(authActions.logOut());
+  }, []);
+  return signOut;
+}
+
+export function useSignInOrSignUp(): {
+  signIn(email: string, password: string): void;
+  signUp(email: string, password: string, displayName: string): void;
+} {
+  const dispatch = useAppDispatch();
+
+  const signIn = useCallback((email: string, password: string) => {
+    dispatch(authActions.signIn(email, password));
+  }, []);
+
+  const signUp = useCallback(
+    (email: string, password: string, displayName: string) => {
+      dispatch(authActions.signUp(email, password, displayName));
+    },
+    [],
+  );
+  return { signIn, signUp };
+}

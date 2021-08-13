@@ -18,7 +18,7 @@ function* signUpSaga({
   email,
   password,
   displayName,
-}: SignInAction): Generator<StrictEffect, void, firebase.User> {
+}: SignUpAction): Generator<StrictEffect, void, firebase.User> {
   try {
     const user: firebase.User = yield call(
       signUpWithEmailAndPassword,
@@ -28,6 +28,7 @@ function* signUpSaga({
     );
     yield put(updateUser(user));
   } catch (err) {
+    // todo 예외처리 액션 구현
     console.error(err);
   }
 }
@@ -43,7 +44,7 @@ export function* watchSignUpReviewSaga(): Generator<
 function* signInSaga({
   email,
   password,
-}: SignUpAction): Generator<StrictEffect, void, firebase.User> {
+}: SignInAction): Generator<StrictEffect, void, firebase.User> {
   try {
     const user: firebase.User = yield call(
       signInWithEmailAndPassword,

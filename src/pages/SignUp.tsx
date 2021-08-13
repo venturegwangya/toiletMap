@@ -1,30 +1,36 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { useSignInOrSignUp } from '@modules/auth/hooks';
 import { useState } from 'react';
 
-export default function SignUp({
-  isSignUp,
-}: {
-  isSignUp?: boolean; // required 한가?
-}): JSX.Element {
+export default function SignUp(): JSX.Element {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [isSignUp, setSignUp] = useState(false);
+  const { signIn, signUp } = useSignInOrSignUp();
 
-  const signUp = (e: { preventDefault: () => void }) => {
+  const onClickSignUp = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    // authAPI.signUpWithEmailAndPassword(email, password, userName);
-    alert('계정 생성');
+    try {
+      signUp(email, password, userName);
+      alert('계정 생성 완료');
+    } catch (e) {
+      alert(e);
+    }
   };
 
-  const signIn = (e: { preventDefault: () => void }) => {
+  const onClickSignIn = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    // authAPI.signInWithEmailAndPassword(email, password);
+    signIn(email, password);
     alert('로그인 완료');
   };
 
   return (
-    <div>
-      <form className="signUpPage__form">
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <form
+        style={{ display: 'flex', flexDirection: 'column' }}
+        className="signUpPage__form"
+      >
         {isSignUp && (
           <input
             placeholder="Name"
@@ -48,27 +54,30 @@ export default function SignUp({
         {isSignUp ? (
           <button
             type="submit"
-            onClick={signUp}
+            onClick={onClickSignUp}
             disabled={
               email.length === 0 ||
               userName.length === 0 ||
               password.length === 0
             }
           >
-            {' '}
-            Sign Up
+            가입
           </button>
         ) : (
           <button
             type="submit"
-            onClick={signIn}
+            onClick={onClickSignIn}
             disabled={email.length === 0 || password.length === 0}
           >
-            {' '}
-            Sign In
+            로그인하기
           </button>
         )}
       </form>
+      <button onClick={() => setSignUp(!isSignUp)}>
+        {isSignUp
+          ? '아이디가 갑자기 기억나서 로그인 하러 가기'
+          : '회원 가입하기'}
+      </button>
       {/* <div className="signUpPage__signUpContainer">
         {isSignUp ? `Already have an account?` : `Don't have an account?`}{' '}
         <Link className="signUpPage__signUpText" to={isSignUp ? '/login' : '/signup'}>

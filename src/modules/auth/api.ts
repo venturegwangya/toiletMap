@@ -10,14 +10,10 @@ export async function signUpWithEmailAndPassword(
   password: string,
   displayName: string,
 ): Promise<firebase.User | null | undefined> {
-  try {
-    const userCredential: firebase.auth.UserCredential =
-      await firebaseAuth.createUserWithEmailAndPassword(email, password);
-    userCredential.user?.updateProfile({ displayName });
-    return userCredential.user;
-  } catch (error) {
-    alert(error.message);
-  }
+  const userCredential: firebase.auth.UserCredential =
+    await firebaseAuth.createUserWithEmailAndPassword(email, password);
+  userCredential.user?.updateProfile({ displayName });
+  return userCredential.user;
 }
 
 /**
