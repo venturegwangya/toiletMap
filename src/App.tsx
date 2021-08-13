@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import firebase from 'firebase';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { BodyLayout, FlexRowDiv, Header } from './components/common';
 import { Avatar } from './components/common/Avatar';
@@ -17,13 +17,14 @@ import SideMenu from '@components/window/SideMenu';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
 import { toiletHooks } from '@modules/toilet';
-import { windowHooks, windowTypes } from '@modules/window';
+import { windowHooks } from '@modules/window';
 import { subscribeToAuthChange } from '@modules/auth/api';
+import { authHooks } from '@modules/auth';
 
 const LEFT_PANEL_MENU_WIDTH = '300px';
 
 function App(): EmotionJSX.Element {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const { user, setUser } = authHooks.useUser();
   const selectedMenu = windowHooks.useSelectedLeftMenu();
   const leftContainerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -35,11 +36,11 @@ function App(): EmotionJSX.Element {
   useEffect(() => {
     // componentMount/Update
     const unsub = subscribeToAuthChange(
-      user => {
-        // setUser(user);
+      _user => {
+        setUser(_user);
       },
       () => {
-        // setUser(null);
+        setUser(null);
       },
     );
     fetchNearByToilets();
@@ -79,7 +80,7 @@ function App(): EmotionJSX.Element {
               <>
                 <ToiletList toilets={toilets} />
                 {selectedToilet && (
-                  <ReviewPanel toilet={selectedToilet} user={null} />
+                  <ReviewPanel toilet={selectedToilet} user={user} />
                 )}
               </>
             )}

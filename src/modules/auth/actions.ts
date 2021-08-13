@@ -64,16 +64,18 @@ export const UPDATE_USER = 'auth/UPDATE_USER' as const;
 // TODO: 이준희 => null, undefined WrapperType 정의(?)
 export interface UpdateUserAction {
   type: typeof UPDATE_USER;
-  user: firebase.User | null | undefined;
+  user: firebase.User | null;
 }
 
-export function updateUser(
-  user: firebase.User | undefined | null,
-): UpdateUserAction {
+export function updateUser(user: firebase.User | null): UpdateUserAction {
   return {
     type: UPDATE_USER,
     user,
   };
 }
 
-export type AuthActionTypes = SignInAction | SignUpAction | LogOutAction;
+export type AuthActionTypes =
+  | SignInAction
+  | SignUpAction
+  | LogOutAction
+  | UpdateUserAction;

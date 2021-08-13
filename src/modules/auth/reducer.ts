@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { AuthActionTypes, SIGN_IN, SIGN_UP } from './actions';
+import { AuthActionTypes, SIGN_IN, SIGN_UP, UPDATE_USER } from './actions';
 
 export interface AuthState {
   user: firebase.User | null;
@@ -21,6 +21,8 @@ export default function (
       return { ...state };
     case SIGN_IN:
       return { ...state };
+    case UPDATE_USER:
+      return { ...state, user: action.user };
     default:
       return { ...state };
   }
