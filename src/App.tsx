@@ -62,14 +62,6 @@ function App(): EmotionJSX.Element {
         overflow: hidden;
       `}
     >
-      <Header>
-        <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg" />
-        <Avatar
-          size={48}
-          imgSrc="https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large"
-          onClick={() => dispatch(showModal(React.createElement(LogInModal)))}
-        />
-      </Header>
       <BodyLayout
         showLeft
         LeftOverlayComponent={
