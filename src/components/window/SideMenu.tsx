@@ -20,7 +20,7 @@ export default function SideMenu(): ReactElement {
     <SideMenuBar>
       {windowTypes.leftMenus.map((menu, i) => (
         <SideMenuItem
-          key={`side_menu_item_${i}`}
+          key={menu}
           selected={selectedMenu === menu}
           onClick={() => setSelectedLeftMenu(menu)}
         >
