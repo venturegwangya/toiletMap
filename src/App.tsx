@@ -13,24 +13,18 @@ import ToiletList from './components/toilet/ToiletList';
 import { showModal } from './modules/window/actions';
 import { useAppDispatch } from './modules/configureStore';
 import PopupPill from '@components/common/PopupPill';
-import LeftMenuContainer from '@components/menu/LeftMenuContainer';
-import LeftMenuItemView from '@components/menu/LeftMenu';
-import {
-  faList,
-  faPoop,
-  faRedo,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons';
+import SideMenu from '@components/window/SideMenu';
+import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { ReviewPanel } from '@components/review/ReviewPanel';
-import { toiletActions, toiletHooks } from '@modules/toilet';
-import { windowHooks } from '@modules/window';
+import { toiletHooks } from '@modules/toilet';
+import { windowHooks, windowTypes } from '@modules/window';
 import { subscribeToAuthChange } from '@modules/auth/api';
 
-export type LeftMenu = 'LIST' | 'USER_SETTING' | 'WRITE_REVIEW';
 const LEFT_PANEL_MENU_WIDTH = '300px';
 
 function App(): EmotionJSX.Element {
-  const [selectedMenu, setMenu] = useState<LeftMenu | null>('LIST');
+  const [user, setUser] = useState<firebase.User | null>(null);
+  const selectedMenu = windowHooks.useSelectedLeftMenu();
   const leftContainerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const { toilets, selectedToilet, requestAgain } = toiletHooks.useToilet();
@@ -56,13 +50,6 @@ function App(): EmotionJSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleMenuClick = useCallback(
-    (menu: LeftMenu) => {
-      setMenu(menu === selectedMenu ? null : menu);
-    },
-    [selectedMenu],
-  );
-
   return (
     <div
       css={css`
@@ -86,32 +73,7 @@ function App(): EmotionJSX.Element {
         showLeft
         LeftOverlayComponent={
           <FlexRowDiv id="leftContainer" ref={leftContainerRef}>
-            <LeftMenuContainer>
-              <LeftMenuItemView
-                onClick={handleMenuClick}
-                id={'USER_SETTING'}
-                selected={'USER_SETTING' === selectedMenu}
-                iconProps={{
-                  icon: faUser,
-                }}
-              />
-              <LeftMenuItemView
-                onClick={handleMenuClick}
-                id={'LIST'}
-                selected={'LIST' === selectedMenu}
-                iconProps={{
-                  icon: faList,
-                }}
-              />
-              <LeftMenuItemView
-                onClick={handleMenuClick}
-                id={'WRITE_REVIEW'}
-                selected={'WRITE_REVIEW' === selectedMenu}
-                iconProps={{
-                  icon: faPoop,
-                }}
-              />
-            </LeftMenuContainer>
+            <SideMenu />
             {/* 화장실 리스트 */}
             {selectedMenu === 'LIST' && (
               <>

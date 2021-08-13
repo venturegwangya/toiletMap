@@ -1,3 +1,4 @@
+import { LeftMenu } from './types';
 /**
  * 모달을 보여준다.
  */
@@ -27,26 +28,21 @@ export function hideModal(): HideModalAction {
 }
 
 /**
- * @description '이 위치 다시 검색' left position 갱신
+ * 모달을 숨긴다.
  */
-export const CHANGE_REFRESH_LEFT_POSITION =
-  'window/CHANGE_REFRESH_LEFT_POSITION' as const;
-
-export interface ChangeRefreshPillPositionAction {
-  type: typeof CHANGE_REFRESH_LEFT_POSITION;
-  position: string;
+export const SELECT_LEFT_MENU = 'window/SELECT_LEFT_MENU' as const;
+export interface SelectLeftMenuAction {
+  type: typeof SELECT_LEFT_MENU;
+  leftMenu: LeftMenu;
 }
-
-export function changeRefreshPillLeftPosition(
-  position: string,
-): ChangeRefreshPillPositionAction {
+export function selectLeftMenu(leftMenu: LeftMenu): SelectLeftMenuAction {
   return {
-    type: CHANGE_REFRESH_LEFT_POSITION,
-    position,
+    type: SELECT_LEFT_MENU,
+    leftMenu,
   };
 }
 
 export type WindowActionType =
   | ShowModalAction
   | HideModalAction
-  | ChangeRefreshPillPositionAction;
+  | SelectLeftMenuAction;

@@ -4,8 +4,7 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { FlexColumnDiv, SubtitleSpan, TitleSpan } from '../common';
 import styled from '@emotion/styled';
 import IconText from '../common/IconText';
-import { useAppDispatch } from '../../modules/configureStore';
-import { toiletActions, toiletHooks } from '@modules/toilet';
+import { toiletHooks } from '@modules/toilet';
 import { Toilet } from '@modules/toilet/models';
 import {
   faChild,

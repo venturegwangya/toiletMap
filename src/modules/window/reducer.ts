@@ -1,21 +1,22 @@
 import React from 'react';
+import { LeftMenu } from './types';
 import {
   HIDE_MODAL,
   WindowActionType,
   SHOW_MODAL,
-  CHANGE_REFRESH_LEFT_POSITION,
+  SELECT_LEFT_MENU,
 } from './actions';
 
 export interface WindowState {
   show: boolean;
   modalContent: React.ReactNode;
-  pillLeftPosition: string;
+  leftMenu: LeftMenu;
 }
 
 const initialState: WindowState = {
   show: false,
   modalContent: null,
-  pillLeftPosition: '50%',
+  leftMenu: null,
 };
 
 export default function windowReducer(
@@ -27,8 +28,8 @@ export default function windowReducer(
       return { ...state, modalContent: action.modalContent, show: true };
     case HIDE_MODAL:
       return { ...state, show: false };
-    case CHANGE_REFRESH_LEFT_POSITION:
-      return { ...state, pillLeftPosition: action.position };
+    case SELECT_LEFT_MENU:
+      return { ...state, leftMenu: action.leftMenu };
     default:
       return state;
   }
