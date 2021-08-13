@@ -5,7 +5,12 @@
 - 공공데이터를 활용하여 공중 화장실의 위치를 보여준다.
 - 신규 화장실 등록, 리뷰기능으로 공개 화장실의 위치, 상태를 서로 공유할 수 있다.
 
-## 사용 기술
+## 참여
+
+- [v0.5 마일스톤 할일](https://github.com/venturegwangya/toiletMap/projects/1)
+
+
+## 기술 참고자료
 
 - ReactJS
   - [파일 구조 참조1](https://codesandbox.io/s/rz8bg?file=/src/core/sagas/lyricsSaga.ts)
