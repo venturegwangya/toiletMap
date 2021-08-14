@@ -27,3 +27,12 @@ yarn-error.log*
 .idea/vcs.xml
 .idea/inspectionProfiles/Project_Default.xml
 .idea/.gitignore
+
+#81 not using zero-installs
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
