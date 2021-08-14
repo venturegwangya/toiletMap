@@ -2,7 +2,7 @@
 import { useSignInOrSignUp } from '@modules/auth/hooks';
 import { useState } from 'react';
 
-export default function SignUp(): JSX.Element {
+export function SignUp(): JSX.Element {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
