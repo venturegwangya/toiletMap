@@ -12,7 +12,7 @@ export function LogInModal(): EmotionJSX.Element {
       `}
     >
       <SignUp></SignUp>
-      <SignUp isSignUp></SignUp>
+      <SignUp></SignUp>
     </div>
   );
 }

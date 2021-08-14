@@ -1,17 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import firebase from 'firebase';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import './App.css';
-import { BodyLayout, FlexRowDiv, Header } from './components/common';
-import { Avatar } from './components/common/Avatar';
-import { LogInModal } from './components/common/modal/LogInModal';
+import { BodyLayout, FlexRowDiv } from './components/common';
 import { ModalPortal } from './components/common/modal/ModalPortal';
 import Map from './components/map/Map';
 import ToiletList from './components/toilet/ToiletList';
-import { showModal } from './modules/window/actions';
-import { useAppDispatch } from './modules/configureStore';
 import PopupPill from '@components/common/PopupPill';
 import SideMenu from '@components/window/SideMenu';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +15,7 @@ import { toiletHooks } from '@modules/toilet';
 import { windowHooks } from '@modules/window';
 import { subscribeToAuthChange } from '@modules/auth/api';
 import { authHooks } from '@modules/auth';
+import { SignUp } from './pages';
 
 const LEFT_PANEL_MENU_WIDTH = '300px';
 
@@ -27,11 +23,12 @@ function App(): EmotionJSX.Element {
   const { user, setUser } = authHooks.useUser();
   const selectedMenu = windowHooks.useSelectedLeftMenu();
   const leftContainerRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
   const { toilets, selectedToilet, requestAgain } = toiletHooks.useToilet();
   const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
   const refreshPillButtonPosition =
     windowHooks.useLeftPosition(leftContainerRef);
+
+  const logOut = authHooks.useLogOut();
 
   useEffect(() => {
     // componentMount/Update
@@ -62,14 +59,6 @@ function App(): EmotionJSX.Element {
         overflow: hidden;
       `}
     >
-      <Header>
-        <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gr8n1r9v8vj304601et8m.jpg" />
-        <Avatar
-          size={48}
-          imgSrc="https://pbs.twimg.com/media/E1Pe-mSUYAE3NXV?format=jpg&name=large"
-          onClick={() => dispatch(showModal(React.createElement(LogInModal)))}
-        />
-      </Header>
       <BodyLayout
         showLeft
         LeftOverlayComponent={
@@ -92,7 +81,15 @@ function App(): EmotionJSX.Element {
                   backgroundColor: 'yellow',
                 }}
               >
-                <text>CANVA처럼 트랜지션 넣을 거임 </text>
+                {user == null ? (
+                  <SignUp />
+                ) : (
+                  <>
+                    <div>이름: {user.displayName}</div>
+                    <div>email: {user.email}</div>
+                    <button onClick={logOut}>로그아웃 할끄니까!</button>
+                  </>
+                )}
               </div>
             )}
           </FlexRowDiv>

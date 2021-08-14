@@ -9,12 +9,19 @@ export interface SignUpAction {
   type: typeof SIGN_UP;
   email: string;
   password: string;
+  displayName: string;
 }
-export function signUp(email: string, password: string): SignUpAction {
+
+export function signUp(
+  email: string,
+  password: string,
+  displayName: string,
+): SignUpAction {
   return {
     type: SIGN_UP,
     email,
     password,
+    displayName,
   };
 }
 
@@ -27,19 +34,13 @@ export interface SignInAction {
   type: typeof SIGN_IN;
   email: string;
   password: string;
-  displayName: string;
 }
 
-export function signIn(
-  email: string,
-  password: string,
-  displayName: string,
-): SignInAction {
+export function signIn(email: string, password: string): SignInAction {
   return {
     type: SIGN_IN,
     email,
     password,
-    displayName,
   };
 }
 
