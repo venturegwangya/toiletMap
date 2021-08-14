@@ -7,19 +7,20 @@ export function useUser(): {
   user: firebase.User | null;
   setUser(user: firebase.User | null): void;
 } {
-  const user = useAppSelector(state => state.auth.user);
   const dispatch = useAppDispatch();
-  const setUser = useCallback((_user: firebase.User) => {
-    dispatch(authActions.updateUser(_user));
-  }, []);
+  const setUser = useCallback(
+    (user: firebase.User) => {
+      dispatch(authActions.updateUser(user));
+    },
+    [dispatch],
+  );
+  const user = useAppSelector(state => state.auth.user);
   return { user, setUser };
 }
 
 export function useLogOut() {
   const dispatch = useAppDispatch();
-  const signOut = useCallback(() => {
-    dispatch(authActions.logOut());
-  }, []);
+  const signOut = useCallback(() => dispatch(authActions.logOut()), [dispatch]);
   return signOut;
 }
 
@@ -29,15 +30,16 @@ export function useSignInOrSignUp(): {
 } {
   const dispatch = useAppDispatch();
 
-  const signIn = useCallback((email: string, password: string) => {
-    dispatch(authActions.signIn(email, password));
-  }, []);
+  const signIn = useCallback(
+    (email: string, password: string) =>
+      dispatch(authActions.signIn(email, password)),
+    [dispatch],
+  );
 
   const signUp = useCallback(
-    (email: string, password: string, displayName: string) => {
-      dispatch(authActions.signUp(email, password, displayName));
-    },
-    [],
+    (email: string, password: string, displayName: string) =>
+      dispatch(authActions.signUp(email, password, displayName)),
+    [dispatch],
   );
   return { signIn, signUp };
 }
