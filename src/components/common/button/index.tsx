@@ -1,0 +1,36 @@
+import React from 'react';
+import tw from 'twin.macro';
+
+export type ButtonType = 'submit' | 'button' | 'reset';
+
+type Props = React.PropsWithChildren<{
+  onClick(e: React.MouseEvent): void;
+  disabled?: boolean;
+  type?: ButtonType;
+}>;
+
+const ButtonView = tw.button`
+flex-1 
+bg-blue-500
+hover:bg-blue-700
+text-white 
+font-bold 
+py-2
+px-2
+w-full
+rounded 
+focus:outline-none
+`;
+
+export function Button({
+  onClick,
+  children,
+  disabled = false,
+  type = 'button',
+}: Props): React.ReactElement {
+  return (
+    <ButtonView type={type} onClick={onClick} disabled={disabled}>
+      {children}
+    </ButtonView>
+  );
+}

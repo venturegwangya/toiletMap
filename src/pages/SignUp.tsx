@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { Button } from '@components/common/button';
 import { useSignInOrSignUp } from '@modules/auth/hooks';
 import { useState } from 'react';
 import tw from 'twin.macro';
@@ -25,19 +26,6 @@ text-gray-700
 text-sm
 font-bold
 mb-2
-`;
-
-const Button = tw.button`
-flex-1 
-bg-blue-500
-hover:bg-blue-700
-text-white 
-font-bold 
-py-2
-px-2
-w-full
-rounded 
-focus:outline-none
 `;
 
 export function SignUp(): JSX.Element {

@@ -18,10 +18,10 @@ export function useUser(): {
   return { user, setUser };
 }
 
-export function useLogOut() {
+export function useLogOut(): () => void {
   const dispatch = useAppDispatch();
-  const signOut = useCallback(() => dispatch(authActions.logOut()), [dispatch]);
-  return signOut;
+  const logOut = useCallback(() => dispatch(authActions.logOut()), [dispatch]);
+  return logOut;
 }
 
 export function useSignInOrSignUp(): {
