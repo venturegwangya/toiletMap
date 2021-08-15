@@ -3547,13 +3547,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-leaflet@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "@types/react-leaflet@npm:2.8.1"
+"@types/react-leaflet@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "@types/react-leaflet@npm:2.8.2"
   dependencies:
     "@types/leaflet": "*"
     "@types/react": "*"
-  checksum: c5f8bb4e64674d35f8acb6e8b21e01682f6b34f266a9d3bed40bb065aff87f1f2e579ae486101cde441135132b2e8bad1c807323c01a782904bc4123c715375a
+  checksum: e972d779f0d084bb76f2be126d755d800ceaf12bca95e8b392c859b5aea6f3fdf098cde42ff3078cf64cffe218a28c99c40210928fb264839a34ac19a3175b9e
   languageName: node
   linkType: hard
 
@@ -16839,7 +16839,7 @@ resolve@^2.0.0-next.3:
     "@types/node": ^15.12.0
     "@types/react": ^17.0.9
     "@types/react-dom": ^17.0.7
-    "@types/react-leaflet": ^2.8.1
+    "@types/react-leaflet": ^2.8.2
     "@typescript-eslint/eslint-plugin": ^4.15.2
     "@typescript-eslint/parser": ^4.15.2
     autoprefixer: ^9

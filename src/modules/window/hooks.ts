@@ -54,6 +54,7 @@ export function useLeftPosition(ref: React.RefObject<HTMLElement>): number {
     return () => {
       observer.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return left;
 }

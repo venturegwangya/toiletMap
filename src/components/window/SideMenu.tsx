@@ -1,32 +1,70 @@
-import React, { ReactElement } from 'react';
+/** @jsxImportSource @emotion/react */
+import { ReviewPanel } from '@components/review/ReviewPanel';
+import ToiletList from '@components/toilet/ToiletList';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { authHooks } from '@modules/auth';
+import { subscribeToAuthChange } from '@modules/auth/api';
+import { toiletHooks } from '@modules/toilet';
+import { windowHooks } from '@modules/window';
+import { useEffect } from 'react';
+import { SignUp } from '../../pages/SignUp';
 import tw from 'twin.macro';
-import { windowHooks, windowTypes } from '@modules/window';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styled from '@emotion/styled';
 
-const SideMenuBar = tw.div`w-12 h-full bg-white`;
-const SideMenuItem = styled.div<{ selected: boolean }>(props => [
-  tw`flex items-center justify-center w-12 h-12`,
-  props.selected && tw`bg-green-50`,
-]);
+const SideMenuContainer = tw.div`flex`;
 
-// hook으로 인해 presentational이랑 분리가되는 경우. 재사용하는 컴포넌트는 hook을 쓰지 않고 props를 전달받기
-// TODO: 박민규 2021-08-12 메뉴 종류가 늘어나면 알아서 되게 만들기
-// TODO: 박민규 2021-08-12 메뉴 종류마다 알아서 클릭되게 만들기
-export default function SideMenu(): ReactElement {
-  const setSelectedLeftMenu = windowHooks.useSelectLeftMenu();
+export function SideMenu(): EmotionJSX.Element {
+  const logOut = authHooks.useLogOut();
   const selectedMenu = windowHooks.useSelectedLeftMenu();
+  const { selectedToilet, toilets } = toiletHooks.useToilet();
+  const { user, setUser } = authHooks.useUser();
+  const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
+
+  useEffect(() => {
+    // componentMount/Update
+    const unsub = subscribeToAuthChange(
+      _user => {
+        setUser(_user);
+      },
+      () => {
+        setUser(null);
+      },
+    );
+    fetchNearByToilets();
+    return () => {
+      unsub();
+    };
+    // 한번만 실행해야함
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
-    <SideMenuBar>
-      {windowTypes.leftMenus.map((menu, i) => (
-        <SideMenuItem
-          key={menu}
-          selected={selectedMenu === menu}
-          onClick={() => setSelectedLeftMenu(menu)}
+    <SideMenuContainer>
+      {/* 화장실 리스트 */}
+      {selectedMenu === 'LIST' && (
+        <>
+          <ToiletList toilets={toilets} />
+          {selectedToilet && (
+            <ReviewPanel toilet={selectedToilet} user={user} />
+          )}
+        </>
+      )}
+      {/* 리뷰 리스트 */}
+      {selectedMenu === 'USER_SETTING' && (
+        <div
+          style={{
+            backgroundColor: 'yellow',
+          }}
         >
-          <FontAwesomeIcon icon={windowTypes.leftMenuIconMap[menu]} size="lg" />
-        </SideMenuItem>
-      ))}
-    </SideMenuBar>
+          {user == null ? (
+            <SignUp />
+          ) : (
+            <>
+              <div>이름: {user.displayName}</div>
+              <div>email: {user.email}</div>
+              <button onClick={logOut}>로그아웃 할끄니까!</button>
+            </>
+          )}
+        </div>
+      )}
+    </SideMenuContainer>
   );
 }
