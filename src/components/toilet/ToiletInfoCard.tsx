@@ -64,17 +64,19 @@ function ToiletInfoCard({ toilet }: ToiletListItemProps): EmotionJSX.Element {
         <IconText
           enabled={toilet.unisex >= 1}
           icon={faGenderless}
-          text={'남녀공용화장실' + availableText(toilet.unisex >= 1)}
+          text={'남녀공용화장실 ' + availableText(toilet.unisex >= 1)}
         />
         <IconText
           enabled={toilet.disabledFacilities >= 1}
           icon={faWheelchair}
-          text={'장애인용 시설' + availableText(toilet.disabledFacilities >= 1)}
+          text={
+            '장애인용 시설 ' + availableText(toilet.disabledFacilities >= 1)
+          }
         />
         <IconText
           enabled={toilet.childFacilities >= 1}
           icon={faChild}
-          text={'아동용 시설' + availableText(toilet.childFacilities >= 1)}
+          text={'아동용 시설 ' + availableText(toilet.childFacilities >= 1)}
         />
       </FlexColumnDiv>
       {/* {reviews.map((review, i) => {

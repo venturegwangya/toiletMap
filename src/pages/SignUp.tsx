@@ -1,6 +1,44 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { useSignInOrSignUp } from '@modules/auth/hooks';
 import { useState } from 'react';
+import tw from 'twin.macro';
+
+const Input = tw.input`
+w-full
+shadow
+appearance-none
+border
+rounded
+w-full
+py-2
+px-3
+text-gray-700
+leading-tight
+focus:outline-none
+focus:shadow-md
+mb-3
+`;
+
+const Label = tw.label`
+block 
+text-gray-700
+text-sm
+font-bold
+mb-2
+`;
+
+const Button = tw.button`
+flex-1 
+bg-blue-500
+hover:bg-blue-700
+text-white 
+font-bold 
+py-2
+px-2
+w-full
+rounded 
+focus:outline-none
+`;
 
 export function SignUp(): JSX.Element {
   const [email, setEmail] = useState('');
@@ -26,33 +64,35 @@ export function SignUp(): JSX.Element {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <form
-        style={{ display: 'flex', flexDirection: 'column' }}
-        className="signUpPage__form"
-      >
+    <div className="bg-white p-4 flex flex-col items-center">
+      <form className="w-full">
         {isSignUp && (
-          <input
-            placeholder="Name"
-            type="text"
-            value={userName}
-            onChange={e => setUserName(e.target.value)}
-          />
+          <>
+            <Label>이름(닉네임)</Label>
+            <Input
+              placeholder="Name"
+              type="text"
+              value={userName}
+              onChange={e => setUserName(e.target.value)}
+            />
+          </>
         )}
-        <input
+        <Label>이메일</Label>
+        <Input
           placeholder="Email"
           type="text"
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
-        <input
+        <Label>비밀번호</Label>
+        <Input
           placeholder="Password"
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
         {isSignUp ? (
-          <button
+          <Button
             type="submit"
             onClick={onClickSignUp}
             disabled={
@@ -61,29 +101,26 @@ export function SignUp(): JSX.Element {
               password.length === 0
             }
           >
-            가입
-          </button>
+            회원가입
+          </Button>
         ) : (
-          <button
-            type="submit"
-            onClick={onClickSignIn}
-            disabled={email.length === 0 || password.length === 0}
-          >
-            로그인하기
-          </button>
+          <div className="flex flex-col justify-center items-center">
+            <Button
+              type="submit"
+              onClick={onClickSignIn}
+              disabled={email.length === 0 || password.length === 0}
+            >
+              로그인
+            </Button>
+          </div>
         )}
+        <div
+          className="text-sm pt-2 cursor-pointer text-center text-gray-700"
+          onClick={() => setSignUp(!isSignUp)}
+        >
+          {isSignUp ? '다시 로그인하기 ' : '회원 가입하기'}
+        </div>
       </form>
-      <button onClick={() => setSignUp(!isSignUp)}>
-        {isSignUp
-          ? '아이디가 갑자기 기억나서 로그인 하러 가기'
-          : '회원 가입하기'}
-      </button>
-      {/* <div className="signUpPage__signUpContainer">
-        {isSignUp ? `Already have an account?` : `Don't have an account?`}{' '}
-        <Link className="signUpPage__signUpText" to={isSignUp ? '/login' : '/signup'}>
-          {isSignUp ? 'Sign In' : 'Sign Up'}
-        </Link>
-      </div> */}
     </div>
   );
 }
