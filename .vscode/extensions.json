@@ -3,6 +3,8 @@
     "csstools.postcss",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "jpoissonnier.vscode-styled-components"
+    "jpoissonnier.vscode-styled-components",
+    "lightyen.tailwindcss-intellisense-twin",
+    "bradlc.vscode-tailwindcss"
   ]
 }

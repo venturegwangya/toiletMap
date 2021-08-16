@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
-import BodyLayout from './BodyLayout';
 import { Avatar } from './Avatar';
 import StyledIcon from './StyledIcon';
 
@@ -39,7 +38,6 @@ export {
   FlexRowDiv,
   TitleSpan,
   SubtitleSpan,
-  BodyLayout,
   Header,
   Avatar,
   StyledIcon,
