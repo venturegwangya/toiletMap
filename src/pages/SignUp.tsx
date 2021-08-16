@@ -1,24 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Button } from '@components/common/button';
+import { Input } from '@components/common/input';
 import { useSignInOrSignUp } from '@modules/auth/hooks';
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import tw from 'twin.macro';
-
-const Input = tw.input`
-w-full
-shadow
-appearance-none
-border
-rounded
-w-full
-py-2
-px-3
-text-gray-700
-leading-tight
-focus:outline-none
-focus:shadow-md
-mb-3
-`;
 
 const Label = tw.label`
 block 
@@ -35,21 +20,27 @@ export function SignUp(): JSX.Element {
   const [isSignUp, setSignUp] = useState(false);
   const { signIn, signUp } = useSignInOrSignUp();
 
-  const onClickSignUp = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    try {
-      signUp(email, password, userName);
-      alert('계정 생성 완료');
-    } catch (e) {
-      alert(e);
-    }
-  };
+  const onClickSignUp = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      try {
+        signUp(email, password, userName);
+        alert('계정 생성 완료');
+      } catch (e) {
+        alert(e);
+      }
+    },
+    [signIn, signUp],
+  );
 
-  const onClickSignIn = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    signIn(email, password);
-    alert('로그인 완료');
-  };
+  const onClickSignIn = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      signIn(email, password);
+      alert('로그인 완료');
+    },
+    [signIn, signUp],
+  );
 
   return (
     <div className="bg-white p-4 flex flex-col items-center">
@@ -58,25 +49,28 @@ export function SignUp(): JSX.Element {
           <>
             <Label>이름(닉네임)</Label>
             <Input
+              id="name"
               placeholder="Name"
               type="text"
-              value={userName}
+              defalutValue={userName}
               onChange={e => setUserName(e.target.value)}
             />
           </>
         )}
         <Label>이메일</Label>
         <Input
+          id="email"
           placeholder="Email"
           type="text"
-          value={email}
+          defalutValue={email}
           onChange={e => setEmail(e.target.value)}
         />
         <Label>비밀번호</Label>
         <Input
+          id="password"
           placeholder="Password"
           type="password"
-          value={password}
+          defalutValue={password}
           onChange={e => setPassword(e.target.value)}
         />
         {isSignUp ? (

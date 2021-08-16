@@ -3,6 +3,7 @@ import tw from 'twin.macro';
 
 export type ButtonType = 'submit' | 'button' | 'reset';
 
+// TODO: 이준희 => 추후에 타입 별 버튼 색상 타입 추가
 type Props = React.PropsWithChildren<{
   onClick(e: React.MouseEvent): void;
   disabled?: boolean;
