@@ -1,17 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Button } from '@components/common/button';
 import { Input } from '@components/common/input';
+import { Label } from '@components/common/label';
 import { useSignInOrSignUp } from '@modules/auth/hooks';
 import React, { useCallback, useState } from 'react';
-import tw from 'twin.macro';
-
-const Label = tw.label`
-block 
-text-gray-700
-text-sm
-font-bold
-mb-2
-`;
 
 export function SignUp(): JSX.Element {
   const [email, setEmail] = useState('');
@@ -47,6 +39,7 @@ export function SignUp(): JSX.Element {
       <form className="w-full">
         {isSignUp && (
           <>
+            {/** 아래 컴포넌트도 한번 더 묶는 게 맞는 것일까? */}
             <Label>이름(닉네임)</Label>
             <Input
               id="name"
