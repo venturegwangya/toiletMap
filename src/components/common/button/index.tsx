@@ -7,6 +7,7 @@ export type ButtonType = 'submit' | 'button' | 'reset';
 type Props = React.PropsWithChildren<{
   onClick(e: React.MouseEvent): void;
   disabled?: boolean;
+  varientStyle?: string;
   type?: ButtonType;
 }>;
 
@@ -28,9 +29,15 @@ export function Button({
   children,
   disabled = false,
   type = 'button',
+  varientStyle,
 }: Props): React.ReactElement {
   return (
-    <ButtonView type={type} onClick={onClick} disabled={disabled}>
+    <ButtonView
+      className={varientStyle}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </ButtonView>
   );
