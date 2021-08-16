@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { LatLngExpression } from 'leaflet';
+import { LatLngBounds, LatLngExpression } from 'leaflet';
 import { MapContainer, Marker, TileLayer, ZoomControl } from 'react-leaflet';
 import { toiletModels, toiletHooks } from '@modules/toilet';
 import MapViewController from './MapViewController';
@@ -13,6 +13,15 @@ import { useRef } from 'react';
 const seoul: LatLngExpression = [36.29095, 127.6043522];
 const zoom = 8;
 
+const southKoreaBounds: LatLngBounds = new LatLngBounds([
+  [38.8, 121.75],
+  [38.8, 132.18],
+  [34.3, 132.18],
+  [34.3, 129.4],
+  [31.93, 129.4],
+  [31.93, 121.75],
+]);
+
 const mapStyle = tw`w-screen h-screen`;
 
 function Map(): EmotionJSX.Element {
@@ -23,8 +32,11 @@ function Map(): EmotionJSX.Element {
       css={mapStyle}
       center={seoul}
       zoom={zoom}
+      minZoom={8}
       scrollWheelZoom={false}
       zoomControl={false}
+      maxBounds={southKoreaBounds}
+      maxBoundsViscosity={1.0} // 맵 경계밖으로 드래그 완전 차단
     >
       {requestAgain && (
         <PopupPill
