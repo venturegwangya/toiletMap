@@ -1,4 +1,6 @@
-# 화장실 지도
+# 대똥여지도 💩
+
+![Poop Status](https://img.shields.io/badge/%F0%9F%92%A9-urgent-red)
 
 ## 개요
 
