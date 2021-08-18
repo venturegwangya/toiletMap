@@ -39,6 +39,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "local-server": "firebase emulators:start --import=./emulators.backup",
     "eject": "react-scripts eject",
     "lint": "eslint --fix"
   },
