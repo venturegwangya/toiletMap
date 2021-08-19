@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@modules/configureStore';
 import { Toilet } from './models';
 import firebase from 'firebase';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   RequestToiletsInAreaAction,
   SelectToiletAction,
@@ -40,11 +40,14 @@ export function useToiletActions(): {
   return { fetchToilets, setSelectedToilet };
 }
 
+// zoom = 8 일 때, 범위 100
 export function useFetchNearByToilets(): () => void {
   const { fetchToilets, setSelectedToilet } = useToiletActions();
-  const mapCenter = mapHooks.useMapGeoPoint();
+  const { center, zoom } = mapHooks.useMap();
+  const area = useMemo(() => 6400 / (zoom * zoom), [zoom]);
+
   return useCallback(() => {
-    fetchToilets(mapCenter, 100);
+    fetchToilets(center, area);
     setSelectedToilet(null);
-  }, [fetchToilets, mapCenter, setSelectedToilet]);
+  }, [center, area, fetchToilets, setSelectedToilet]);
 }

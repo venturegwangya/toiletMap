@@ -17,4 +17,21 @@ export function changePosition(position: LatLng): ChangePositionAction {
   };
 }
 
-export type MapActionType = ChangePositionAction;
+/**
+ * @description 지도 zoom값
+ */
+export const CHANGE_ZOOM = 'map/CHANGE_ZOOM' as const;
+
+export interface ChangeZoomAction {
+  type: typeof CHANGE_ZOOM;
+  zoom: number;
+}
+
+export function changeZoom(zoom: number): ChangeZoomAction {
+  return {
+    type: CHANGE_ZOOM,
+    zoom,
+  };
+}
+
+export type MapActionType = ChangePositionAction | ChangeZoomAction;
