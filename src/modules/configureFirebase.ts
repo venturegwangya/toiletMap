@@ -13,6 +13,10 @@ const firebaseGeoDB = geofirestore.initializeApp(firebaseDB);
 
 if (process.env.NODE_ENV === DEV_ENV) {
   firebaseDB.useEmulator('http://localhost', 8080);
+  firebaseDB.settings({
+    host: 'localhost:8080',
+    ssl: false,
+  });
   firebaseAuth.useEmulator('http://localhost:9099');
 }
 
