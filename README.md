@@ -31,3 +31,5 @@
   - [subscription 처리](https://stackoverflow.com/questions/50668964/what-is-the-proper-way-of-connecting-firebase-with-redux-sagas)
 - Leaflet
   - [지도 줌 컨트롤 위치 변경](https://egghead.io/lessons/react-change-the-react-leaflet-map-zoomcontrol-location-and-icons)
+- Yarn Berry 
+  - [firebase module 때문에 pnp는 우선 실패](https://github.com/firebase/firebase-js-sdk/issues/3707)
