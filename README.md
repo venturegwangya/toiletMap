@@ -34,5 +34,5 @@
 - Yarn Berry (Yarn 2)
   - [Yarn Berry란?](https://toss.tech/article/node-modules-and-yarn-berry)
   - [Yarn Migration Docs](https://yarnpkg.com/getting-started/migration)
-  - [Yarn Berry PnP](https://yarnpkg.com/features/pnp)
+  - [Yarn Berry Plug'n'Play](https://yarnpkg.com/features/pnp)
   - [firebase module 때문에 pnp는 우선 실패](https://github.com/firebase/firebase-js-sdk/issues/3707)
