@@ -1,14 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import PopupPill from '@components/map/PopupPill';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { faRedo } from '@fortawesome/free-solid-svg-icons';
+import { toiletHooks } from '@modules/toilet';
 import { LatLngBounds, LatLngExpression } from 'leaflet';
 import { MapContainer, Marker, TileLayer, ZoomControl } from 'react-leaflet';
-import { toiletModels, toiletHooks } from '@modules/toilet';
-import MapViewController from './MapViewController';
 import tw from 'twin.macro';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import PopupPill from '@components/map/PopupPill';
-import { faRedo } from '@fortawesome/free-solid-svg-icons';
-import { windowHooks } from '@modules/window';
-import { useRef } from 'react';
+import MapViewController from './MapViewController';
 
 const seoul: LatLngExpression = [36.29095, 127.6043522];
 const zoom = 8;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Button } from '@components/common/button';
-import { Input } from '@components/common/input';
+import { StyledButton } from '@components/common/button';
+import { StyledInput } from '@components/common/input';
 import { Label } from '@components/common/label';
 import { useSignInOrSignUp } from '@modules/auth/hooks';
 import React, { useCallback, useState } from 'react';
@@ -17,21 +17,21 @@ export function SignUp(): JSX.Element {
       e.preventDefault();
       try {
         signUp(email, password, userName);
-        alert('계정 생성 완료');
+        console.log(email, password, userName);
       } catch (e) {
         alert(e);
       }
     },
-    [signIn, signUp],
+    [email, password, signUp, userName],
   );
 
   const onClickSignIn = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
       signIn(email, password);
-      alert('로그인 완료');
+      console.log(email, password);
     },
-    [signIn, signUp],
+    [email, password, signIn],
   );
 
   return (
@@ -41,33 +41,33 @@ export function SignUp(): JSX.Element {
           <>
             {/** 아래 컴포넌트도 한번 더 묶는 게 맞는 것일까? */}
             <Label>이름(닉네임)</Label>
-            <Input
+            <StyledInput
               id="name"
               placeholder="Name"
               type="text"
-              defalutValue={userName}
+              defaultValue={userName}
               onChange={e => setUserName(e.target.value)}
             />
           </>
         )}
         <Label>이메일</Label>
-        <Input
+        <StyledInput
           id="email"
           placeholder="Email"
           type="text"
-          defalutValue={email}
+          defaultValue={email}
           onChange={e => setEmail(e.target.value)}
         />
         <Label>비밀번호</Label>
-        <Input
+        <StyledInput
           id="password"
           placeholder="Password"
           type="password"
-          defalutValue={password}
+          defaultValue={password}
           onChange={e => setPassword(e.target.value)}
         />
         {isSignUp ? (
-          <Button
+          <StyledButton
             type="submit"
             onClick={onClickSignUp}
             disabled={
@@ -77,16 +77,16 @@ export function SignUp(): JSX.Element {
             }
           >
             회원가입
-          </Button>
+          </StyledButton>
         ) : (
           <div className="flex flex-col justify-center items-center">
-            <Button
+            <StyledButton
               type="submit"
               onClick={onClickSignIn}
               disabled={email.length === 0 || password.length === 0}
             >
               로그인
-            </Button>
+            </StyledButton>
           </div>
         )}
         <div
