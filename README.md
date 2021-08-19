@@ -33,7 +33,8 @@
   - [Why do we need middleware for async flow in redux](https://stackoverflow.com/questions/34570758/why-do-we-need-middleware-for-async-flow-in-redux/34599594#34599594)
   - [Redux tutorials: async logic](https://redux.js.org/tutorials/essentials/part-5-async-logic)
 - Firebase
-  - [subscription 처리](https://stackoverflow.com/questions/50668964/what-is-the-proper-way-of-connecting-firebase-with-redux-sagas)
+  - [subscription 처리 (1)](https://stackoverflow.com/questions/50668964/what-is-the-proper-way-of-connecting-firebase-with-redux-sagas)
+  - [subscription 처리 (2)](https://stackoverflow.com/questions/51672715/redux-saga-firebase-onauthstatechanged-eventchannel)
 - Leaflet
   - [지도 줌 컨트롤 위치 변경](https://egghead.io/lessons/react-change-the-react-leaflet-map-zoomcontrol-location-and-icons)
 - Yarn Berry (Yarn 2)
