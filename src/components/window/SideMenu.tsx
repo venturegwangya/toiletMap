@@ -7,7 +7,7 @@ import { subscribeToAuthChange } from '@modules/auth/api';
 import { toiletHooks } from '@modules/toilet';
 import { windowHooks } from '@modules/window';
 import { useEffect } from 'react';
-import { SignUp } from '../../pages/SignUp';
+import { SignUp, UserProfileInfoView } from '../../pages';
 import tw from 'twin.macro';
 
 const SideMenuContainer = tw.div`flex`;
@@ -57,11 +57,7 @@ export function SideMenu(): EmotionJSX.Element {
           {user == null ? (
             <SignUp />
           ) : (
-            <>
-              <div>이름: {user.displayName}</div>
-              <div>email: {user.email}</div>
-              <button onClick={logOut}>로그아웃 할끄니까!</button>
-            </>
+            <UserProfileInfoView user={user} logOut={logOut} />
           )}
         </div>
       )}

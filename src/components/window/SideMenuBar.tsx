@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from '@emotion/styled';
 
 const SideMenuBarContainer = tw.div`w-12 h-full bg-white`;
+
 const SideMenuItem = styled.div<{ selected: boolean }>(props => [
   tw`flex items-center justify-center w-12 h-12`,
   props.selected && tw`bg-green-50`,
