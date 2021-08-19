@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { Button } from '@components/common/button';
+import { Input } from '@components/common/input';
+import { Label } from '@components/common/label';
 import { useSignInOrSignUp } from '@modules/auth/hooks';
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 export function SignUp(): JSX.Element {
   const [email, setEmail] = useState('');
@@ -9,50 +12,62 @@ export function SignUp(): JSX.Element {
   const [isSignUp, setSignUp] = useState(false);
   const { signIn, signUp } = useSignInOrSignUp();
 
-  const onClickSignUp = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    try {
-      signUp(email, password, userName);
-      alert('계정 생성 완료');
-    } catch (e) {
-      alert(e);
-    }
-  };
+  const onClickSignUp = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      try {
+        signUp(email, password, userName);
+        alert('계정 생성 완료');
+      } catch (e) {
+        alert(e);
+      }
+    },
+    [signIn, signUp],
+  );
 
-  const onClickSignIn = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    signIn(email, password);
-    alert('로그인 완료');
-  };
+  const onClickSignIn = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      signIn(email, password);
+      alert('로그인 완료');
+    },
+    [signIn, signUp],
+  );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <form
-        style={{ display: 'flex', flexDirection: 'column' }}
-        className="signUpPage__form"
-      >
+    <div className="bg-white p-4 flex flex-col items-center">
+      <form className="w-full">
         {isSignUp && (
-          <input
-            placeholder="Name"
-            type="text"
-            value={userName}
-            onChange={e => setUserName(e.target.value)}
-          />
+          <>
+            {/** 아래 컴포넌트도 한번 더 묶는 게 맞는 것일까? */}
+            <Label>이름(닉네임)</Label>
+            <Input
+              id="name"
+              placeholder="Name"
+              type="text"
+              defalutValue={userName}
+              onChange={e => setUserName(e.target.value)}
+            />
+          </>
         )}
-        <input
+        <Label>이메일</Label>
+        <Input
+          id="email"
           placeholder="Email"
           type="text"
-          value={email}
+          defalutValue={email}
           onChange={e => setEmail(e.target.value)}
         />
-        <input
+        <Label>비밀번호</Label>
+        <Input
+          id="password"
           placeholder="Password"
           type="password"
-          value={password}
+          defalutValue={password}
           onChange={e => setPassword(e.target.value)}
         />
         {isSignUp ? (
-          <button
+          <Button
             type="submit"
             onClick={onClickSignUp}
             disabled={
@@ -61,29 +76,26 @@ export function SignUp(): JSX.Element {
               password.length === 0
             }
           >
-            가입
-          </button>
+            회원가입
+          </Button>
         ) : (
-          <button
-            type="submit"
-            onClick={onClickSignIn}
-            disabled={email.length === 0 || password.length === 0}
-          >
-            로그인하기
-          </button>
+          <div className="flex flex-col justify-center items-center">
+            <Button
+              type="submit"
+              onClick={onClickSignIn}
+              disabled={email.length === 0 || password.length === 0}
+            >
+              로그인
+            </Button>
+          </div>
         )}
+        <div
+          className="text-sm pt-2 cursor-pointer text-center text-gray-700"
+          onClick={() => setSignUp(!isSignUp)}
+        >
+          {isSignUp ? '다시 로그인하기 ' : '회원 가입하기'}
+        </div>
       </form>
-      <button onClick={() => setSignUp(!isSignUp)}>
-        {isSignUp
-          ? '아이디가 갑자기 기억나서 로그인 하러 가기'
-          : '회원 가입하기'}
-      </button>
-      {/* <div className="signUpPage__signUpContainer">
-        {isSignUp ? `Already have an account?` : `Don't have an account?`}{' '}
-        <Link className="signUpPage__signUpText" to={isSignUp ? '/login' : '/signup'}>
-          {isSignUp ? 'Sign In' : 'Sign Up'}
-        </Link>
-      </div> */}
     </div>
   );
 }

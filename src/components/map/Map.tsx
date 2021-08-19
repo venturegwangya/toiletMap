@@ -25,7 +25,7 @@ const southKoreaBounds: LatLngBounds = new LatLngBounds([
 const mapStyle = tw`w-screen h-screen`;
 
 function Map(): EmotionJSX.Element {
-  const { toilets, selectedToilet, requestAgain } = toiletHooks.useToilet();
+  const { toilets, requestAgain } = toiletHooks.useToilet();
   const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
   return (
     <MapContainer
