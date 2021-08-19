@@ -10,7 +10,12 @@
 ## 참여
 
 - [v0.5 마일스톤 할일](https://github.com/venturegwangya/toiletMap/projects/1)
-
+- firebase 로컬 에뮬레이터 개발환경 설정 (한번만 하면됨)
+  - [자바 1.8 이상](https://www.java.com/ko/download/) 설치
+  - `firebase init emulators`
+    - existing project를 선택하고
+    - Auth와 firestore 설치한다. 포트값은 기본값 그대로 사용. (추후 더 상세히 업데이트)
+- firebase 로컬 에뮬레이터 실행 `yarn local-server`
 
 ## 기술 참고자료
 
