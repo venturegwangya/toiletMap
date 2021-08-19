@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import { LatLng } from 'leaflet';
 import { useAppDispatch, useAppSelector } from '../configureStore';
 import { useCallback, useMemo } from 'react';
-import { changePosition } from './actions';
+import { changePosition, changeZoom } from './actions';
 import { toiletActions } from '@modules/toilet';
 
 export function useMapLatLng(): LatLng {
@@ -10,16 +10,23 @@ export function useMapLatLng(): LatLng {
   return latLng;
 }
 
-export function useMapGeoPoint(): firebase.firestore.GeoPoint {
+export function useMap(): {
+  center: firebase.firestore.GeoPoint;
+  zoom: number;
+} {
   const latLng = useMapLatLng();
   const geoPoint = useMemo(
     () => new firebase.firestore.GeoPoint(latLng.lat, latLng.lng),
     [latLng],
   );
-  return geoPoint;
+  const zoom = useAppSelector(state => state.map.zoom);
+  return { center: geoPoint, zoom };
 }
 
-export function useMapActions(): { setLatLng: (latLng: LatLng) => void } {
+export function useMapActions(): {
+  setLatLng: (latLng: LatLng) => void;
+  setZoom: (zoom: number) => void;
+} {
   const dispatch = useAppDispatch();
   const setLatLng = useCallback(
     latLng => {
@@ -28,5 +35,13 @@ export function useMapActions(): { setLatLng: (latLng: LatLng) => void } {
     },
     [dispatch],
   );
-  return { setLatLng };
+
+  const setZoom = useCallback(
+    zoom => {
+      dispatch(changeZoom(zoom));
+      dispatch(toiletActions.needRequestAgain());
+    },
+    [dispatch],
+  );
+  return { setLatLng, setZoom };
 }

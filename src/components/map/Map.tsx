@@ -2,6 +2,7 @@
 import PopupPill from '@components/map/PopupPill';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
+import { mapHooks } from '@modules/map';
 import { toiletHooks } from '@modules/toilet';
 import { LatLngBounds, LatLngExpression } from 'leaflet';
 import { MapContainer, Marker, TileLayer, ZoomControl } from 'react-leaflet';
@@ -9,7 +10,6 @@ import tw from 'twin.macro';
 import MapViewController from './MapViewController';
 
 const seoul: LatLngExpression = [36.29095, 127.6043522];
-const zoom = 8;
 
 const southKoreaBounds: LatLngBounds = new LatLngBounds([
   [38.8, 121.75],
@@ -23,8 +23,10 @@ const southKoreaBounds: LatLngBounds = new LatLngBounds([
 const mapStyle = tw`w-screen h-screen`;
 
 function Map(): EmotionJSX.Element {
+  const { zoom } = mapHooks.useMap();
   const { toilets, requestAgain } = toiletHooks.useToilet();
   const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
+
   return (
     <MapContainer
       css={mapStyle}
@@ -49,10 +51,10 @@ function Map(): EmotionJSX.Element {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {toilets.map((toilet, i) => {
+      {toilets.map(toilet => {
         return (
           <Marker
-            key={i}
+            key={toilet.id}
             position={{
               lat: toilet.coordinates.latitude,
               lng: toilet.coordinates.longitude,
