@@ -13,10 +13,10 @@ import { ReviewList } from '@components/review/ReviewList';
 import { RoundDividedList } from '../common/list/index';
 
 const SideMenuContainer = styled.div<{ show: boolean }>(props => [
-  tw`transform translate-y-twice transition-transform`,
+  tw`transform translate-y-0 transition-transform`,
   tw`fixed flex-shrink-0 w-screen bottom-0 flex z-over-map h-max`,
   tw`md:(relative bottom-auto w-96 h-full)`,
-  props.show && tw`translate-y-0`,
+  !props.show && tw`translate-y-twice`,
 ]);
 
 export function SideMenu(): EmotionJSX.Element {
