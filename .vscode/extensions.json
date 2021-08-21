@@ -6,6 +6,7 @@
     "jpoissonnier.vscode-styled-components",
     "lightyen.tailwindcss-intellisense-twin",
     "bradlc.vscode-tailwindcss",
-    "github.vscode-pull-request-github"
+    "github.vscode-pull-request-github",
+    "toba.vsfire"
   ]
 }
