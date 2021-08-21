@@ -5,6 +5,7 @@
     "esbenp.prettier-vscode",
     "jpoissonnier.vscode-styled-components",
     "lightyen.tailwindcss-intellisense-twin",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "github.vscode-pull-request-github"
   ]
 }
