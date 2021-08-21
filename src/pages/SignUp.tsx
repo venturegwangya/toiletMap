@@ -2,6 +2,7 @@
 import { StyledButton } from '@components/common/button';
 import { StyledInput } from '@components/common/input';
 import { Label } from '@components/common/label';
+import { RoundDividedList } from '@components/common/list';
 import { useSignInOrSignUp } from '@modules/auth/hooks';
 import React, { useCallback, useState } from 'react';
 
@@ -35,7 +36,7 @@ export function SignUp(): JSX.Element {
   );
 
   return (
-    <div className="bg-white p-4 flex flex-col items-center">
+    <RoundDividedList>
       <form className="w-full">
         {isSignUp && (
           <>
@@ -96,6 +97,6 @@ export function SignUp(): JSX.Element {
           {isSignUp ? '다시 로그인하기 ' : '회원 가입하기'}
         </div>
       </form>
-    </div>
+    </RoundDividedList>
   );
 }
