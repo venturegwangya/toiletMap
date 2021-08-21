@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       zIndex: {
-        'over-map': 500,
+        'over-map': 1010,
+        'over-menu': 1020,
       },
       height: {
         max: 'max-content',

@@ -1,6 +1,5 @@
-import { ReviewOverlay } from '@components/review/ReviewOverlay';
 import { SideMenu } from '@components/window/SideMenu';
-import SideMenuBar from '@components/window/SideMenuBar';
+import SideMenuButtons from '@components/window/SideMenuBar';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { toiletHooks } from '@modules/toilet';
 import React, { ReactElement } from 'react';
@@ -23,9 +22,8 @@ export default function MenuOverlay(): ReactElement {
   const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
   return (
     <MenuOverlayContainer>
-      <SideMenuBar />
+      <SideMenuButtons />
       <SideMenu />
-      <ReviewOverlay />
       <PopupPillContainer>
         <Pill
           show={requestAgain}
