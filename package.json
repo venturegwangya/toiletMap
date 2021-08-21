@@ -52,10 +52,7 @@
   "babelMacros": {
     "twin": {
       "config": "tailwind.config.js",
-      "preset": "emotion",
-      "styled": {
-        "from": "emotion"
-      }
+      "preset": "emotion"
     }
   },
   "browserslist": [
