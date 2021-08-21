@@ -13,6 +13,10 @@ module.exports = {
         default: 'rgba(0, 0, 0, 0.12) 0px 6px 20px',
         hover: 'rgba(0, 0, 0, 0.2) 0px 6px 20px',
       },
+      translate: {
+        twice: '200%',
+        'neg-300': '-300%',
+      },
     },
   },
   variants: {

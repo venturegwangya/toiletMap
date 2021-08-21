@@ -27,6 +27,7 @@
   - [Saga Typing 문제](https://github.com/redux-saga/redux-saga/issues/1883)
 - EmotionJS/ TailwindCSS / [twin.macro](https://github.com/ben-rogerson/twin.macro)
   - [examples of tailwind-css as css-in-js](https://dev.to/angelmtztrc/react-app-with-tailwind-css-emotion-twin-macro-3dpe)
+  - [theme configuration](https://tailwindcss.com/docs/theme)
 - Redux, Redux-saga
   - [Redux saga vs async await](https://thecodebarbarian.com/redux-saga-vs-async-await.html)
   - [Why do we need middleware for async flow in redux](https://stackoverflow.com/questions/34570758/why-do-we-need-middleware-for-async-flow-in-redux/34599594#34599594)
