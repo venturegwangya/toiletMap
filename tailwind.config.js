@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      inset: {
+        'side-menu-open': 'calc(50% + 12rem)',
+      },
       zIndex: {
         'over-map': 1010,
         'over-menu': 1020,

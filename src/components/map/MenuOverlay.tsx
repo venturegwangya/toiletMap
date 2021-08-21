@@ -1,7 +1,9 @@
 import { SideMenu } from '@components/window/SideMenu';
 import SideMenuButtons from '@components/window/SideMenuButtons';
+import styled from '@emotion/styled';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { toiletHooks } from '@modules/toilet';
+import { windowHooks } from '@modules/window';
 import React, { ReactElement } from 'react';
 import tw from 'twin.macro';
 import Pill from './Pill';
@@ -15,18 +17,26 @@ import Pill from './Pill';
 
 const MenuOverlayContainer = tw.div`flex flex-row absolute w-full h-full gap-4`;
 // TODO: 박민규 2021-08-21 지도 쪽에 더 넣으려면 변경해야함
-const PopupPillContainer = tw.div`flex w-full h-full justify-center padding[3em]`;
+
+const PopupPillContainer = styled.div<{ show: boolean; shift: boolean }>(
+  props => [
+    tw`transform transition-transform translate-y-neg-300 -translate-x-1/2`,
+    tw`absolute left-1/2 top-12 z-over-map`,
+    props.show && tw`translate-y-0`,
+    props.shift && tw`md:left-side-menu-open`,
+  ],
+);
 
 export default function MenuOverlay(): ReactElement {
   const { requestAgain } = toiletHooks.useToilet();
+  const selectedMenu = windowHooks.useSelectedLeftMenu();
   const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
   return (
     <MenuOverlayContainer>
       <SideMenuButtons />
       <SideMenu />
-      <PopupPillContainer>
+      <PopupPillContainer show={requestAgain} shift={selectedMenu != null}>
         <Pill
-          show={requestAgain}
           text="이 위치에서 다시 검색"
           icon={faRedo}
           onClick={fetchNearByToilets}
