@@ -2,7 +2,6 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { toiletModels } from '@modules/toilet';
 import { processRawToiletData } from '../../util/parseToiletData';
 import ToiletInfoCard from './ToiletInfoCard';
-import { RoundDividedList } from '../common/list/index';
 
 interface ToiletListProps {
   toilets: toiletModels.Toilet[];
@@ -24,13 +23,13 @@ function ToiletList({ toilets }: ToiletListProps): EmotionJSX.Element {
   };
 
   return (
-    <RoundDividedList>
+    <>
       {toilets.map((toilet: toiletModels.Toilet) => (
         <ToiletInfoCard key={toilet.id} toilet={toilet} />
       ))}
       <label>JSON파일 Firebase에 업로드</label>
       <input type="file" id="get_the_file" onChange={handleChange}></input>
-    </RoundDividedList>
+    </>
   );
 }
 

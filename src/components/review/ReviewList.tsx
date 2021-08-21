@@ -4,7 +4,6 @@ import { useAppDispatch } from '@modules/configureStore';
 import { reviewActions, reviewHooks } from '@modules/review';
 import { toiletModels, toiletHooks } from '@modules/toilet';
 import React, { useCallback, useEffect } from 'react';
-import { RoundDividedList } from '../common/list/index';
 import { ReviewForm } from './ReviewForm';
 import ReviewListItem from './ReviewListItem';
 
@@ -30,7 +29,7 @@ export function ReviewList({ selectedToilet }: Props): EmotionJSX.Element {
   }, [dispatch, selectedToilet]);
 
   return (
-    <RoundDividedList>
+    <>
       <div onClick={() => setSelectedToilet(null)}>뒤로가귀</div>
       {user != null && <ReviewForm toilet={selectedToilet} user={user} />}
       {reviews.map((r, i) => (
@@ -41,6 +40,6 @@ export function ReviewList({ selectedToilet }: Props): EmotionJSX.Element {
           toiletId={selectedToilet.id}
         />
       ))}
-    </RoundDividedList>
+    </>
   );
 }

@@ -10,11 +10,13 @@ import { SignUp, UserProfileInfoView } from '../../pages';
 import tw from 'twin.macro';
 import styled from '@emotion/styled';
 import { ReviewList } from '@components/review/ReviewList';
+import { RoundDividedList } from '../common/list/index';
 
 const SideMenuContainer = styled.div<{ show: boolean }>(props => [
+  tw`transform translate-y-twice transition-transform`,
   tw`fixed flex-shrink-0 w-screen bottom-0 flex z-over-map h-max`,
   tw`md:(relative bottom-auto w-96 h-full)`,
-  !props.show && tw`hidden`,
+  props.show && tw`translate-y-0`,
 ]);
 
 export function SideMenu(): EmotionJSX.Element {
@@ -43,20 +45,22 @@ export function SideMenu(): EmotionJSX.Element {
   }, []);
   return (
     <SideMenuContainer show={selectedMenu != null}>
-      {/* 화장실 리스트 */}
-      {selectedMenu === 'LIST' &&
-        (selectedToilet ? (
-          <ReviewList selectedToilet={selectedToilet} />
-        ) : (
-          <ToiletList toilets={toilets} />
-        ))}
-      {/* 리뷰 리스트 */}
-      {selectedMenu === 'USER_SETTING' &&
-        (user == null ? (
-          <SignUp />
-        ) : (
-          <UserProfileInfoView user={user} logOut={logOut} />
-        ))}
+      <RoundDividedList>
+        {/* 화장실 리스트 / 리뷰 리스트 */}
+        {selectedMenu === 'LIST' &&
+          (selectedToilet ? (
+            <ReviewList selectedToilet={selectedToilet} />
+          ) : (
+            <ToiletList toilets={toilets} />
+          ))}
+        {/* 유저 */}
+        {selectedMenu === 'USER_SETTING' &&
+          (user == null ? (
+            <SignUp />
+          ) : (
+            <UserProfileInfoView user={user} logOut={logOut} />
+          ))}
+      </RoundDividedList>
     </SideMenuContainer>
   );
 }

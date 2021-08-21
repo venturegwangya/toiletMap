@@ -1,5 +1,5 @@
 import { SideMenu } from '@components/window/SideMenu';
-import SideMenuButtons from '@components/window/SideMenuBar';
+import SideMenuButtons from '@components/window/SideMenuButtons';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { toiletHooks } from '@modules/toilet';
 import React, { ReactElement } from 'react';
