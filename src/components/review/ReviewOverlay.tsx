@@ -7,18 +7,17 @@ import firebase from 'firebase';
 import ReviewListItem from './ReviewListItem';
 import { ReviewForm } from './ReviewForm';
 import { useCallback } from 'react';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
-const ReviewListContainer = tw.ul`divide-y divide-gray-100`;
+const ReviewPanelContainer = tw.div`fixed left-0 z-over-map bg-white md:(relative w-64)`;
+const DivideList = tw.ul`divide-y divide-gray-100`;
 
-interface ReviewPanelProps {
+interface Props {
   toilet: Toilet;
   user: firebase.User | null;
 }
 
-export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
-  toilet,
-  user,
-}) => {
+export function ReviewOverlay({ toilet, user }: Props): EmotionJSX.Element {
   const dispatch = useAppDispatch();
   const reviews = reviewHooks.useSelectedToiletReviews();
   const userHasReview = useCallback(() => {
@@ -33,17 +32,9 @@ export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
   }, [dispatch, toilet]);
 
   return (
-    <div
-      style={{
-        width: '300px',
-        background: 'white',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
+    <ReviewPanelContainer>
       {user != null && <ReviewForm toilet={toilet} user={user} />}
-      <ReviewListContainer>
+      <DivideList>
         {reviews.map((r, i) => (
           <ReviewListItem
             key={`review-${i}`}
@@ -52,7 +43,7 @@ export const ReviewPanel: React.FunctionComponent<ReviewPanelProps> = ({
             toiletId={toilet.id}
           />
         ))}
-      </ReviewListContainer>
-    </div>
+      </DivideList>
+    </ReviewPanelContainer>
   );
-};
+}

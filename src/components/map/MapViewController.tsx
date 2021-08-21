@@ -13,5 +13,5 @@ export default function MapViewController(): ReactElement {
       setZoom(map.getZoom());
     },
   });
-  return <div></div>;
+  return <></>;
 }

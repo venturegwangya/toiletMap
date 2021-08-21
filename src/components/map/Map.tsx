@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import PopupPill from '@components/map/PopupPill';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { mapHooks } from '@modules/map';
 import { toiletHooks } from '@modules/toilet';
 import { LatLngBounds, LatLngExpression } from 'leaflet';
@@ -24,8 +22,7 @@ const mapStyle = tw`w-screen h-screen`;
 
 function Map(): EmotionJSX.Element {
   const { zoom } = mapHooks.useMap();
-  const { toilets, requestAgain } = toiletHooks.useToilet();
-  const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
+  const { toilets } = toiletHooks.useToilet();
 
   return (
     <MapContainer
@@ -38,13 +35,6 @@ function Map(): EmotionJSX.Element {
       maxBounds={southKoreaBounds}
       maxBoundsViscosity={1.0} // 맵 경계밖으로 드래그 완전 차단
     >
-      {requestAgain && (
-        <PopupPill
-          text="이 위치에서 다시 검색"
-          icon={faRedo}
-          onClick={fetchNearByToilets}
-        />
-      )}
       <ZoomControl position={'bottomright'} />
       <MapViewController />
       <TileLayer

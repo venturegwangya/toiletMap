@@ -2,10 +2,7 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { toiletModels } from '@modules/toilet';
 import { processRawToiletData } from '../../util/parseToiletData';
 import ToiletInfoCard from './ToiletInfoCard';
-import tw from 'twin.macro';
-
-// TODO: divide 부분 리뷰 리스트에도 있으므로 공통으로 추출하고 함수형으로 Composition하기
-const ToiletListContainer = tw.ul`divide-y divide-gray-300 p-8 bg-white overflow-y-scroll`;
+import { RoundDividedList } from '../common/list/index';
 
 interface ToiletListProps {
   toilets: toiletModels.Toilet[];
@@ -27,13 +24,13 @@ function ToiletList({ toilets }: ToiletListProps): EmotionJSX.Element {
   };
 
   return (
-    <ToiletListContainer>
+    <RoundDividedList>
       {toilets.map((toilet: toiletModels.Toilet) => (
         <ToiletInfoCard key={toilet.id} toilet={toilet} />
       ))}
       <label>JSON파일 Firebase에 업로드</label>
       <input type="file" id="get_the_file" onChange={handleChange}></input>
-    </ToiletListContainer>
+    </RoundDividedList>
   );
 }
 

@@ -4,10 +4,10 @@ import { windowHooks, windowTypes } from '@modules/window';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from '@emotion/styled';
 
-const SideMenuBarContainer = tw.div`w-12 h-full bg-white`;
+const SideMenuBarContainer = tw.div`relative flex flex-col w-max z-over-map gap-2 margin-left[1em] margin-top[1em]`;
 
-const SideMenuItem = styled.div<{ selected: boolean }>(props => [
-  tw`flex items-center justify-center w-12 h-12`,
+const SideMenuBarItem = styled.div<{ selected: boolean }>(props => [
+  tw`flex items-center justify-center w-10 h-10 rounded-lg bg-white shadow-default hover:(shadow-hover)`,
   props.selected && tw`bg-green-50`,
 ]);
 
@@ -18,13 +18,15 @@ export default function SideMenuBar(): ReactElement {
   return (
     <SideMenuBarContainer>
       {windowTypes.leftMenus.map(menu => (
-        <SideMenuItem
+        <SideMenuBarItem
           key={menu}
           selected={selectedMenu === menu}
-          onClick={() => setSelectedLeftMenu(menu)}
+          onClick={() =>
+            setSelectedLeftMenu(menu === selectedMenu ? null : menu)
+          }
         >
-          <FontAwesomeIcon icon={windowTypes.leftMenuIconMap[menu]} size="lg" />
-        </SideMenuItem>
+          <FontAwesomeIcon icon={windowTypes.leftMenuIconMap[menu]} size="sm" />
+        </SideMenuBarItem>
       ))}
     </SideMenuBarContainer>
   );

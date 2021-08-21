@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { ReviewPanel } from '@components/review/ReviewPanel';
 import ToiletList from '@components/toilet/ToiletList';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { authHooks } from '@modules/auth';
@@ -9,13 +8,17 @@ import { windowHooks } from '@modules/window';
 import { useEffect } from 'react';
 import { SignUp, UserProfileInfoView } from '../../pages';
 import tw from 'twin.macro';
+import styled from '@emotion/styled';
 
-const SideMenuContainer = tw.div`flex`;
+const SideMenuContainer = styled.div<{ show: boolean }>(props => [
+  tw`flex z-over-map relative w-96 h-full`,
+  !props.show && tw`hidden`,
+]);
 
 export function SideMenu(): EmotionJSX.Element {
   const logOut = authHooks.useLogOut();
   const selectedMenu = windowHooks.useSelectedLeftMenu();
-  const { selectedToilet, toilets } = toiletHooks.useToilet();
+  const { toilets } = toiletHooks.useToilet();
   const { user, setUser } = authHooks.useUser();
   const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
 
@@ -37,30 +40,18 @@ export function SideMenu(): EmotionJSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <SideMenuContainer>
-      {/* 화장실 리스트 */}
-      {selectedMenu === 'LIST' && (
-        <>
-          <ToiletList toilets={toilets} />
-          {selectedToilet && (
-            <ReviewPanel toilet={selectedToilet} user={user} />
-          )}
-        </>
-      )}
-      {/* 리뷰 리스트 */}
-      {selectedMenu === 'USER_SETTING' && (
-        <div
-          style={{
-            backgroundColor: 'yellow',
-          }}
-        >
-          {user == null ? (
+    <>
+      <SideMenuContainer show={selectedMenu != null}>
+        {/* 화장실 리스트 */}
+        {selectedMenu === 'LIST' && <ToiletList toilets={toilets} />}
+        {/* 리뷰 리스트 */}
+        {selectedMenu === 'USER_SETTING' &&
+          (user == null ? (
             <SignUp />
           ) : (
             <UserProfileInfoView user={user} logOut={logOut} />
-          )}
-        </div>
-      )}
-    </SideMenuContainer>
+          ))}
+      </SideMenuContainer>
+    </>
   );
 }

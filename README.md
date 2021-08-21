@@ -25,8 +25,7 @@
   - [Bulletproof-react](https://github.com/alan2207/bulletproof-react)
 - TypeScript
   - [Saga Typing 문제](https://github.com/redux-saga/redux-saga/issues/1883)
-- EmotionJS
-- TailwindCSS
+- EmotionJS/ TailwindCSS / [twin.macro](https://github.com/ben-rogerson/twin.macro)
   - [examples of tailwind-css as css-in-js](https://dev.to/angelmtztrc/react-app-with-tailwind-css-emotion-twin-macro-3dpe)
 - Redux, Redux-saga
   - [Redux saga vs async await](https://thecodebarbarian.com/redux-saga-vs-async-await.html)
