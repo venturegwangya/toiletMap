@@ -15,6 +15,7 @@ import {
   SignUpAction,
   SIGN_IN,
   SIGN_UP,
+  SUBSCRIBE_AUTH_CHANGED,
   updateUser,
 } from './actions';
 import {
@@ -86,11 +87,15 @@ export function* watchLogOutSaga(): Generator<StrictEffect, void, void> {
 /**
  * {@link} https://stackoverflow.com/questions/48507262/redux-saga-yield-put-not-working-inside-nested-callback
  */
-export function* watchAuthSaga(): Generator<StrictEffect, void, firebase.User> {
+function* subscriptionAuthSaga(): Generator<
+  StrictEffect,
+  void,
+  { user: firebase.User }
+> {
   // first create your eventChannel
   const authEventsChannel = eventChannel(emit => {
     const unsubscribe = firebaseAuth.onAuthStateChanged(user => {
-      emit(user);
+      emit({ user });
     });
     // return a function that can be used to unregister listeners when the saga is cancelled
     return unsubscribe;
@@ -99,18 +104,29 @@ export function* watchAuthSaga(): Generator<StrictEffect, void, firebase.User> {
   // then monitor those events in your saga
   try {
     while (true) {
-      const user = yield take(authEventsChannel);
+      const { user } = yield take(authEventsChannel);
       yield put(updateUser(user));
     }
+  } catch (e) {
+    console.error(e);
+    authEventsChannel.close();
   } finally {
     // unregister listener if the saga was cancelled
     if (yield cancelled()) authEventsChannel.close();
   }
 }
 
+export function* watchSubscriptionAuthSaga(): Generator<
+  StrictEffect,
+  void,
+  void
+> {
+  yield takeEvery(SUBSCRIBE_AUTH_CHANGED, subscriptionAuthSaga);
+}
+
 export const sagas = [
   watchSignUpReviewSaga,
   watchSignInSaga,
   watchLogOutSaga,
-  watchAuthSaga,
+  watchSubscriptionAuthSaga,
 ];

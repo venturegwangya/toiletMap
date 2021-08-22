@@ -75,8 +75,23 @@ export function updateUser(user: firebase.User | null): UpdateUserAction {
   };
 }
 
+/**
+ * User Auth 상태 구독
+ */
+export const SUBSCRIBE_AUTH_CHANGED = 'auth/SUBSCRIBE_AUTH_CHANGED' as const;
+export interface SubscribeAuthChangedAction {
+  type: typeof SUBSCRIBE_AUTH_CHANGED;
+}
+
+export function subscribeToAuthChanged(): SubscribeAuthChangedAction {
+  return {
+    type: SUBSCRIBE_AUTH_CHANGED,
+  };
+}
+
 export type AuthActionTypes =
   | SignInAction
   | SignUpAction
   | LogOutAction
-  | UpdateUserAction;
+  | UpdateUserAction
+  | SubscribeAuthChangedAction;

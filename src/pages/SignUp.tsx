@@ -17,7 +17,6 @@ export function SignUp(): JSX.Element {
       e.preventDefault();
       try {
         signUp(email, password, userName);
-        console.log(email, password, userName);
       } catch (e) {
         alert(e);
       }
@@ -29,7 +28,6 @@ export function SignUp(): JSX.Element {
     (e: React.MouseEvent) => {
       e.preventDefault();
       signIn(email, password);
-      console.log(email, password);
     },
     [email, password, signIn],
   );

@@ -2,15 +2,14 @@
 import ToiletList from '@components/toilet/ToiletList';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { authHooks } from '@modules/auth';
-import { subscribeToAuthChange } from '@modules/auth/api';
 import { toiletHooks } from '@modules/toilet';
 import { windowHooks } from '@modules/window';
 import { useEffect } from 'react';
-import { SignUp, UserProfileInfoView } from '../../pages';
 import tw from 'twin.macro';
 import styled from '@emotion/styled';
 import { ReviewList } from '@components/review/ReviewList';
 import { RoundDividedList } from '../common/list/index';
+import { SignUp, UserProfileInfoView } from '../../pages';
 
 const SideMenuContainer = styled.div<{ show: boolean }>(props => [
   tw`transform translate-y-0 transition-transform`,
@@ -23,23 +22,12 @@ export function SideMenu(): EmotionJSX.Element {
   const logOut = authHooks.useLogOut();
   const selectedMenu = windowHooks.useSelectedLeftMenu();
   const { selectedToilet, toilets } = toiletHooks.useToilet();
-  const { user, setUser } = authHooks.useUser();
+  const { user } = authHooks.useUser();
   const fetchNearByToilets = toiletHooks.useFetchNearByToilets();
 
   useEffect(() => {
     // componentMount/Update
-    const unsub = subscribeToAuthChange(
-      _user => {
-        setUser(_user);
-      },
-      () => {
-        setUser(null);
-      },
-    );
     fetchNearByToilets();
-    return () => {
-      unsub();
-    };
     // 한번만 실행해야함
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
