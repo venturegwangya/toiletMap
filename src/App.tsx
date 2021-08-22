@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import './App.css';
 import { ModalPortal } from './components/common/modal/ModalPortal';

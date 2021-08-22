@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ReactElement } from 'react';

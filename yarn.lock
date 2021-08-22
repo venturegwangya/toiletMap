@@ -255,6 +255,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-plugin-utils@npm:^7.14.5":
+  version: 7.14.5
+  resolution: "@babel/helper-plugin-utils@npm:7.14.5"
+  checksum: fe20e90a24d02770a60ebe80ab9f0dfd7258503cea8006c71709ac9af1aa3e47b0de569499673f11ea6c99597f8c0e4880ae1d505986e61101b69716820972fe
+  languageName: node
+  linkType: hard
+
 "@babel/helper-remap-async-to-generator@npm:^7.12.13":
   version: 7.12.13
   resolution: "@babel/helper-remap-async-to-generator@npm:7.12.13"
@@ -724,6 +731,17 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: 30697ad4607a9339b06c2648c2d128ce6865c3d2d14049b422c5ca060d6532978bb1008e086df402d365fda04fbafe9bd4ad9f62d78ef2e7a7063459b59645c0
+  languageName: node
+  linkType: hard
+
+"@babel/plugin-syntax-jsx@npm:^7.2.0":
+  version: 7.14.5
+  resolution: "@babel/plugin-syntax-jsx@npm:7.14.5"
+  dependencies:
+    "@babel/helper-plugin-utils": ^7.14.5
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 3a2ba87534b0f9ee70eba0754d2ae544825c25afd98efb8e42b41399e02de4cc5b1f70fc5ce444fb7a7e5b09972c289eed2f00917be5b88d67407f4cbde8e960
   languageName: node
   linkType: hard
 
@@ -1681,7 +1699,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/babel-plugin@npm:^11.3.0":
+"@emotion/babel-plugin-jsx-pragmatic@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@emotion/babel-plugin-jsx-pragmatic@npm:0.1.5"
+  dependencies:
+    "@babel/plugin-syntax-jsx": ^7.2.0
+  peerDependencies:
+    "@babel/core": ^7.0.0
+  checksum: b92aafafd35eca0cf9690a4b21899827ef24e0ce7bfe97381ef3258113deaa21eb047b492f4eadfac5ba57b301c0bdcab934d776774d91e867f1a8bdb7ab9870
+  languageName: node
+  linkType: hard
+
+"@emotion/babel-plugin@npm:^11.2.0, @emotion/babel-plugin@npm:^11.3.0":
   version: 11.3.0
   resolution: "@emotion/babel-plugin@npm:11.3.0"
   dependencies:
@@ -1700,6 +1729,20 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0
   checksum: 8ff91de4a26c32f8342b28b96630527d347879b6669a9bf6f78945ef6588af34be800e0feca0434e8900f082350c351a4b6941e48127aad916a581821620c919
+  languageName: node
+  linkType: hard
+
+"@emotion/babel-preset-css-prop@npm:^11.2.0":
+  version: 11.2.0
+  resolution: "@emotion/babel-preset-css-prop@npm:11.2.0"
+  dependencies:
+    "@babel/plugin-transform-react-jsx": ^7.12.1
+    "@babel/runtime": ^7.7.2
+    "@emotion/babel-plugin": ^11.2.0
+    "@emotion/babel-plugin-jsx-pragmatic": ^0.1.5
+  peerDependencies:
+    "@babel/core": ^7.0.0
+  checksum: 211fb98cb5fb958ddaaeeb326595c4681f0d6a8ac626dec4499cbd1771909f9c6d9af174e6288ef444ad256c0cd96238ab1575a460aeb9be93277b521f891eb3
   languageName: node
   linkType: hard
 
@@ -1739,14 +1782,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11.4.0":
-  version: 11.4.0
-  resolution: "@emotion/react@npm:11.4.0"
+"@emotion/react@npm:^11.4.1":
+  version: 11.4.1
+  resolution: "@emotion/react@npm:11.4.1"
   dependencies:
     "@babel/runtime": ^7.13.10
     "@emotion/cache": ^11.4.0
     "@emotion/serialize": ^1.0.2
-    "@emotion/sheet": ^1.0.1
+    "@emotion/sheet": ^1.0.2
     "@emotion/utils": ^1.0.0
     "@emotion/weak-memoize": ^0.2.5
     hoist-non-react-statics: ^3.3.1
@@ -1758,7 +1801,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: af2abadbaeb762dd09be6f34036a769373fb8625116420c546592a33643e967942769ee23289d160977ae74922ff5dfac5bc5fdbe9c893fc3415fbb4d25c2318
+  checksum: de3c2150785567e68572ba42ab2fb28808c8522c7888eb54a22e19f3d981b59170d9e2e3db9445f25074d8d5e29c21da477450c7d5bbf9f2d168d759129aae8b
   languageName: node
   linkType: hard
 
@@ -1775,10 +1818,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/sheet@npm:^1.0.0, @emotion/sheet@npm:^1.0.1":
+"@emotion/sheet@npm:^1.0.0":
   version: 1.0.1
   resolution: "@emotion/sheet@npm:1.0.1"
   checksum: 624e2ede033e9b668fe9e20be92a9b712a0efb290f39ad72baa267688d41c37fd684f9b9349dbd62f722818a50c175d1b364b8d49896bd7e89f03083228a5eab
+  languageName: node
+  linkType: hard
+
+"@emotion/sheet@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@emotion/sheet@npm:1.0.2"
+  checksum: 836b413c6657cd6a3de93c53eebd80ea9a6656123f1b78f539b2eaba145fb8566e3aa005b301f807632964f29f7c3cd85322dafb5634abdc1760794e0c7f76dd
   languageName: node
   linkType: hard
 
@@ -16825,7 +16875,8 @@ resolve@^2.0.0-next.3:
   resolution: "toilet-map@workspace:."
   dependencies:
     "@craco/craco": ^6.1.2
-    "@emotion/react": ^11.4.0
+    "@emotion/babel-preset-css-prop": ^11.2.0
+    "@emotion/react": ^11.4.1
     "@emotion/styled": ^11.3.0
     "@fortawesome/fontawesome-svg-core": ^1.2.35
     "@fortawesome/free-brands-svg-icons": ^5.15.3

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
 import { Avatar } from './Avatar';
 import StyledIcon from './StyledIcon';

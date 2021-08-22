@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { mapHooks } from '@modules/map';
 import { toiletHooks } from '@modules/toilet';
