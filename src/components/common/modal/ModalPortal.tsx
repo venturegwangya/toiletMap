@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';

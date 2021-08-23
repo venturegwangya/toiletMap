@@ -7,6 +7,7 @@ module.exports = {
       '@components': path.resolve(__dirname, './src/components/'),
     },
   },
+  babel: { presets: ['@emotion/babel-preset-css-prop'] },
   style: {
     postcss: {
       plugins: [require('tailwindcss'), require('autoprefixer')],
