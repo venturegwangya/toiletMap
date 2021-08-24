@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@modules/configureStore';
 import firebase from 'firebase';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { authActions } from '.';
 
 export function useUser(): {
@@ -42,4 +42,11 @@ export function useSignInOrSignUp(): {
     [dispatch],
   );
   return { signIn, signUp };
+}
+
+export function useSubscribeToAuthChanged(): void {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(authActions.subscribeToAuthChanged());
+  });
 }

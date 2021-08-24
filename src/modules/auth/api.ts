@@ -32,18 +32,6 @@ export async function signInWithEmailAndPassword(
   }
 }
 
-export function subscribeToAuthChange(
-  onLogin: {
-    (arg0: firebase.User): void;
-  },
-  onLogout: () => void,
-) {
-  return firebaseAuth.onAuthStateChanged(authUser => {
-    if (authUser) onLogin(authUser);
-    else onLogout();
-  });
-}
-
 /**
  * @override 로그아웃
  */
