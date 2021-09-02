@@ -1,4 +1,4 @@
-import { LeftMenu } from './types';
+import { windowTypes } from '.';
 /**
  * 모달을 보여준다.
  */
@@ -33,9 +33,11 @@ export function hideModal(): HideModalAction {
 export const SELECT_LEFT_MENU = 'window/SELECT_LEFT_MENU' as const;
 export interface SelectLeftMenuAction {
   type: typeof SELECT_LEFT_MENU;
-  leftMenu: LeftMenu;
+  leftMenu: windowTypes.LeftMenu;
 }
-export function selectLeftMenu(leftMenu: LeftMenu): SelectLeftMenuAction {
+export function selectLeftMenu(
+  leftMenu: windowTypes.LeftMenu,
+): SelectLeftMenuAction {
   return {
     type: SELECT_LEFT_MENU,
     leftMenu,

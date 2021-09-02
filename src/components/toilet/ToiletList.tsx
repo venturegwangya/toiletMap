@@ -3,6 +3,8 @@ import { toiletModels } from '@modules/toilet';
 import { processRawToiletData } from '../../util/parseToiletData';
 import ToiletInfoCard from './ToiletInfoCard';
 
+// asdfasdfo
+
 interface ToiletListProps {
   toilets: toiletModels.Toilet[];
 }
