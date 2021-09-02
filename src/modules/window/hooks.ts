@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useAppSelector } from '../configureStore';
-import { LeftMenu } from './types';
-import { useAppDispatch } from '@modules/configureStore';
-import { useCallback } from 'react';
-import { selectLeftMenu, SelectLeftMenuAction } from './actions';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '@modules/configureStore';
+import { windowTypes, windowActions } from '.';
 
-export function useSelectedLeftMenu(): LeftMenu {
+export function useSelectedLeftMenu(): windowTypes.LeftMenu {
   const leftMenu = useAppSelector(state => state.window.leftMenu);
   return leftMenu;
 }
 
 export function useSelectLeftMenu(): (
-  leftMenu: LeftMenu,
-) => SelectLeftMenuAction {
+  leftMenu: windowTypes.LeftMenu,
+) => windowActions.SelectLeftMenuAction {
   const dispatch = useAppDispatch();
   const setSelectedLeftMenu = useCallback(
-    (leftMenu: LeftMenu) => dispatch(selectLeftMenu(leftMenu)),
+    (leftMenu: windowTypes.LeftMenu) =>
+      dispatch(windowActions.selectLeftMenu(leftMenu)),
     [dispatch],
   );
   return setSelectedLeftMenu;
