@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { toiletAPI, toiletModels } from '@modules/toilet';
-import { Review, ReviewBase } from './models';
+import { reviewModels } from '.';
 import { getFirebaseServerTimestamp } from '@modules/configureFirebase';
 
 const REVIEW_COLLECTION_NAME = 'reviews';
@@ -28,15 +28,15 @@ const reviewRef = (toiletId: string, reviewId: string) =>
 // }
 function snapshotToReview(
   doc: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>,
-): Review {
-  return Object.assign(doc.data() as unknown as Review, {
+): reviewModels.Review {
+  return Object.assign(doc.data() as unknown as reviewModels.Review, {
     id: doc.id,
-  }) as Review;
+  }) as reviewModels.Review;
 }
 
 export async function fetchReviewsByToiletId(
   toiletId: string,
-): Promise<Review[]> {
+): Promise<reviewModels.Review[]> {
   const reviewData = await reviewsRef(toiletId)
     .orderBy('timestamp', 'desc')
     .get();
@@ -47,7 +47,7 @@ export async function fetchReviewsByToiletId(
  */
 export async function createReview(
   toilet: toiletModels.Toilet,
-  review: ReviewBase,
+  review: reviewModels.ReviewBase,
 ): Promise<void> {
   const booleanToNumericSign = (bool: boolean) => (bool ? 1 : -1);
 
@@ -67,7 +67,10 @@ export async function createReview(
   reviewsRef(toilet.id).doc(review.id).set(review);
 }
 
-function likeReview(userId: string, review: Review): Review {
+function likeReview(
+  userId: string,
+  review: reviewModels.Review,
+): reviewModels.Review {
   if (review.dislikedUIDs === undefined) review.dislikedUIDs = {};
   if (review.dislikedUIDs[userId] != null && !review.dislikedUIDs[userId]) {
     // like가 있으면 취소
@@ -80,7 +83,10 @@ function likeReview(userId: string, review: Review): Review {
 }
 
 //
-function dislikeReview(userId: string, review: Review): Review {
+function dislikeReview(
+  userId: string,
+  review: reviewModels.Review,
+): reviewModels.Review {
   if (review.dislikedUIDs === undefined) review.dislikedUIDs = {};
   if (review.dislikedUIDs[userId] != null && review.dislikedUIDs[userId]) {
     // dislike가 있으면 취소
@@ -97,9 +103,9 @@ export async function likeOrDislikeReview(
   toiletId: string,
   reviewId: string,
   isDislike: boolean,
-): Promise<Review> {
+): Promise<reviewModels.Review> {
   // 항상 최신 리뷰를 가져옴
-  const review: Review = snapshotToReview(
+  const review: reviewModels.Review = snapshotToReview(
     await reviewRef(toiletId, reviewId).get(),
   );
   if (isDislike) {

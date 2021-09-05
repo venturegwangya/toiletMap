@@ -1,5 +1,5 @@
 import { Review, ReviewBase } from '@modules/review/models';
-import { Toilet } from '@modules/toilet/models';
+import { toiletModels } from '@modules/toilet';
 
 /**
  * 리뷰 생성
@@ -8,12 +8,12 @@ export const CREATE_REVIEW = 'review/CREATE_REVIEW';
 
 export interface CreateReviewAction {
   type: typeof CREATE_REVIEW;
-  toilet: Toilet;
+  toilet: toiletModels.Toilet;
   review: ReviewBase;
 }
 
 export function createReview(
-  toilet: Toilet,
+  toilet: toiletModels.Toilet,
   review: ReviewBase,
 ): CreateReviewAction {
   return {
