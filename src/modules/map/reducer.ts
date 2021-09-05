@@ -1,5 +1,5 @@
 import { LatLng } from 'leaflet';
-import { CHANGE_POSITION, MapActionType, CHANGE_ZOOM } from './actions';
+import { mapActions } from '.';
 
 export interface MapState {
   position: LatLng;
@@ -15,12 +15,12 @@ const initialState: MapState = {
 
 export default function (
   state: MapState = initialState,
-  action: MapActionType,
+  action: mapActions.MapActionType,
 ): MapState {
   switch (action.type) {
-    case CHANGE_POSITION:
+    case mapActions.CHANGE_POSITION:
       return { ...state, position: action.position };
-    case CHANGE_ZOOM:
+    case mapActions.CHANGE_ZOOM:
       return { ...state, zoom: action.zoom };
     default:
       return state;

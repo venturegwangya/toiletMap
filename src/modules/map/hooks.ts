@@ -2,8 +2,8 @@ import firebase from 'firebase';
 import { LatLng } from 'leaflet';
 import { useAppDispatch, useAppSelector } from '../configureStore';
 import { useCallback, useMemo } from 'react';
-import { changePosition, changeZoom } from './actions';
 import { toiletActions } from '@modules/toilet';
+import { mapActions } from '.';
 
 export function useMapLatLng(): LatLng {
   const latLng = useAppSelector(state => state.map.position);
@@ -30,7 +30,7 @@ export function useMapActions(): {
   const dispatch = useAppDispatch();
   const setLatLng = useCallback(
     latLng => {
-      dispatch(changePosition(latLng));
+      dispatch(mapActions.changePosition(latLng));
       dispatch(toiletActions.needRequestAgain());
     },
     [dispatch],
@@ -38,7 +38,7 @@ export function useMapActions(): {
 
   const setZoom = useCallback(
     zoom => {
-      dispatch(changeZoom(zoom));
+      dispatch(mapActions.changeZoom(zoom));
       dispatch(toiletActions.needRequestAgain());
     },
     [dispatch],
