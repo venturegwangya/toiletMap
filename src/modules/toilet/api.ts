@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { Toilet, ToiletBase } from './models';
-import { firebaseDB, firebaseGeoDB } from '../configureFirebase';
+import { firebaseDB, firebaseGeoDB } from '@modules/configureFirebase';
 import { reviewModels, reviewAPI } from '@modules/review';
 
 const TOILET_COLLECTION_NAME = 'toilets';
