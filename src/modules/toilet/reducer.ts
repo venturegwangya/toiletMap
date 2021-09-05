@@ -1,14 +1,8 @@
-import {
-  NEED_REQUEST_AGAIN,
-  RECEIVE_TOILETS,
-  SELECT_TOILET,
-  ToiletActionType,
-} from './actions';
-import { Toilet } from './models';
+import { toiletActions, toiletModels } from '.';
 
 export interface ToiletState {
-  fetchedToilets: Toilet[];
-  selectedToilet: Toilet | null;
+  fetchedToilets: toiletModels.Toilet[];
+  selectedToilet: toiletModels.Toilet | null;
   needRequestAgain: boolean;
 }
 
@@ -20,21 +14,21 @@ const initialState: ToiletState = {
 
 export default function (
   state: ToiletState = initialState,
-  action: ToiletActionType,
+  action: toiletActions.ToiletActionType,
 ): ToiletState {
   switch (action.type) {
-    case NEED_REQUEST_AGAIN:
+    case toiletActions.NEED_REQUEST_AGAIN:
       return {
         ...state,
         needRequestAgain: true,
       };
-    case RECEIVE_TOILETS:
+    case toiletActions.RECEIVE_TOILETS:
       return {
         ...state,
         fetchedToilets: action.toilets,
         needRequestAgain: false,
       };
-    case SELECT_TOILET:
+    case toiletActions.SELECT_TOILET:
       return {
         ...state,
         selectedToilet:

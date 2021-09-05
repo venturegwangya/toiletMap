@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { ToiletRegisterType } from './types';
+import { toiletTypes } from '.';
 
 export interface Unique {
   id: string;
@@ -10,7 +10,7 @@ export interface Unique {
  */
 export interface ToiletBase {
   name: string;
-  type: ToiletRegisterType;
+  type: toiletTypes.ToiletRegisterType;
   coordinates: firebase.firestore.GeoPoint;
   timestamp: firebase.firestore.FieldValue;
   reviewCount: number;

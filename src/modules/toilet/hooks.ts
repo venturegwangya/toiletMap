@@ -1,18 +1,12 @@
 import { useAppDispatch, useAppSelector } from '@modules/configureStore';
-import { Toilet } from './models';
 import firebase from 'firebase';
 import { useCallback, useMemo } from 'react';
-import {
-  RequestToiletsInAreaAction,
-  SelectToiletAction,
-  requestToiletsInArea,
-  selectToilet,
-} from './actions';
 import { mapHooks } from '@modules/map';
+import { toiletActions, toiletModels } from '.';
 
 export function useToilet(): {
-  toilets: Toilet[];
-  selectedToilet: Toilet | null;
+  toilets: toiletModels.Toilet[];
+  selectedToilet: toiletModels.Toilet | null;
   requestAgain: boolean;
 } {
   const toilets = useAppSelector(state => state.toilet.fetchedToilets);
@@ -25,16 +19,19 @@ export function useToiletActions(): {
   fetchToilets: (
     center: firebase.firestore.GeoPoint,
     radius: number,
-  ) => RequestToiletsInAreaAction;
-  setSelectedToilet: (toilet: Toilet | null) => SelectToiletAction;
+  ) => toiletActions.RequestToiletsInAreaAction;
+  setSelectedToilet: (
+    toilet: toiletModels.Toilet | null,
+  ) => toiletActions.SelectToiletAction;
 } {
   const dispatch = useAppDispatch();
   const fetchToilets = useCallback(
-    (center, radius) => dispatch(requestToiletsInArea(center, radius)),
+    (center, radius) =>
+      dispatch(toiletActions.requestToiletsInArea(center, radius)),
     [dispatch],
   );
   const setSelectedToilet = useCallback(
-    toilet => dispatch(selectToilet(toilet)),
+    toilet => dispatch(toiletActions.selectToilet(toilet)),
     [dispatch],
   );
   return { fetchToilets, setSelectedToilet };
