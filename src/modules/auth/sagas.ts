@@ -9,34 +9,21 @@ import {
   take,
   takeEvery,
 } from 'redux-saga/effects';
-import {
-  LOG_OUT,
-  SignInAction,
-  SignUpAction,
-  SIGN_IN,
-  SIGN_UP,
-  SUBSCRIBE_AUTH_CHANGED,
-  updateUser,
-} from './actions';
-import {
-  logout,
-  signInWithEmailAndPassword,
-  signUpWithEmailAndPassword,
-} from './api';
+import { authActions, authAPI } from './';
 
 function* signUpSaga({
   email,
   password,
   displayName,
-}: SignUpAction): Generator<StrictEffect, void, firebase.User> {
+}: authActions.SignUpAction): Generator<StrictEffect, void, firebase.User> {
   try {
     const user: firebase.User = yield call(
-      signUpWithEmailAndPassword,
+      authAPI.signUpWithEmailAndPassword,
       email,
       password,
       displayName,
     );
-    yield put(updateUser(user));
+    yield put(authActions.updateUser(user));
   } catch (err) {
     // todo 예외처리 액션 구현
     console.error(err);
@@ -48,40 +35,40 @@ export function* watchSignUpReviewSaga(): Generator<
   void,
   firebase.User
 > {
-  yield takeEvery(SIGN_UP, signUpSaga);
+  yield takeEvery(authActions.SIGN_UP, signUpSaga);
 }
 
 function* signInSaga({
   email,
   password,
-}: SignInAction): Generator<StrictEffect, void, firebase.User> {
+}: authActions.SignInAction): Generator<StrictEffect, void, firebase.User> {
   try {
     const user: firebase.User = yield call(
-      signInWithEmailAndPassword,
+      authAPI.signInWithEmailAndPassword,
       email,
       password,
     );
-    yield put(updateUser(user));
+    yield put(authActions.updateUser(user));
   } catch (err) {
     console.error(err);
   }
 }
 
 export function* watchSignInSaga(): Generator<StrictEffect, void, void> {
-  yield takeEvery(SIGN_IN, signInSaga);
+  yield takeEvery(authActions.SIGN_IN, signInSaga);
 }
 
 function* logOutSaga(): Generator<StrictEffect, void, void> {
   try {
-    yield call(logout);
-    yield put(updateUser(null));
+    yield call(authAPI.logout);
+    yield put(authActions.updateUser(null));
   } catch (err) {
     console.error(err);
   }
 }
 
 export function* watchLogOutSaga(): Generator<StrictEffect, void, void> {
-  yield takeEvery(LOG_OUT, logOutSaga);
+  yield takeEvery(authActions.LOG_OUT, logOutSaga);
 }
 
 /**
@@ -105,7 +92,7 @@ function* subscriptionAuthSaga(): Generator<
   try {
     while (true) {
       const { user } = yield take(authEventsChannel);
-      yield put(updateUser(user));
+      yield put(authActions.updateUser(user));
     }
   } catch (e) {
     console.error(e);
@@ -121,7 +108,7 @@ export function* watchSubscriptionAuthSaga(): Generator<
   void,
   void
 > {
-  yield takeEvery(SUBSCRIBE_AUTH_CHANGED, subscriptionAuthSaga);
+  yield takeEvery(authActions.SUBSCRIBE_AUTH_CHANGED, subscriptionAuthSaga);
 }
 
 export const sagas = [
