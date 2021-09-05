@@ -1,15 +1,8 @@
-import { ReviewBase, Review } from '@modules/review/models';
-import { LIKE_OR_DISLIKE_REVIEW_SUCCESS } from './actions';
-import {
-  CREATE_REVIEW,
-  RECEIVE_REVIEWS,
-  CREATE_REVIEW_SUCCESS,
-  ReviewActionType,
-} from './actions';
+import { reviewActions, reviewModels } from '.';
 
 export interface ReviewState {
-  review: Partial<ReviewBase | null>;
-  fetchedReviews: Review[];
+  review: Partial<reviewModels.ReviewBase | null>;
+  fetchedReviews: reviewModels.Review[];
 }
 
 const initialState: ReviewState = {
@@ -19,23 +12,23 @@ const initialState: ReviewState = {
 
 export default function (
   state: ReviewState = initialState,
-  action: ReviewActionType,
+  action: reviewActions.ReviewActionType,
 ): ReviewState {
   switch (action.type) {
-    case RECEIVE_REVIEWS:
+    case reviewActions.RECEIVE_REVIEWS:
       return {
         ...state,
         fetchedReviews: action.reviews,
       };
-    case CREATE_REVIEW:
+    case reviewActions.CREATE_REVIEW:
       return {
         ...state,
       };
-    case CREATE_REVIEW_SUCCESS:
+    case reviewActions.CREATE_REVIEW_SUCCESS:
       return {
         ...state,
       };
-    case LIKE_OR_DISLIKE_REVIEW_SUCCESS:
+    case reviewActions.LIKE_OR_DISLIKE_REVIEW_SUCCESS:
       return {
         ...state,
         fetchedReviews: state.fetchedReviews.map(review => {

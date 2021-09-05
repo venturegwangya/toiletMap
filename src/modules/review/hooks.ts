@@ -1,26 +1,20 @@
 import { useAppDispatch, useAppSelector } from '@modules/configureStore';
-import { Review, ReviewBase } from './models';
 import { toiletModels } from '@modules/toilet';
-import {
-  createReview,
-  likeOrDislikeReview,
-  LikeOrDislikeReviewAction,
-} from './actions';
 import { useCallback } from 'react';
-import { CreateReviewAction } from './actions';
+import { reviewModels, reviewActions } from '.';
 
-export function useSelectedToiletReviews(): Review[] {
+export function useSelectedToiletReviews(): reviewModels.Review[] {
   const reviews = useAppSelector(state => state.review.fetchedReviews);
   return reviews;
 }
 
 export function useCreateReview(): (
   toilet: toiletModels.Toilet,
-  review: ReviewBase,
-) => CreateReviewAction {
+  review: reviewModels.ReviewBase,
+) => reviewActions.CreateReviewAction {
   const dispatch = useAppDispatch();
   return useCallback(
-    (toilet, review) => dispatch(createReview(toilet, review)),
+    (toilet, review) => dispatch(reviewActions.createReview(toilet, review)),
     [dispatch],
   );
 }
@@ -30,17 +24,23 @@ export function useLikeOrDislikeReview(
   toiletId: string,
   reviewId: string,
 ): {
-  like: () => LikeOrDislikeReviewAction;
-  dislike: () => LikeOrDislikeReviewAction;
+  like: () => reviewActions.LikeOrDislikeReviewAction;
+  dislike: () => reviewActions.LikeOrDislikeReviewAction;
 } {
   const dispatch = useAppDispatch();
   const like = useCallback(
-    () => dispatch(likeOrDislikeReview(userId, toiletId, reviewId, false)),
+    () =>
+      dispatch(
+        reviewActions.likeOrDislikeReview(userId, toiletId, reviewId, false),
+      ),
     [dispatch, userId, toiletId, reviewId],
   );
 
   const dislike = useCallback(
-    () => dispatch(likeOrDislikeReview(userId, toiletId, reviewId, true)),
+    () =>
+      dispatch(
+        reviewActions.likeOrDislikeReview(userId, toiletId, reviewId, true),
+      ),
     [dispatch, userId, toiletId, reviewId],
   );
   return { like, dislike };
