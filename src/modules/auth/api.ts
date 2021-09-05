@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import firebase from 'firebase';
 import { firebaseAuth } from '../configureFirebase';
 
@@ -35,10 +34,11 @@ export async function signInWithEmailAndPassword(
 /**
  * @override 로그아웃
  */
-export async function logout() {
+export async function logout(): Promise<void> {
   try {
     await firebaseAuth.signOut();
   } catch (err) {
+    // TODO
     alert(err);
   }
 }
